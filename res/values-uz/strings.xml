@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Chaqiruv sozlamalari"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Faqat administrator qo‘ng‘iroq sozlamalarini o‘zgartirishi mumkin."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Telefondagi hisob sozlamalarini faqat administrator yoki ishxona foydalanuvchisi oʻzgartirishi mumkin."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Qurilma egasi mobil tarmoq sozlamalarini oʻzgartirish imkoniyatini cheklagan."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Sozlamalar (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Chaqiruv sozlamalarida xato"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Sozlamalar olinmoqda…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Odatiy qo‘ng‘iroq qilish uchun favqulodda qayta qo‘ng‘iroq rejimidan chiqing."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Tarmoqda ro‘yxatdan o‘tmagan."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Uyali tarmoq mavjud emas."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobil tarmoq ishlamayapti.\n\nTelefon qilish uchun simsiz tarmoqqa ulaning.\n\nBu qurilmada 2G yoqilmagan va aloqaga taʼsir qilishi mumkin. Davom etish uchun Sozlamalar orqali 2G ulanishga ruxsat bering."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Mobil tarmoqdan foydalanib bo‘lmaydi. Qo‘ng‘iroq qilish uchun Wi-Fi tarmog‘iga ulaning."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobil tarmoq ishlamayapti.\n\nTelefon qilish uchun simsiz tarmoqqa ulaning.\n\nBu qurilmada 2G yoqilmagan va aloqaga taʼsir qilishi mumkin. Davom etish uchun Sozlamalar orqali 2G ulanishga ruxsat bering."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Qo‘ng‘iroq qilish uchun raqamni to‘g‘ri kiriting."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Chaqiruv amalga oshmadi."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Qo‘ng‘iroq qilib bo‘lmayapti. Xabar yuborib ko‘ring."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Qo‘ng‘iroqlarni ushlab turib bo‘lmadi."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Qo‘ng‘iroq qilish uchun simsiz tarmoqqa ulaning"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Qo‘ng‘iroq qilish uchun Wi-Fi qo‘ng‘iroqlar funksiyasini yoqing."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Telefon qilish uchun sputnik rejimini faolsizlantiring."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Telefon qilish uchun avval sputnik orqali aloqani uzing."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Mobil yoki Wi-Fi tarmoqsiz xabarlarni yuborish va qabul qilish mumkin."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Favqulodda vaziyatlar uchun axborot"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Egasi"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Axborotni ochish uchun yana bir marta bosing"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Olinadigan eSIM kartani birlamchi qilib belgilash"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Radio signal quvvati"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Xizmatdan tashqari simulyatsiya (faqat nosozliklarni aniqlash dasturi uchun)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Soxta operator sputnik rejimi (faqat debag nashrida)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Haqiqiy sputnik eSOS rejimini sinash (faqat debag nashrida)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM kartadagi abonentlar ro‘yxatini ochish"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Ruxsat etilgan raqamlar ro‘yxatini ochish"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Xizmatlarni terish raqamlarini ochish"</string>

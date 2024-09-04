@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Налады выклікаў"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Налады выклікаў можа мяняць толькі адміністратар."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Налады ўліковага запісу на тэлефоне можа мяняць толькі адміністратар ці карыстальнік працоўнага профілю."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Уладальнік прылады забараніў змяняць налады мабільнай сеткі."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Налады (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Памылка налад выкліку"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Чытанне налад..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Каб зрабіць звычайны выклік, выйдзіце з рэжыму экстранных зваротных выклікаў."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Не зарэгістраваны ў сетцы."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Мабільная сетка недаступная."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Мабільная сетка недаступная.\n\nКаб зрабіць выклік, падключыцеся да бесправадной сеткі.\n\nНа гэтай прыладзе адключана перадача даных у рэжыме 2G, што можа ўплываць на магчымасць падключэння. Каб працягнуць, перайдзіце ў налады і ўключыце параметр \"Дазволіць 2G\"."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Мабільная сетка недаступная. Падлучыцеся да бесправадной сеткі, каб зрабіць выклік."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Мабільная сетка недаступная.\n\nКаб зрабіць выклік, падключыцеся да бесправадной сеткі.\n\nНа гэтай прыладзе адключана перадача даных у рэжыме 2G, што можа ўплываць на магчымасць падключэння. Каб працягнуць, перайдзіце ў налады і ўключыце параметр \"Дазволіць 2G\"."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Каб зрабіць выклік, увядзіце сапраўдны нумар."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Збой выклiку."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Немагчыма зараз дадаць выклік. Можна выйсці на сувязь, адправіўшы паведамленне."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Немагчыма ўтрымліваць выклікі."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Падлучыцеся да бесправадной сеткі, каб зрабіць выклік."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Дазволіць выклік па Wi-Fi-тэлефаніі."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Адключыце рэжым спадарожніка, каб зрабіць выклік."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Каб зрабіць выклік, завяршыце спадарожнікавае падключэнне."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Вы можаце адпраўляць і атрымліваць паведамленні без доступу да мабільнай сеткі або Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Даныя для экстранных сітуацый"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Уладальнік"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Каб паглядзець інфармацыю, націсніце яшчэ раз"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Зрабіць здымную eSIM-карту стандартнай"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Магутнасць радыёсігналу"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Мадэляванне знаходжання па-за сеткай (толькі ў зборцы для адладкі)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Імітацыя рэжыму спадарожніка з SIM-картай ад аператара (толькі ў зборцы для адладкі)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Тэсціраванне рэальнага рэжыму спадарожнікавага падключэння eSOS (толькі ў зборцы для адладкі)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Праглядзець адрасную кнігу на SIM-карце"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Прагляд фіксаваных нумароў"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Паглядзець сэрвісныя нумары"</string>

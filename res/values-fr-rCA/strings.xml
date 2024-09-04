@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Paramètres d\'appel"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Seul l\'administrateur peut modifier les paramètres d\'appel."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Seuls l\'admin. ou l\'utilisat. profession. peuvent modif. les param. du compte tél."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Le propriétaire de l\'appareil a limité la possibilité de modifier les paramètres du réseau cellulaire."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Paramètres (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Erreur des paramètres d\'appel"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Lecture des paramètres..."</string>
@@ -145,7 +146,7 @@
     <string name="stk_cc_ss_to_ussd_error" msgid="8330749347425752192">"Demande SS remplacée par une demande USSD"</string>
     <string name="stk_cc_ss_to_ss_error" msgid="8297155544652134278">"Remplacement par une nouvelle demande SS"</string>
     <string name="stk_cc_ss_to_dial_video_error" msgid="4255261231466032505">"Demande SS remplacée par un appel vidéo"</string>
-    <string name="fdn_check_failure" msgid="1833769746374185247">"Les numéros autorisés sont activés dans l\'application de votre téléphone. Par conséquent, certaines fonctionnalités d\'appel ne fonctionnent pas."</string>
+    <string name="fdn_check_failure" msgid="1833769746374185247">"Les numéros autorisés sont activés dans l\'appli de votre téléphone. Par conséquent, certaines fonctionnalités d\'appel ne fonctionnent pas."</string>
     <string name="radio_off_error" msgid="8321564164914232181">"Activez le signal radio avant d\'afficher ces paramètres."</string>
     <string name="close_dialog" msgid="1074977476136119408">"OK"</string>
     <string name="enable" msgid="2636552299455477603">"Activer"</string>
@@ -298,7 +299,7 @@
     <string name="sip_accounts_removed_notification_title" msgid="3528076957535736095">"Comptes SIP obsolètes trouvés et retirés"</string>
     <string name="sip_accounts_removed_notification_message" msgid="1916856744869791592">"Les appels SIP ne sont plus pris en charge par la plateforme Android.\nVos comptes SIP <xliff:g id="REMOVED_SIP_ACCOUNTS">%s</xliff:g> existants ont été retirés.\nVeuillez confirmer votre paramètre de compte d\'appel par défaut."</string>
     <string name="sip_accounts_removed_notification_action" msgid="3772778402370555562">"Accéder aux paramètres"</string>
-    <string name="data_usage_title" msgid="8438592133893837464">"Utilisation des données des applications"</string>
+    <string name="data_usage_title" msgid="8438592133893837464">"Utilisation des données des applis"</string>
     <string name="data_usage_template" msgid="6287906680674061783">"<xliff:g id="ID_1">%1$s</xliff:g> de données mobiles utilisées pendant la période suivante : <xliff:g id="ID_2">%2$s</xliff:g>"</string>
     <string name="advanced_options_title" msgid="9208195294513520934">"Avancés"</string>
     <string name="carrier_settings_euicc" msgid="1190237227261337749">"Opérateur"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Quittez le mode de rappel d\'urgence pour effectuer un appel non urgent."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Non enregistré sur le réseau"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Réseau pour mobile non disponible"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Réseau mobile non disponible.\n\nConnectez-vous à un réseau sans fil pour passer un appel.\n\nLe réseau 2G est désactivé sur cet appareil, ce qui peut affecter votre connectivité. Accédez aux paramètres et activez Autoriser les réseaux 2G pour continuer."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Le réseau mobile n\'est pas accessible. Connectez-vous à un réseau sans fil pour effectuer un appel."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Le réseau mobile n\'est pas disponible.\n\nConnectez-vous à un réseau sans fil pour passer un appel.\n\nLe réseau 2G est désactivé sur cet appareil, ce qui peut affecter votre connectivité. Accédez aux paramètres et activez Autoriser les réseaux 2G pour continuer."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Pour faire un appel, entrez un numéro valide."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Échec de l\'appel."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Impossible d\'ajouter l\'appel pour le moment. Vous pouvez essayer de joindre la personne en lui envoyant un message."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Impossible de mettre les appels en attente."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Connectez-vous à un réseau Wi-Fi pour faire un appel."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Activez les appels Wi-Fi pour faire un appel."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Désactivez le mode Satellite pour passer un appel."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Pour passer un appel, mettez d\'abord fin à la connexion par satellite."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Vous pouvez envoyer et recevoir des messages sans avoir recours à un appareil mobile ni à un réseau Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Renseignements en cas d\'urgence"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Propriétaire"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Touchez à nouveau pour afficher les renseignements"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Définir la carte eSIM amovible comme carte SIM par défaut"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Alimentation de radio cellulaire"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulation de l\'appareil hors service (version de débogage uniquement)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mode Satellite de l\'opérateur simulé (version de débogage uniquement)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Tester le mode eSOS par satellite réel (version de débogage uniquement)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Afficher le carnet d\'adresses de la carte SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Afficher les numéros d\'appel fixes"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Afficher les numéros de service"</string>
@@ -926,9 +932,9 @@
     <string name="call_quality_notification_bluetooth_details" msgid="8348950331707346711">"Votre signal Bluetooth est faible. Essayez de passer au haut-parleur mains libres."</string>
     <string name="call_quality_notification_name" msgid="3476828289553948830">"Notification de qualité d\'appel"</string>
     <string name="notification_channel_sip_account" msgid="1261816025156179637">"Comptes SIP obsolètes"</string>
-    <string name="send_from_work_profile_title" msgid="7044759579507604732">"Impossible d\'envoyer un message à partir d\'une application personnelle"</string>
-    <string name="send_from_work_profile_description" msgid="2174402508727161974">"Votre organisation ne vous autorise à envoyer de messages qu\'à partir d\'applications professionnelles"</string>
+    <string name="send_from_work_profile_title" msgid="7044759579507604732">"Impossible d\'envoyer un message à partir d\'une appli personnelle"</string>
+    <string name="send_from_work_profile_description" msgid="2174402508727161974">"Votre organisation ne vous autorise à envoyer de messages qu\'à partir d\'applis professionnelles"</string>
     <string name="send_from_work_profile_cancel" msgid="177746511030381711">"Annuler"</string>
     <string name="send_from_work_profile_action_str" msgid="6892775562934243337">"Passer au profil professionnel"</string>
-    <string name="install_messages_on_work_profile_action_str" msgid="3773440996395152903">"Installer une application de messagerie professionnelle"</string>
+    <string name="install_messages_on_work_profile_action_str" msgid="3773440996395152903">"Installer une appli de messagerie professionnelle"</string>
 </resources>

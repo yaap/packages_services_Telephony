@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"कल सेटिङहरू"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"कल सेटिङहरू केवल प्रशासकीय प्रयोगकर्ताद्वारा परिवर्तन गर्न सकिन्छ।"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"एड्मिन वा कार्य प्रोफाइलका प्रयोगकर्ता मात्र फोनमा लिंक गरिएको खाताका सेटिङ बदल्न सक्नुहुन्छ।"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"डिभाइसका मालिकले मोबाइल नेटवर्कसम्बन्धी सेटिङ परिवर्तन गर्न रोक लगाउनुभएको छ।"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"सेटिङहरू (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"कल सेटिङमा त्रुटि"</string>
     <string name="reading_settings" msgid="1605904432450871183">"सेटिङहरू पढ्दै..."</string>
@@ -187,12 +188,12 @@
     <string name="manual_mode_disallowed_summary" msgid="3970048592179890197">"%1$s मा जडान हुँदा उपलब्ध छैन"</string>
     <string name="network_select_title" msgid="4117305053881611988">"नेटवर्क"</string>
     <string name="register_automatically" msgid="3907580547590554834">"स्वतः दर्ता..."</string>
-    <string name="preferred_network_mode_title" msgid="5253395265169539830">"रुचाइएको सञ्जाल प्रकार"</string>
+    <string name="preferred_network_mode_title" msgid="5253395265169539830">"रुचाइएको नेटवर्कको प्रकार"</string>
     <string name="preferred_network_mode_summary" msgid="3787989000044330064">"नेटवर्क संचालन मोड परिवर्तन गर्नुहोस्"</string>
-    <string name="preferred_network_mode_dialogtitle" msgid="2781447433514459696">"रुचाइएको सञ्जाल प्रकार"</string>
+    <string name="preferred_network_mode_dialogtitle" msgid="2781447433514459696">"रुचाइएको नेटवर्कको प्रकार"</string>
     <string name="forbidden_network" msgid="5081729819561333023">"(निषेध गरिएको)"</string>
     <string name="choose_network_title" msgid="5335832663422653082">"नेटवर्क छनौट गर्नुहोस्‌"</string>
-    <string name="network_disconnected" msgid="8844141106841160825">"जडान विच्छेद गरियो"</string>
+    <string name="network_disconnected" msgid="8844141106841160825">"जडान डिस्कनेक्ट गरियो"</string>
     <string name="network_connected" msgid="2760235679963580224">"जडान गरियो"</string>
     <string name="network_connecting" msgid="160901383582774987">"जडान गरिँदै छ..."</string>
     <string name="network_could_not_connect" msgid="6547460848093727998">"जडान गर्न सकिएन"</string>
@@ -306,7 +307,7 @@
     <string name="carrier_settings_euicc_summary" msgid="2027941166597330117">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g> — <xliff:g id="PHONE_NUMBER">%2$s</xliff:g>"</string>
     <string name="mobile_data_settings_title" msgid="7228249980933944101">"मोबाइल डेटा"</string>
     <string name="mobile_data_settings_summary" msgid="5012570152029118471">"मोबाइल नेटवर्कको प्रयोग गरी डेटामाथि पहुँच गर्नुहोस्"</string>
-    <string name="data_usage_disable_mobile" msgid="5669109209055988308">"मोबाइल डेटा निष्क्रिय पार्ने हो?"</string>
+    <string name="data_usage_disable_mobile" msgid="5669109209055988308">"मोबाइल डेटा अफ गर्ने हो?"</string>
     <string name="sim_selection_required_pref" msgid="6985901872978341314">"चयन गर्न आवश्यक छ"</string>
     <string name="sim_change_data_title" msgid="9142726786345906606">"डेटा सिम परिवर्तन गर्ने हो?"</string>
     <string name="sim_change_data_message" msgid="3567358694255933280">"मोबाइल डेटाका लागि <xliff:g id="OLD_SIM">%2$s</xliff:g> को सट्टा <xliff:g id="NEW_SIM">%1$s</xliff:g> को प्रयोग गर्ने हो?"</string>
@@ -482,8 +483,8 @@
     <string name="fdn_failed" msgid="216592346853420250">"FDN कार्य बिफल भयो।"</string>
     <string name="simContacts_emptyLoading" msgid="4989040293858675483">"SIM कार्ड पढ्दै..."</string>
     <string name="simContacts_empty" msgid="1135632055473689521">"तपाईँको SIM कार्डमा कुनै पनि सम्पर्क छैन।"</string>
-    <string name="simContacts_title" msgid="2714029230160136647">"सम्पर्कहरू आयात गर्न चयन गर्नुहोस्"</string>
-    <string name="simContacts_airplaneMode" msgid="4654884030631503808">"SIM कार्डबाट सम्पर्कहरू आयात गर्न हवाइजहाज मोड बन्द गर्नुहोस्।"</string>
+    <string name="simContacts_title" msgid="2714029230160136647">"कन्ट्याक्टहरू इम्पोर्ट गर्न चयन गर्नुहोस्"</string>
+    <string name="simContacts_airplaneMode" msgid="4654884030631503808">"SIM कार्डबाट कन्ट्याक्टहरू इम्पोर्ट गर्न हवाइजहाज मोड बन्द गर्नुहोस्।"</string>
     <string name="enable_pin" msgid="967674051730845376">"SIM PIN सक्षम/अक्षम गर्नुहोस्"</string>
     <string name="change_pin" msgid="3657869530942905790">"SIM को PIN परिवर्तन गर्नुहोस्"</string>
     <string name="enter_pin_text" msgid="3182311451978663356">"SIM PIN:"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"गैर-आपत्‌कालीन कल गर्न आपत्‌कालीन कलब्याक मोडबाट निस्कनुहोस्।"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"नेटवर्कमा दर्ता भएको छैन।"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"मोबाइल नेटवर्क उपलब्ध छैन।"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"मोबाइल नेटवर्क उपलब्ध छैन।\n\nकल गर्न वायरलेस नेटवर्कमा कनेक्ट गर्नुहोस्।\n\nयो डिभाइसमा 2G नेटवर्क अफ गरिएको छ, यसै कारणले तपाईंको कनेक्टिभिटी प्रभावित भएको हुन सक्छ। सेटिङमा जानुहोस् र जारी राख्नका निम्ति 2G प्रयोग गर्ने अनुमति दिनुहोस्।"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"मोबाइल नेटवर्क उपलब्ध छैन। कल गर्न तारविनाको नेटवर्कमा कनेक्ट गर्नुहोस्।"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"मोबाइल नेटवर्क उपलब्ध छैन।\n\nकल गर्न वायरलेस नेटवर्कमा कनेक्ट गर्नुहोस्।\n\nयो डिभाइसमा 2G अफ गरिएको छ, यसै कारणले तपाईंको कनेक्टिभिटी प्रभावित भएको हुन सक्छ। सेटिङमा जानुहोस् र जारी राख्नका निम्ति 2G प्रयोग गर्ने अनुमति दिनुहोस्।"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"एक कल गर्नको लागि, एक वैध नम्बर प्रविष्टि गर्नुहोस्।"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"कल विफल भयो।"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"यतिबेला कल गर्न सकिएन। तपाईंले कुनै सन्देश पठाएर सम्पर्क गर्ने प्रयास गर्न सक्नुहुन्छ।"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"कल सञ्चालन गर्न सकिँदैन।"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"एक कल गर्न एक ताररहितको सञ्जालमा कनेक्ट गर्नुहोस्।"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"कल गर्नका लागि Wi-Fi कलिङ सक्षम गर्नुहोस्।"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"कल गर्न स्याटेलाइट मोड अफ गर्नुहोस्।"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"कल गर्न सर्वप्रथम स्याटलाइट कनेक्सन अन्त्य गर्नुहोस्।"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"तपाईं मोबाइल वा Wi-Fi नेटवर्कविनै म्यासेज पठाउन र प्राप्त गर्न सक्नुहुन्छ।"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"आपत्‌कालीन जानकारी"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"मालिक"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"जानकारी हेर्न पुनः ट्याप गर्नुहोस्"</string>
@@ -588,14 +592,14 @@
     <string name="onscreenManageConferenceText" msgid="4700574060601755137">"सम्मेलन प्रबन्ध गर्नुहोस्"</string>
     <string name="onscreenAudioText" msgid="7224226735052019986">"अडियो"</string>
     <string name="onscreenVideoCallText" msgid="1743992456126258698">"भिडियो कल"</string>
-    <string name="importSimEntry" msgid="3892354284082689894">"आयात गर्नुहोस्"</string>
-    <string name="importAllSimEntries" msgid="2628391505643564007">"सबै आयात गर्नुहोस्"</string>
-    <string name="importingSimContacts" msgid="4995457122107888932">"SIM सम्पर्कहरू आयात गर्दै"</string>
-    <string name="importToFDNfromContacts" msgid="5068664870738407341">"सम्पर्कहरूबाट आयात गर्नुहोस्"</string>
+    <string name="importSimEntry" msgid="3892354284082689894">"इम्पोर्ट गर्नुहोस्"</string>
+    <string name="importAllSimEntries" msgid="2628391505643564007">"सबै इम्पोर्ट गर्नुहोस्"</string>
+    <string name="importingSimContacts" msgid="4995457122107888932">"SIM कन्ट्याक्टहरू आयात गर्दै"</string>
+    <string name="importToFDNfromContacts" msgid="5068664870738407341">"कन्ट्याक्टबाट इम्पोर्ट गर्नुहोस्"</string>
     <string name="singleContactImportedMsg" msgid="3619804066300998934">"आयातित सम्पर्क"</string>
-    <string name="failedToImportSingleContactMsg" msgid="228095510489830266">"सम्पर्क आयात गर्न असफल"</string>
-    <string name="hac_mode_title" msgid="4127986689621125468">"श्रवणका लागि सहयोगी यन्त्रहरू"</string>
-    <string name="hac_mode_summary" msgid="7774989500136009881">"श्रवण सहायता अनुकूलता खोल्नुहोस्"</string>
+    <string name="failedToImportSingleContactMsg" msgid="228095510489830266">"सम्पर्क इम्पोर्ट गर्न असफल"</string>
+    <string name="hac_mode_title" msgid="4127986689621125468">"हियरिङ डिभाइसहरू"</string>
+    <string name="hac_mode_summary" msgid="7774989500136009881">"हियरिङ डिभाइस कम्प्याटिबिलिटी अन गर्नुहोस्"</string>
     <string name="rtt_mode_title" msgid="3075948111362818043">"द्रुत टेक्स्ट म्यासेज (RTT) कल"</string>
     <string name="rtt_mode_summary" msgid="8631541375609989562">"भ्वाइस कलभित्रै सन्देश प्रवाह गर्ने अनुमति दिनुहोस्"</string>
     <string name="rtt_mode_more_information" msgid="587500128658756318">"RTT ले बहिरा, सुन्नमा कठिन हुने, बोल्न नसक्ने र आवाज मात्र नभई कल गर्दा थप कुराहरू चाहिने  मान्छेहरूलाई सहायता गर्छ!&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;थप जान्नुहोस्&lt;/a&gt;\n       &lt;br&gt;&lt;br&gt; - RTT कलहरूलाई सन्देशसम्बन्धी ट्रान्सक्रिप्टका रूपमा सुरक्षित गरिन्छ\n      &lt;br&gt; - RTT भिडियो कलहरूमा उपलब्ध छैन"</string>
@@ -815,7 +819,7 @@
     <string name="supp_service_deflected_call" msgid="7565979024562921707">"कल अर्को नम्बरमा स्थानान्तरण गरियो।"</string>
     <string name="supp_service_forwarded_call" msgid="6475776013771821457">"कल फर्वार्ड गरियो।"</string>
     <string name="supp_service_conference_call" msgid="4004193534408317148">"सम्मेलन कलमा सामेल हुँदै छ।"</string>
-    <string name="supp_service_held_call_released" msgid="2847835124639112410">"होल्डमा राखिएको कललाई विच्छेद गरियो।"</string>
+    <string name="supp_service_held_call_released" msgid="2847835124639112410">"होल्डमा राखिएको कललाई डिस्कनेक्ट गरियो।"</string>
     <string name="callFailed_otasp_provisioning_in_process" msgid="3345666183602879326">"डिभाइसमा हाल सेवाहरूको व्यवस्था गरिँदै हुनाले कल गर्न सकिँदैन।"</string>
     <string name="callFailed_already_dialing" msgid="7250591188960691086">"अर्को बहिर्गमन कल पहिले नै डायल भएका हुनाले कल गर्न सकिँदैन।"</string>
     <string name="callFailed_already_ringing" msgid="2376603543544289303">"जवाफ नदिइएको आगमन कल जारी रहेकाले नयाँ कल गर्न सकिँदैन। कुनै नयाँ कल गर्नुअघि आगमन कलको जवाफ दिनुहोस् वा त्यसलाई अस्वीकार गर्नुहोस्।"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"हटाउन मिल्ने eSIM डिफल्ट रूपमा सेट गर्नुहोस्"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"मोबाइल रेडियोको पावर"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"\"सेवा उपलब्ध छैन\" सिमुलेट गर्नुहोस् (डिबग बिल्डमा मात्र सिमुलेट गर्न मिल्छ)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"सेवा प्रदायकको स्याटेलाइट मोडको परीक्षण गर्नुहोस् (डिबग बिल्ड मात्र)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"वास्तविक स्याटेलाइट eSOS मोड परीक्षण गर्नुहोस् (डिबग बिल्ड मात्र)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM को ठेगाना पुस्तिका हेर्नुहोस्"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"स्थिर डायल गर्ने नम्बरहरू हेर्नुहोस्"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"सेवामा डायल गर्ने नम्बरहरू हेर्नुहोस्"</string>
@@ -860,7 +866,7 @@
     <string name="radioInfo_phone_idle" msgid="2191653783170757819">"निष्क्रिय"</string>
     <string name="radioInfo_phone_ringing" msgid="8100354169567413370">"घन्टी बज्दै छ"</string>
     <string name="radioInfo_phone_offhook" msgid="7564601639749936170">"कल जारी छ"</string>
-    <string name="radioInfo_data_disconnected" msgid="8085447971880814541">"विच्छेद गरियो"</string>
+    <string name="radioInfo_data_disconnected" msgid="8085447971880814541">"डिस्कनेक्ट गरिएको छ"</string>
     <string name="radioInfo_data_connecting" msgid="925092271092152472">"जोडिँदै"</string>
     <string name="radioInfo_data_connected" msgid="7637335645634239508">"जडान गरियो"</string>
     <string name="radioInfo_data_suspended" msgid="8695262782642002785">"निलम्बित"</string>

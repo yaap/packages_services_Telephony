@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import android.telephony.satellite.stub.SatelliteImplBase;
 import android.telephony.satellite.stub.SatelliteModemState;
 import android.telephony.satellite.stub.SatelliteResult;
 import android.telephony.satellite.stub.SatelliteService;
+import android.telephony.satellite.stub.SystemSelectionSpecifier;
 import android.util.Log;
 
 import com.android.internal.util.FunctionalUtils;
@@ -100,6 +101,7 @@ public class TestSatelliteService extends SatelliteImplBase {
     private List<String> mAllPlmnList = new ArrayList<>();
     private boolean mIsSatelliteEnabledForCarrier;
     private boolean mIsRequestIsSatelliteEnabledForCarrier;
+    private boolean mIsEmergnecy;
 
     /**
      * Create TestSatelliteService using the Executor specified for methods being called from
@@ -117,6 +119,7 @@ public class TestSatelliteService extends SatelliteImplBase {
         mIsCellularModemEnabledMode = false;
         mIsSatelliteEnabledForCarrier = false;
         mIsRequestIsSatelliteEnabledForCarrier = false;
+        mIsEmergnecy = false;
     }
 
     /**
@@ -184,8 +187,9 @@ public class TestSatelliteService extends SatelliteImplBase {
 
     @Override
     public void requestSatelliteEnabled(boolean enableSatellite, boolean enableDemoMode,
-            @NonNull IIntegerConsumer errorCallback) {
-        logd("requestSatelliteEnabled: mErrorCode=" + mErrorCode + " enable = " + enableSatellite);
+            boolean isEmergency, @NonNull IIntegerConsumer errorCallback) {
+        logd("requestSatelliteEnabled: mErrorCode=" + mErrorCode + " enable = " + enableSatellite
+                + " isEmergency=" + isEmergency);
         if (mErrorCode != SatelliteResult.SATELLITE_RESULT_SUCCESS) {
             runWithExecutor(() -> errorCallback.accept(mErrorCode));
             return;
@@ -196,6 +200,7 @@ public class TestSatelliteService extends SatelliteImplBase {
         } else {
             disableSatellite(errorCallback);
         }
+        mIsEmergnecy = isEmergency;
     }
 
     private void enableSatellite(@NonNull IIntegerConsumer errorCallback) {
@@ -371,22 +376,6 @@ public class TestSatelliteService extends SatelliteImplBase {
     }
 
     @Override
-    public void requestIsSatelliteCommunicationAllowedForCurrentLocation(
-            @NonNull IIntegerConsumer errorCallback, @NonNull IBooleanConsumer callback) {
-        logd("requestIsCommunicationAllowedForCurrentLocation: mErrorCode=" + mErrorCode);
-        if (mErrorCode != SatelliteResult.SATELLITE_RESULT_SUCCESS) {
-            runWithExecutor(() -> errorCallback.accept(mErrorCode));
-            return;
-        }
-
-        if (mIsCommunicationAllowedInLocation) {
-            runWithExecutor(() -> callback.accept(true));
-        } else {
-            runWithExecutor(() -> callback.accept(false));
-        }
-    }
-
-    @Override
     public void requestTimeForNextSatelliteVisibility(@NonNull IIntegerConsumer errorCallback,
             @NonNull IIntegerConsumer callback) {
         logd("requestTimeForNextSatelliteVisibility: mErrorCode=" + mErrorCode);
@@ -446,6 +435,23 @@ public class TestSatelliteService extends SatelliteImplBase {
         mIsRequestIsSatelliteEnabledForCarrier = true;
     }
 
+    @Override
+    public void updateSatelliteSubscription(@NonNull String iccId,
+            @NonNull IIntegerConsumer resultCallback) {
+        logd("updateSatelliteSubscription: iccId=" + iccId + " mErrorCode=" + mErrorCode);
+        runWithExecutor(() -> resultCallback.accept(mErrorCode));
+    }
+
+    @Override
+    public void updateSystemSelectionChannels(
+            @NonNull List<SystemSelectionSpecifier> systemSelectionSpecifiers,
+            @NonNull IIntegerConsumer resultCallback) {
+        logd(" updateSystemSelectionChannels: "
+                + "systemSelectionSpecifiers=" + systemSelectionSpecifiers
+                + " mErrorCode=" + mErrorCode);
+        runWithExecutor(() -> resultCallback.accept(mErrorCode));
+    }
+
     public void setLocalSatelliteListener(@NonNull ILocalSatelliteListener listener) {
         logd("setLocalSatelliteListener: listener=" + listener);
         mLocalListener = listener;
@@ -480,6 +486,16 @@ public class TestSatelliteService extends SatelliteImplBase {
         logd("sendOnSatellitePositionChanged");
         mRemoteListeners.values().forEach(listener -> runWithExecutor(() ->
                 listener.onSatellitePositionChanged(pointingInfo)));
+    }
+
+    /**
+     * Helper method to report satellite supported from modem side for testing purpose.
+     * @param supported whether satellite is supported from modem or not.
+     */
+    public void sendOnSatelliteSupportedStateChanged(boolean supported) {
+        logd("sendOnSatelliteSupportedStateChanged: supported=" + supported);
+        mRemoteListeners.values().forEach(listener -> runWithExecutor(() ->
+                listener.onSatelliteSupportedStateChanged(supported)));
     }
 
     /**
@@ -579,6 +595,26 @@ public class TestSatelliteService extends SatelliteImplBase {
 
     public boolean isRequestIsSatelliteEnabledForCarrier() {
         return mIsRequestIsSatelliteEnabledForCarrier;
+    }
+
+    public boolean getIsEmergency() {
+        return mIsEmergnecy;
+    }
+
+    /**
+     * Helper methoid to provide a way to set supported state from test application to mock modem.
+     * @param supported whether satellite is supported by modem or not.
+     */
+    public void updateSatelliteSupportedState(boolean  supported) {
+        logd("updateSatelliteSupportedState: supported=" + supported);
+        mIsSupported = supported;
+        mRemoteListeners.values().forEach(listener -> runWithExecutor(
+                () -> listener.onSatelliteSupportedStateChanged(mIsSupported)));
+
+    }
+
+    public boolean getSatelliteSupportedState() {
+        return mIsSupported;
     }
 
     /**

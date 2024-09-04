@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"കോൾ ക്രമീകരണങ്ങൾ"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"അഡ്മിൻ ഉപയോക്താവിന് മാത്രമേ കോൾ ക്രമീകരണം മാറ്റാൻ കഴിയൂ."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"അഡ്‌മിനോ ഔദ്യോഗിക ഉപയോക്താവിനോ മാത്രമേ ഫോൺ അക്കൗണ്ട് ക്രമീകരണം മാറ്റാനാകൂ."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"ഉപകരണത്തിന്റെ ഉടമ, മൊബൈൽ നെറ്റ്‌വർക്ക് ക്രമീകരണം മാറ്റാനുള്ള ശേഷി നിയന്ത്രിച്ചിരിക്കുന്നു."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"ക്രമീകരണം (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"കോൾ ക്രമീകരണ പിശക്"</string>
     <string name="reading_settings" msgid="1605904432450871183">"ക്രമീകരണങ്ങൾ റീഡ് ചെയ്യുന്നു.…"</string>
@@ -535,14 +536,16 @@
     <string name="notification_voicemail_no_vm_number" msgid="3423686009815186750">"വോയ്‌സ്‌മെയിൽ നമ്പർ അജ്ഞാതമാണ്"</string>
     <string name="notification_network_selection_title" msgid="255595526707809121">"സേവനമില്ല"</string>
     <string name="notification_network_selection_text" msgid="553288408722427659">"തിരഞ്ഞെടുത്ത നെറ്റ്‌വർക്ക് (<xliff:g id="OPERATOR_NAME">%s</xliff:g>) ലഭ്യമല്ല"</string>
-    <string name="incall_error_power_off" product="watch" msgid="7191184639454113633">"ഒരു കോൾ വിളിക്കാൻ മൊബൈൽ നെറ്റ്‌വർക്ക് ഓണാക്കുകയോ ഫ്ലൈറ്റ് മോഡ് അല്ലെങ്കിൽ ബാറ്ററി ലാഭിക്കൽ മോഡ് ഓഫാക്കുകയോ ചെയ്യുക."</string>
+    <string name="incall_error_power_off" product="watch" msgid="7191184639454113633">"ഒരു കോൾ വിളിക്കാൻ മൊബൈൽ നെറ്റ്‌വർക്ക് ഓണാക്കുകയോ ഫ്ലൈറ്റ് മോഡ് അല്ലെങ്കിൽ ബാറ്ററി സേവർ മോഡ് ഓഫാക്കുകയോ ചെയ്യുക."</string>
     <string name="incall_error_power_off" product="default" msgid="8131672264311208673">"ഒരു കോൾ വിളിക്കാൻ വിമാന മോഡ് ഓഫാക്കുക."</string>
     <string name="incall_error_power_off_wfc" msgid="9125661184694727052">"ഒരു കോൾ വിളിക്കാൻ വിമാന മോഡ് ഓഫാക്കുക അല്ലെങ്കിൽ വയർലെസ്സ് നെറ്റ്‌വർക്കിലേക്ക് കണക്റ്റുചെയ്യുക."</string>
     <string name="incall_error_power_off_thermal" product="default" msgid="8695809601655300168"><b>"ഫോൺ വളരെയധികം ചൂടായിരിക്കുന്നു"</b>\n\n"ഈ കോൾ പൂർത്തിയാക്കാനാകില്ല. ഫോൺ തണുക്കുമ്പോൾ വീണ്ടും ശ്രമിക്കുക.\n\nഎമർജൻസി കോളുകൾ നിങ്ങൾക്ക് ഇപ്പോഴും ചെയ്യാവുന്നതാണ്."</string>
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"അടിയന്തിരമല്ലാത്ത കോൾ ചെയ്യാൻ അടിയന്തിര കോൾബാക്ക് മോഡിൽ നിന്ന് പുറത്തുകടക്കുക."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"നെറ്റ്‌വർക്കിൽ രജിസ്റ്റർ ചെയ്‌തിട്ടില്ല."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"മൊബൈൽ നെറ്റ്‌വർക്ക് ലഭ്യമല്ല."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"മൊബൈൽ നെറ്റ്‌വർക്ക് ലഭ്യമല്ല.\n\nകോൾ ചെയ്യാൻ ഒരു വയർലെസ് നെറ്റ്‌വർക്കിലേക്ക് കണക്റ്റ് ചെയ്യുക.\n\nഈ ഉപകരണത്തിൽ 2G പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു, അത് നിങ്ങളുടെ കണക്റ്റിവിറ്റിയെ ബാധിച്ചേക്കാം. തുടരാൻ, ക്രമീകരണത്തിലേക്ക് പോയി 2G അനുവദിക്കുക പ്രവർത്തനക്ഷമമാക്കുക."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"മൊബൈൽ നെറ്റ്‌വർക്ക് ലഭ്യമല്ല. കോൾ വിളിക്കാൻ വയർലെസ്സ് നെറ്റ്‌വർക്കിലേക്ക് കണക്റ്റുചെയ്യുക."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"മൊബൈൽ നെറ്റ്‌വർക്ക് ലഭ്യമല്ല.\n\nകോൾ ചെയ്യാൻ ഒരു വയർലെസ് നെറ്റ്‌വർക്കിലേക്ക് കണക്റ്റ് ചെയ്യുക.\n\nഈ ഉപകരണത്തിൽ 2G പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു, അത് നിങ്ങളുടെ കണക്റ്റിവിറ്റിയെ ബാധിച്ചേക്കാം. തുടരാൻ, ക്രമീകരണത്തിലേക്ക് പോയി 2G അനുവദിക്കുക പ്രവർത്തനക്ഷമമാക്കുക."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"ഒരു കോൾ ചെയ്യുന്നതിന്, സാധുതയുള്ള നമ്പർ നൽകുക."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"കോൾ ചെയ്യാനായില്ല."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"ഇപ്പോൾ കോൾ ചേർക്കാനാവില്ല. നിങ്ങൾക്കൊരു സന്ദേശമയച്ചുകൊണ്ട് ബന്ധപ്പെടാൻ ശ്രമിക്കാം."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"കോളുകൾ ഹോൾഡുചെയ്യാൻ കഴിയില്ല."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"ഒരു കോൾ വിളിക്കാൻ വയർലെസ്സ് നെറ്റ്‌വർക്കിലേക്ക് കണക്റ്റുചെയ്യുക."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"കോൾ ചെയ്യാൻ Wi-Fi കോളിംഗ് പ്രവർത്തനക്ഷമമാക്കുക."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"കോൾ ചെയ്യാൻ സാറ്റലൈറ്റ് മോഡ് പ്രവർത്തനരഹിതമാക്കുക."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"ഒരു കോൾ ചെയ്യുന്നതിന്, ആദ്യം സാറ്റലൈറ്റ് കണക്ഷൻ അവസാനിപ്പിക്കുക."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"മൊബൈൽ അല്ലെങ്കിൽ വൈഫൈ നെറ്റ്‌വർക്ക് ഇല്ലാതെ തന്നെ നിങ്ങൾക്ക് സന്ദേശങ്ങൾ അയയ്ക്കാനും സ്വീകരിക്കാനും കഴിയും."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"അടിയന്തര വിവരം"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"ഉടമ"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"വിവരങ്ങൾ കാണാൻ വീണ്ടും ടാപ്പ് ചെയ്യുക"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"നീക്കം ചെയ്യാവുന്ന ഇ-സിം ഡിഫോൾട്ടായി സജ്ജീകരിക്കുക"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"മൊബൈൽ റേഡിയോ പവർ"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"സേവനം ലഭ്യമല്ലെന്ന് അനുകരിക്കുക (ഡീബഗ് ബിൽഡ് മാത്രം)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mock സേവനദാതാവ് ഉപഗ്രഹ മോഡ് (ഡീബഗ് ബിൽഡ് മാത്രം)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"യഥാർത്ഥ സാറ്റലൈറ്റ് eSOS മോഡ് പരീക്ഷിക്കുക (ഡീബഗ് ബിൽഡ് മാത്രം)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"സിം വിലാസ പുസ്‌തകം കാണുക"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"സ്ഥിര ഡയലിംഗ് നമ്പറുകൾ കാണുക"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"സർവീസ് ഡയലിംഗ് നമ്പറുകൾ കാണുക"</string>

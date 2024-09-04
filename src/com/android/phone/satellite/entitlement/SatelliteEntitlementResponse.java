@@ -18,6 +18,7 @@ package com.android.phone.satellite.entitlement;
 
 import static com.android.phone.satellite.entitlement.SatelliteEntitlementResult.SATELLITE_ENTITLEMENT_STATUS_DISABLED;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -70,7 +71,9 @@ public class SatelliteEntitlementResponse {
         mEntitlementStatus = SATELLITE_ENTITLEMENT_STATUS_DISABLED;
         mPlmnAllowedList = new ArrayList<>();
         mPlmnBarredList = new ArrayList<>();
-        parsingResponse(response);
+        if (!TextUtils.isEmpty(response)) {
+            parsingResponse(response);
+        }
     }
 
     /**
@@ -94,7 +97,6 @@ public class SatelliteEntitlementResponse {
      * Get the PLMNBarredList from the response
      * @return The PLMNs Barred List
      */
-    @VisibleForTesting
     public List<String> getPlmnBarredList() {
         return mPlmnBarredList.stream().map(String::new).collect(Collectors.toList());
     }
@@ -123,15 +125,21 @@ public class SatelliteEntitlementResponse {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     String dataPlanType = jsonArray.getJSONObject(i).has(DATA_PLAN_TYPE_KEY)
                             ? jsonArray.getJSONObject(i).getString(DATA_PLAN_TYPE_KEY) : "";
-                    mPlmnAllowedList.add(new SatelliteNetworkInfo(
-                            jsonArray.getJSONObject(i).getString(PLMN_KEY), dataPlanType));
+                    String plmn = jsonArray.getJSONObject(i).getString(PLMN_KEY);
+                    logd("parsingResponse: plmn=" + plmn + " dataplan=" + dataPlanType);
+                    if (!TextUtils.isEmpty(plmn)) {
+                        mPlmnAllowedList.add(new SatelliteNetworkInfo(plmn, dataPlanType));
+                    }
                 }
             }
             if (jsonToken.has(PLMN_BARRED_KEY)) {
                 mPlmnBarredList = new ArrayList<>();
                 JSONArray jsonArray = jsonToken.getJSONArray(PLMN_BARRED_KEY);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    mPlmnBarredList.add(jsonArray.getJSONObject(i).getString(PLMN_KEY));
+                    String plmn = jsonArray.getJSONObject(i).getString(PLMN_KEY);
+                    if (!TextUtils.isEmpty(plmn)) {
+                        mPlmnBarredList.add(plmn);
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -139,6 +147,10 @@ public class SatelliteEntitlementResponse {
         } catch (NumberFormatException e) {
             loge("parsingResponse: failed NumberFormatException", e);
         }
+    }
+
+    private static void logd(String log) {
+        Log.d(TAG, log);
     }
 
     private static void loge(String log) {

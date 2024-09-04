@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"إعدادات الاتصال"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"لا يمكن تغيير إعدادات المكالمات إلا بواسطة المستخدم الإداري."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"لا يمكن تغيير إعدادات حساب الهاتف إلا من قِبل المشرف أو مستخدم حساب العمل."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"حظر مالك الجهاز إمكانية تغيير إعدادات شبكة الجوّال."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"الإعدادات (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"خطأ في إعدادات الاتصال"</string>
     <string name="reading_settings" msgid="1605904432450871183">"جارٍ قراءة الإعدادات..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"ينبغي الخروج من وضع معاودة الاتصال بالطوارئ لإجراء مكالمة غير طارئة."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"غير مسجل على الشبكة."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"شبكة الجوال غير متاحة."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"شبكة الجوّال غير متوفّرة.\n\nيُرجى الاتصال بشبكة لاسلكية لإجراء مكالمة.\n\nتم إيقاف شبكة الجيل الثاني على هذا الجهاز، ما قد يؤثر في إمكانية الاتصال بالإنترنت. انتقِل إلى \"الإعدادات\" وفعِّل خيار \"السماح بشبكة الجيل الثاني\" للمتابعة."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"شبكة الجوّال ليست متوفرة. اتصل بشبكة لاسلكية لإجراء مكالمة."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"شبكة الجوّال غير متوفّرة.\n\nيُرجى الاتصال بشبكة لاسلكية لإجراء مكالمة.\n\nتم إيقاف شبكة الجيل الثاني على هذا الجهاز، ما قد يؤثر في إمكانية الاتصال بالإنترنت. انتقِل إلى \"الإعدادات\" وفعِّل خيار \"السماح بشبكة الجيل الثاني\" للمتابعة."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"لإجراء مكالمة، أدخل رقمًا صالحًا."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"تعذّرت المكالمة."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"يتعذر إجراء المكالمة في الوقت الحالي. يمكنك محاولة التواصل من خلال إرسال رسالة."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"يتعذر وضع المكالمات قيد الانتظار."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"اتصل بشبكة لاسلكية لإجراء مكالمة."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"‏يمكنك تفعيل اتصال Wi-Fi لإجراء مكالمة."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"يجب إيقاف وضع القمر الصناعي لإجراء مكالمة."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"لإجراء مكالمة، عليك أولاً إنهاء اتصال القمر الصناعي."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"‏يمكنك إرسال الرسائل واستلامها بدون شبكة الجوّال أو شبكة Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"معلومات الطوارئ"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"المالك"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"انقر مجددًا لعرض المعلومات."</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"‏ضبط شريحة eSIM القابلة للإزالة كشريحة تلقائية"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"طاقة اللاسلكي للجوّال"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"محاكاة الخطأ \"خارج الخدمة\" (الإصدار المخصص لتصحيح الأخطاء فقط)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"وضع القمر الصناعي التجريبي لمشغّل شبكة الجوّال (إصدار مخصّص لتصحيح الأخطاء فقط)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"‏اختبار وضع القمر الصناعي الحقيقي لنظام eSOS (إصدار مخصّص لتصحيح الأخطاء فقط)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"‏عرض دفتر عناوين SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"عرض أرقام الطلب الثابت"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"عرض أرقام طلب الخدمة"</string>
@@ -929,6 +935,6 @@
     <string name="send_from_work_profile_title" msgid="7044759579507604732">"لا يمكن إرسال رسائل من تطبيق شخصي"</string>
     <string name="send_from_work_profile_description" msgid="2174402508727161974">"تسمح لك مؤسستك بإرسال الرسائل من تطبيقات العمل فقط."</string>
     <string name="send_from_work_profile_cancel" msgid="177746511030381711">"إلغاء"</string>
-    <string name="send_from_work_profile_action_str" msgid="6892775562934243337">"التبديل إلى الملف الشخصي للعمل"</string>
+    <string name="send_from_work_profile_action_str" msgid="6892775562934243337">"التبديل إلى ملف العمل"</string>
     <string name="install_messages_on_work_profile_action_str" msgid="3773440996395152903">"تثبيت تطبيق لرسائل العمل"</string>
 </resources>

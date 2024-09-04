@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Definições de chamadas"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"As definições de chamadas só podem ser alteradas pelo utilizador gestor."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"As definições da conta do telemóvel só podem ser alteradas pelo administrador ou utilizador de trabalho."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"O proprietário do dispositivo restringiu a capacidade de alterar as definições de rede móvel."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Definições (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Erro nas definições de chamada"</string>
     <string name="reading_settings" msgid="1605904432450871183">"A ler as definições..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Sair do modo de chamada de retorno de emergência para efetuar uma chamada que não é de emergência."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Sem registo na rede."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Rede móvel não disponível."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"A rede móvel não está disponível.\n\nLigue-se a uma rede sem fios para fazer uma chamada.\n\nO 2G está desativado neste dispositivo, o que pode estar a afetar a sua conetividade. Aceda às Definições e ative a opção Permitir 2G para continuar."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"A rede móvel não está disponível. Ligue-se a uma rede sem fios para efetuar uma chamada."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"A rede móvel não está disponível.\n\nLigue-se a uma rede sem fios para fazer uma chamada.\n\nO 2G está desativado neste dispositivo, o que pode estar a afetar a sua conetividade. Aceda às Definições e ative a opção Permitir 2G para continuar."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Para telefonar, introduza um número válido."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"A chamada falhou."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Não é possível adicionar a chamada neste momento. Pode tentar entrar em contacto ao enviar uma mensagem."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Não é possível colocar as chamadas em espera."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Ligue-se a uma rede sem fios para fazer uma chamada."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Ativar as chamadas através de Wi-Fi para fazer uma chamada."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Desative o modo satélite para fazer uma chamada."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Para fazer uma chamada, termine primeiro a ligação de satélite."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Pode enviar e receber mensagens sem uma rede móvel ou Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Informações de emergência"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Proprietário"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Toque novamente para ver informações"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Predefinir eSIM removível"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Potência do rádio móvel"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simule o modo fora de serviço (apenas na versão de depuração)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Modo satélite da operadora fictícia (apenas na versão de depuração)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Testar modo eSOS de satélite real (apenas na versão de depuração)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Ver livro de endereços do SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Ver números autorizados"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Ver números de marcação de serviços"</string>

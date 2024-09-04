@@ -193,6 +193,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             "set-satellite-pointing-ui-class-name";
     private static final String SET_DATAGRAM_CONTROLLER_TIMEOUT_DURATION =
             "set-datagram-controller-timeout-duration";
+    private static final String SET_DATAGRAM_CONTROLLER_BOOLEAN_CONFIG =
+            "set-datagram-controller-boolean-config";
 
     private static final String SET_SATELLITE_CONTROLLER_TIMEOUT_DURATION =
             "set-satellite-controller-timeout-duration";
@@ -205,6 +207,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             "set-oem-enabled-satellite-provision-status";
     private static final String SET_SHOULD_SEND_DATAGRAM_TO_MODEM_IN_DEMO_MODE =
             "set-should-send-datagram-to-modem-in-demo-mode";
+    private static final String SET_IS_SATELLITE_COMMUNICATION_ALLOWED_FOR_CURRENT_LOCATION_CACHE =
+            "set-is-satellite-communication-allowed-for-current-location-cache";
 
     private static final String DOMAIN_SELECTION_SUBCOMMAND = "domainselection";
     private static final String DOMAIN_SELECTION_SET_SERVICE_OVERRIDE = "set-dss-override";
@@ -402,6 +406,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 return handleSetSatellitePointingUiClassNameCommand();
             case SET_DATAGRAM_CONTROLLER_TIMEOUT_DURATION:
                 return handleSetDatagramControllerTimeoutDuration();
+            case SET_DATAGRAM_CONTROLLER_BOOLEAN_CONFIG:
+                return handleSetDatagramControllerBooleanConfig();
             case SET_SATELLITE_CONTROLLER_TIMEOUT_DURATION:
                 return handleSetSatelliteControllerTimeoutDuration();
             case SET_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE:
@@ -414,6 +420,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 return handleSetCountryCodes();
             case SET_OEM_ENABLED_SATELLITE_PROVISION_STATUS:
                 return handleSetOemEnabledSatelliteProvisionStatus();
+            case SET_IS_SATELLITE_COMMUNICATION_ALLOWED_FOR_CURRENT_LOCATION_CACHE:
+                return handleSetIsSatelliteCommunicationAllowedForCurrentLocationCache();
             default: {
                 return handleDefaultCommands(cmd);
             }
@@ -3416,6 +3424,47 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
         return 0;
     }
 
+    private int handleSetDatagramControllerBooleanConfig() {
+        PrintWriter errPw = getErrPrintWriter();
+        boolean reset = false;
+        int booleanType = 0;
+        boolean enable = false;
+
+        String opt;
+        while ((opt = getNextOption()) != null) {
+            switch (opt) {
+                case "-d": {
+                    enable = Boolean.parseBoolean(getNextArgRequired());
+                    break;
+                }
+                case "-r": {
+                    reset = true;
+                    break;
+                }
+                case "-t": {
+                    booleanType = Integer.parseInt(getNextArgRequired());
+                    break;
+                }
+            }
+        }
+        Log.d(LOG_TAG, "setDatagramControllerBooleanConfig: enable="
+                + enable + ", reset=" + reset + ", booleanType=" + booleanType);
+
+        try {
+            boolean result = mInterface.setDatagramControllerBooleanConfig(
+                    reset, booleanType, enable);
+            if (VDBG) {
+                Log.v(LOG_TAG, "setDatagramControllerBooleanConfig result = " + result);
+            }
+            getOutPrintWriter().println(result);
+        } catch (RemoteException e) {
+            Log.w(LOG_TAG, "setDatagramControllerBooleanConfig: error = " + e.getMessage());
+            errPw.println("Exception: " + e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
     private int handleSetSatelliteControllerTimeoutDuration() {
         PrintWriter errPw = getErrPrintWriter();
         boolean reset = false;
@@ -3654,6 +3703,61 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
         return 0;
     }
 
+    private int handleSetIsSatelliteCommunicationAllowedForCurrentLocationCache() {
+        PrintWriter errPw = getErrPrintWriter();
+        String opt;
+        String state;
+
+        if ((opt = getNextArg()) == null) {
+            errPw.println(
+                    "adb shell cmd phone set-is-satellite-communication-allowed-for-current"
+                            + "-location-cache :"
+                            + " Invalid Argument");
+            return -1;
+        } else {
+            switch (opt) {
+                case "-a": {
+                    state = "cache_allowed";
+                    break;
+                }
+                case "-n": {
+                    state = "cache_clear_and_not_allowed";
+                    break;
+                }
+                case "-c": {
+                    state = "clear_cache_only";
+                    break;
+                }
+                default:
+                    errPw.println(
+                            "adb shell cmd phone set-is-satellite-communication-allowed-for-current"
+                                    + "-location-cache :"
+                                    + " Invalid Argument");
+                    return -1;
+            }
+        }
+
+        Log.d(LOG_TAG, "handleSetIsSatelliteCommunicationAllowedForCurrentLocationCache("
+                + state + ")");
+
+        try {
+            boolean result = mInterface.setIsSatelliteCommunicationAllowedForCurrentLocationCache(
+                    state);
+            if (VDBG) {
+                Log.v(LOG_TAG, "setIsSatelliteCommunicationAllowedForCurrentLocationCache "
+                        + "returns: "
+                        + result);
+            }
+            getOutPrintWriter().println(result);
+        } catch (RemoteException e) {
+            Log.w(LOG_TAG, "setIsSatelliteCommunicationAllowedForCurrentLocationCache("
+                    + state + "), error = " + e.getMessage());
+            errPw.println("Exception: " + e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
     /**
      * Sample inputStr = "US,UK,CA;2,1,3"
      * Sample output: {[US,2], [UK,1], [CA,3]}
@@ -3883,7 +3987,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
     /**
      * Building the string that can be used to build the JsonObject which supports to stub the data
      * in CarrierAllowListInfo for CTS testing. sample format is like
-     * {"com.android.example":{"carrierId":"10000","callerSHA1Id":["XXXXXXXXXXXXXX"]}}
+     * {"com.android.example":{"carrierIds":[10000],"callerSHA256Ids":["XXXXXXXXXXXXXX"]}}
      */
     private String convertToJsonString(int index, String param) {
 
@@ -3895,7 +3999,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 break;
             case 1:
                 jSonString =
-                        "{" + QUOTES + token[0] + QUOTES + ":" + QUOTES + token[1] + QUOTES + ",";
+                        "{" + QUOTES + token[0] + QUOTES + ":" + "[" + token[1] + "],";
                 break;
             case 2:
                 jSonString =

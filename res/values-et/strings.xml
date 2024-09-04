@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Kõneseaded"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Kõne seadeid saab muuta ainult administraator."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Telefoni konto seadeid saab muuta ainult administraator või tööprofiili kasutaja."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Seadme omanik on mobiilsidevõrgu seadete muutmise võimalust piiranud."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Seaded (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Kõneseadete viga"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Seadete lugemine ..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Muude kui hädaabikõne tegemiseks väljuge hädaabikõnede režiimist."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Ei ole võrku registreeritud."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Mobiilsidevõrk pole saadaval."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobiilsidevõrk pole saadaval.\n\nHelistamiseks looge ühendus juhtmeta võrguga.\n\n2G on selles seadmes keelatud, mis võib teie ühenduvust mõjutada. Jätkamiseks avage Seaded ja lubage lüliti Luba 2G."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Mobiilsidevõrk pole saadaval. Helistamiseks looge ühendus traadita võrguga."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobiilsidevõrk pole saadaval.\n\nHelistamiseks looge ühendus juhtmeta võrguga.\n\n2G on selles seadmes keelatud, mis võib teie ühenduvust mõjutada. Jätkamiseks avage Seaded ja lubage lüliti Luba 2G."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Helistamiseks sisestage kehtiv number."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Kõne ebaõnnestus."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Kõnet ei saa praegu lisada. Proovige helistamise asemel sõnum saata."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Kõnesid ei saa ootele panna."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Helistamiseks looge ühendus traadita võrguga."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Lubage helistamiseks WiFi-kõned."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Helistamiseks keelake satelliidirežiim."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Helistamiseks katkestage esmalt satelliitühendus."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Teil on võimalik sõnumeid saata ja vastu võtta ilma mobiilside- ja WiFi-võrguta."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Hädaabiteave"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Omanik"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Teabe vaatamiseks puudutage uuesti"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Eemaldatava eSIM-i määramine vaikevalikuks"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobiiliraadio toide"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simuleerimine ei tööta (ainult silumisjärgus)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Simuleeritud operaatori satelliidirežiim (ainult silumisjärgus)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Režiimi eSOS katsetamine reaalse satelliitsidesüsteemi puhul (ainult silumisjärk)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Kuva SIM-i aadressiraamat"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Kuva fikseeritud valimisnumbrid"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Kuva teenuse valimise numbrid"</string>

@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Hívásbeállítások"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"A hívásbeállításokat csak a rendszergazda módosíthatja."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"A telefon fiókbeállításait csak az adminisztrátor vagy munkahelyi felhasználó módosíthatja."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Az eszköz tulajdonosa korlátozta a mobilhálózati beállítások módosítását."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Beállítások (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Hiba a hívásbeállításokban"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Beállítások olvasása..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Lépjen ki a Segélykérő visszahívása módból nem vészjellegű hívás kezdeményezéséhez."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Nincs regisztrálva a hálózaton."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"A mobilhálózat nem érhető el."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Nem áll rendelkezésre mobilhálózat.\n\nHívás indításához csatlakozzon vezeték nélküli hálózathoz.\n\nA 2G le van tiltva ezen az eszközön, ami hatással lehet a kapcsolódásra. A folytatáshoz nyissa meg a beállításokat, és kapcsolja be a 2G engedélyezése lehetőséget."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"A mobilhálózat nem érhető el. Hívás indításához csatlakozzon egy vezeték nélküli hálózathoz."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Nem áll rendelkezésre mobilhálózat.\n\nHívás indításához csatlakozzon vezeték nélküli hálózathoz.\n\nA 2G le van tiltva ezen az eszközön, ami hatással lehet a kapcsolódásra. A folytatáshoz nyissa meg a beállításokat, és kapcsolja be a 2G engedélyezése lehetőséget."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Hívásindításhoz adjon meg egy érvényes számot."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Sikertelen hívás."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Jelenleg nem indítható hívás. Üzenet küldésével érheti el a másik felet."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"A hívások nem tarthatók."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Hívás indításához csatlakozzon egy vezeték nélküli hálózathoz."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Engedélyezze a Wi-Fi-hívást a hívásindításhoz."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Hívás indításához kapcsolja ki a műholdas módot."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Hívás indításához először szakítsa meg a műholdas kapcsolatot."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Küldhet és fogadhat üzeneteket mobil- és Wi-Fi-hálózat nélkül is."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Segélyhívási információk"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Tulajdonos"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Koppints újra az információk megtekintéséhez"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Cserélhető eSIM beállítása alapértelmezettként"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobil rádióadó teljesítménye"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Szolgáltatáskiesés szimulációja (csak hibaelhárító build)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Szimulált szolgáltató – Műholdas mód (csak hibaelhárító build)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"A valódi műholdas eSOS mód tesztelése (csak hibaelhárító build)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM-kártya telefonkönyvének megtekintése"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Fix hívószámok megtekintése"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Szolgáltatásszámok megtekintése"</string>

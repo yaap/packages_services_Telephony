@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"कॉल सेटिंग्ज"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"कॉल सेटिंग्ज केवळ प्रशासक वापरकर्त्याद्वारे बदलल्‍या जाऊ शकतात."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"फोन खाते सेटिंग्ज फक्त ॲडमिन किंवा ऑफिसच्या वापरकर्त्याद्वारे बदलली जाऊ शकतात."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"डिव्हाइसच्या मालकाने मोबाइल नेटवर्क सेटिंग्ज बदलण्याची क्षमता प्रतिबंधित केली आहे."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"सेटिंग्ज (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"कॉल सेटिंग्ज एरर"</string>
     <string name="reading_settings" msgid="1605904432450871183">"सेटिंग्‍ज वाचत आहे…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"आणीबाणी नसलेला कॉल करण्‍यासाठी आणीबाणी कॉलबॅक मोडमधून बाहेर पडा."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"नेटवर्कवर नोंदणीकृत नाही."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"मोबाइल नेटवर्क उपलब्ध नाही."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"मोबाइल नेटवर्क उपलब्‍ध नाही. \n\nकॉल करण्‍यासाठी वायरलेस नेटवर्कशी कनेक्‍ट करा.\n\nया डिव्हाइसवर 2G बंद केले आहे, ज्यामुळे तुमच्या कनेक्टिव्हिटीवर परिणाम होत असेल. सेटिंग्ज वर जा आणि पुढे सुरू ठेवण्यासाठी 2G सुरू करा."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"मोबाइल नेटवर्क उपलब्‍ध नाही. कॉल करण्‍यासाठी वायरलेस नेटवर्कशी कनेक्‍ट करा."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"मोबाइल नेटवर्क उपलब्‍ध नाही. \n\nकॉल करण्‍यासाठी वायरलेस नेटवर्कशी कनेक्‍ट करा.\n\nया डिव्हाइसवर 2G बंद केले आहे, ज्यामुळे तुमच्या कनेक्टिव्हिटीवर परिणाम होत असेल. सेटिंग्ज वर जा आणि पुढे सुरू ठेवण्यासाठी 2G सुरू करा."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"कॉल करण्यासाठी, एक वैध नंबर एंटर करा."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"कॉल अयशस्वी झाला."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"या वेळी कॉल जोडू शकत नाही. तुम्ही मेसेज पाठवून संपर्क करण्याचा प्रयत्न करू शकता."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"कॉल सुरू ठेवू शकत नाही."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"कॉल करण्‍यासाठी वायरलेस नेटवर्कशी कनेक्‍ट करा."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"कॉल करण्यासाठी वाय-फाय कॉलिंग सक्षम करा."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"कॉल करण्यासाठी उपग्रह मोड बंद करा."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"कॉल करण्यासाठी, सर्वप्रथम उपग्रह कनेक्शन बंद करा."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"तुम्ही मोबाइल किंवा वाय-फाय नेटवर्कशिवाय मेसेज पाठवू आणि मिळवू शकता."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"अतिमहत्त्वाची माहिती"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"मालक"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"माहिती पाहण्यासाठी पुन्हा टॅप करा"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"काढून टाकण्यायोग्य eSIM डीफॉल्ट म्हणून सेट करा"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"मोबाइल रेडिओ पॉवर"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"सेवा बंद आहे सिम्युलेट करा (फक्त डीबगचा बिल्‍ड)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"नमुना वाहकाचा उपग्रह मोड (फक्त डीबग बिल्ड)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"प्रत्यक्ष सॅटेलाइट eSOS मोडची चाचणी करा (फक्त डीबग बिल्ड)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"सिम ॲड्रेस बुक पहा"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"निश्चित डायलिंग नंबर पहा"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"सर्व्हिस डायलिंग नंबर पहा"</string>

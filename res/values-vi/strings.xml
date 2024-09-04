@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Cài đặt cuộc gọi"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Chỉ người dùng quản trị mới có thể thay đổi cài đặt cuộc gọi."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Chỉ quản trị viên hoặc người dùng tài khoản cho công việc mới có thể thay đổi chế độ cài đặt tài khoản điện thoại."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Chủ sở hữu thiết bị đã hạn chế khả năng thay đổi chế độ cài đặt mạng di động."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Cài đặt (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Lỗi cài đặt cuộc gọi"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Đang đọc các tùy chọn cài đặt…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Thoát khỏi chế độ gọi lại khẩn cấp để thực hiện cuộc gọi không khẩn cấp."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Chưa được đăng ký trên mạng."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Mạng di động không khả dụng."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Không có mạng di động.\n\nHãy kết nối với mạng không dây để gọi điện.\n\n2G đã bị tắt trên thiết bị này. Điều này có thể ảnh hưởng đến khả năng kết nối của bạn. Chuyển đến phần Cài đặt rồi bật tuỳ chọn Cho phép 2G để tiếp tục."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Hiện không có mạng di động. Hãy kết nối với mạng không dây để thực hiện cuộc gọi."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Không có mạng di động.\n\nHãy kết nối với mạng không dây để gọi điện.\n\n2G đã bị tắt trên thiết bị này. Điều này có thể ảnh hưởng đến khả năng kết nối của bạn. Chuyển đến phần Cài đặt rồi bật cài đặt Cho phép 2G để tiếp tục."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Để thực hiện cuộc gọi, hãy nhập một số hợp lệ."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Cuộc gọi không thành công."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Không thể thêm cuộc gọi tại thời điểm này. Bạn có thể cố gắng liên hệ bằng cách gửi tin nhắn."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Không thể giữ cuộc gọi."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Kết nối với mạng không dây để thực hiện cuộc gọi."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Bật gọi điện qua Wi-Fi để thực hiện cuộc gọi."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Hãy tắt chế độ vệ tinh để gọi điện."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Để gọi điện, trước tiên hãy tắt kết nối vệ tinh."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Bạn có thể gửi và nhận tin nhắn mà không cần mạng di động hoặc mạng Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Thông tin khẩn cấp"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Chủ sở hữu"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Nhấn lại để xem thông tin"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Đặt eSIM có thể tháo rời là Mặc định"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Cường độ của sóng di động"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Mô phỏng thiết bị không hoạt động (chỉ dành cho bản gỡ lỗi)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mô phỏng chế độ vệ tinh của nhà mạng (chỉ dành cho Bản gỡ lỗi)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Thử nghiệm chế độ eSOS thực tế qua vệ tinh (chỉ bản gỡ lỗi)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Xem sổ địa chỉ trên SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Xem số gọi định sẵn"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Xem số quay số dịch vụ"</string>

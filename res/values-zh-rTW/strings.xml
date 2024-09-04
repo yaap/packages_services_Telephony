@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"通話設定"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"只有管理員使用者可以變更通話設定。"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"只有管理員或公司內部使用者可以變更手機帳戶設定。"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"裝置擁有者限制了變更行動網路設定的功能。"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"設定 (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"通話設定錯誤"</string>
     <string name="reading_settings" msgid="1605904432450871183">"正在讀取設定…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"結束緊急回撥模式，以便撥打非緊急電話。"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"尚未註冊網路。"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"無法使用 Google 行動服務網路。"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"無法使用行動網路。\n\n如要撥打電話，請連線至無線網路。\n\n這部裝置已停用 2G，這可能會影響連線能力。請前往「設定」並啟用「允許啟用 2G」，再繼續操作。"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"無法使用行動網路。連上 Wi-Fi 網路即可撥打電話。"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"無法使用行動網路。\n\n如要撥打電話，請連線至無線網路。\n\n這部裝置已停用 2G，這可能會影響連線能力。請前往「設定」並啟用「允許啟用 2G」，再繼續操作。"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"如要撥打電話，請輸入有效的號碼。"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"無法通話。"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"目前無法新增通話，你可以試著傳送簡訊聯絡對方。"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"無法保留通話。"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"連上無線網路即可撥打電話。"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"請啟用 Wi-Fi 通話功能以撥打電話。"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"如要撥打電話，請停用衛星模式。"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"如要撥打電話，請先結束衛星連線。"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"你可以收發訊息，沒有行動/Wi-Fi 網路也無妨。"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"緊急救援資訊"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"擁有者"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"再次輕觸即可查看資訊"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"將可移除的 eSIM 卡設為預設 eSIM 卡"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"行動無線電電源"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"模擬無法使用服務的情況 (僅限偵錯版本)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"模擬電信業者衛星模式 (僅限偵錯版本)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"實際測試衛星緊急求救模式 (僅限偵錯版本)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"查看 SIM 通訊錄"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"查看固定撥號"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"查看服務撥號號碼"</string>

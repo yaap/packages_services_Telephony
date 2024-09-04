@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Anrufeinstellungen"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Anrufeinstellungen können nur vom Administrator geändert werden."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Die Kontoeinstellungen können nur durch den Administrator oder den Nutzer des Arbeitsprofils geändert werden."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Der Eigentümer des Geräts hat die Möglichkeit zum Ändern der Einstellungen für Mobilfunknetze eingeschränkt."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Einstellungen (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Fehler bei Anrufeinstellungen"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Einstellungen werden gelesen…"</string>
@@ -191,7 +192,7 @@
     <string name="preferred_network_mode_summary" msgid="3787989000044330064">"Netzwerkbetriebsmodus ändern"</string>
     <string name="preferred_network_mode_dialogtitle" msgid="2781447433514459696">"Bevorzugter Netzwerktyp"</string>
     <string name="forbidden_network" msgid="5081729819561333023">"(nicht zulässig)"</string>
-    <string name="choose_network_title" msgid="5335832663422653082">"Netzwerk auswählen"</string>
+    <string name="choose_network_title" msgid="5335832663422653082">"Netz auswählen"</string>
     <string name="network_disconnected" msgid="8844141106841160825">"Nicht verbunden"</string>
     <string name="network_connected" msgid="2760235679963580224">"Verbunden"</string>
     <string name="network_connecting" msgid="160901383582774987">"Verbindung wird hergestellt..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Beende den Notfallrückrufmodus, um einen Anruf zu tätigen, bei dem es sich nicht um einen Notfall handelt."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Nicht in Netzwerk registriert."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Mobilfunknetz ist nicht verfügbar."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobilfunknetz nicht verfügbar.\n\nStelle eine Verbindung zu einem drahtlosen Netzwerk her, um zu telefonieren.\n\n2G ist auf diesem Gerät deaktiviert. Dies kann deine Verbindung beeinträchtigen. Gehe zu den Einstellungen und aktiviere „2G zulassen“, um fortzufahren."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Es ist kein Mobilfunknetz verfügbar. Stelle zum Telefonieren eine WLAN-Verbindung her."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobilfunknetz nicht verfügbar.\n\nStelle eine Verbindung zu einem drahtlosen Netzwerk her, um zu telefonieren.\n\n2G ist auf diesem Gerät deaktiviert. Dies kann deine Verbindung beeinträchtigen. Gehe zu den Einstellungen und aktiviere „2G zulassen“, um fortzufahren."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Gib eine gültige Nummer ein."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Fehler beim Anruf."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Der Anruf kann momentan nicht hinzugefügt werden. Versuche stattdessen, eine Nachricht zu senden."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Anrufe können nicht gehalten werden."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Stelle zum Telefonieren eine WLAN-Verbindung her."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Aktiviere WLAN-Telefonie, um anzurufen."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Deaktiviere den Satellitenmodus, um einen Anruf zu tätigen."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Um einen Anruf zu tätigen, musst du zuerst die Satellitenverbindung beenden."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Du kannst Nachrichten ohne Mobilfunknetz oder WLAN senden und empfangen."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Notfallinformationen"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Eigentümer"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Noch einmal tippen, um Informationen anzuzeigen"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Wechsel-eSIM als Standard festlegen"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobilfunkstärke"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"„Außer Betrieb“ simulieren (nur Debug-Build)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Vom Mobilfunkanbieter simulierter Satellitenmodus (nur Debug-Build)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"eSOS-Modus mit echtem Satelliten testen (nur Debug-Build)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM-Adressbuch anzeigen"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Rufnummernbeschränkung ansehen"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Servicerufnummern anzeigen"</string>

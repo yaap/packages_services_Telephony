@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Cilësimet e telefonatës"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Cilësimet e telefonatës mund të ndryshohen vetëm nga administratori."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Cilësimet e llogarisë të telefonit mund të ndryshohen vetëm nga administratori ose një përdorues në punë."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Zotëruesi i pajisjes ka kufizuar aftësinë për të ndryshuar cilësimet e rrjetit celular."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Cilësimet (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Gabim në cilësimet e telefonatës"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Po lexon cilësimet…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Dil nga modaliteti i kthimit të telefonatës së urgjencës për të bërë një telefonatë jo urgjente."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"I paregjistruar në rrjet."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Rrjeti celular nuk mundësohet."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Rrjeti celular nuk ofrohet.\n\nLidhu me një rrjet wireless për të bërë një telefonatë.\n\n2G është çaktivizuar në këtë pajisje, e cila mund të ketë ndikim te lidhshmëria. Shko te \"Cilësimet\" dhe aktivizo \"Lejo 2G\" për të vazhduar."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Rrjeti celular nuk ofrohet. Lidhu me një rrjet wireless për të bërë një telefonatë."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Rrjeti celular nuk ofrohet.\n\nLidhu me një rrjet wireless për të bërë një telefonatë.\n\n2G është çaktivizuar në këtë pajisje, e cila mund të ketë ndikim te lidhshmëria. Shko te \"Cilësimet\" dhe aktivizo \"Lejo 2G\" për të vazhduar."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Për të kryer një telefonatë, fut një numër të vlefshëm."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Thirrja dështoi."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Telefonata nuk mund të shtohet në këtë moment. Mund të provosh të kontaktosh duke dërguar një mesazh."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Telefonatat nuk mund të mbahen në pritje."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Lidhu me një rrjet wireless për të bërë një telefonatë."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Aktivizo telefonatat nëpërmjet rrjetit Wi-Fi për të bërë një telefonatë."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Çaktivizo modalitetin e satelitit për të bërë një telefonatë."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Për të bërë një telefonatë, në fillim mbyll lidhjen satelitore."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Mund të dërgosh dhe të marrësh mesazhe pa një rrjet celular apo rrjet Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Informacioni i urgjencës"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Zotëruesi"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Trokit përsëri për të shikuar informacionet"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Caktoje kartën e lëvizshme eSIM si të parazgjedhur"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Fuqia e radios së rrjetit celular"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulo gjendjen jashtë shërbimit (vetëm versioni i korrigjimit)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Simulo modalitetin e satelitit të operatorit celular (vetëm versioni i korrigjimit)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Testo modalitetin real të \"eSOS satelitor\" (vetëm versioni i korrigjimit)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Shiko librin e adresave të kartës SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Shiko numrat me telefonim të përzgjedhur"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Shiko numrat e telefonit të shërbimit"</string>

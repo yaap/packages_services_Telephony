@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"ਕਾਲ ਸੈਟਿੰਗਾਂ"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"ਕਾਲ ਸੈਟਿੰਗਾਂ ਸਿਰਫ਼ ਪ੍ਰਸ਼ਾਸਕ ਵਰਤੋਂਕਾਰ ਵੱਲੋਂ ਹੀ ਬਦਲੀਆਂ ਜਾ ਸਕਦੀਆਂ ਹਨ।"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"ਫ਼ੋਨ ਦੀਆਂ ਖਾਤਾ ਸੈਟਿੰਗਾਂ ਸਿਰਫ਼ ਪ੍ਰਸ਼ਾਸਕ ਜਾਂ ਕਾਰਜ-ਸਥਾਨ ਵਰਤੋਂਕਾਰ ਵੱਲੋਂ ਹੀ ਬਦਲੀਆਂ ਜਾ ਸਕਦੀਆਂ ਹਨ।"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"ਡੀਵਾਈਸ ਦੇ ਮਾਲਕ ਨੇ ਮੋਬਾਈਲ ਨੈੱਟਵਰਕ ਸੈਟਿੰਗਾਂ ਨੂੰ ਬਦਲਣ ਦੀ ਯੋਗਤਾ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾ ਦਿੱਤੀ ਹੈ।"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"ਸੈਟਿੰਗਾਂ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"ਕਾਲ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਗੜਬੜ"</string>
     <string name="reading_settings" msgid="1605904432450871183">"ਸੈਟਿੰਗਾਂ ਪੜ੍ਹ ਰਿਹਾ ਹੈ…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"ਇੱਕ ਗ਼ੈਰ-ਅਪਾਤਕਾਲ ਕਾਲ ਕਰਨ ਲਈ ਅਪਾਤਕਾਲ ਕਾਲਬੈਕ ਮੋਡ ਤੋਂ ਬਾਹਰ ਆਓ।"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"ਨੈਟਵਰਕ ਤੇ ਰਜਿਸਟਰ ਨਹੀਂ ਕੀਤਾ।"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"ਮੋਬਾਈਲ ਨੈਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ।"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"ਮੋਬਾਈਲ ਨੈੱਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।\n\nਕਾਲ ਕਰਨ ਲਈ ਵਾਇਰਲੈੱਸ ਨੈੱਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਕਰੋ।\n\nਇਸ ਡੀਵਾਈਸ \'ਤੇ 2G ਬੰਦ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਕਨੈਕਟੀਵਿਟੀ ਨੂੰ ਪ੍ਰਭਾਵਿਤ ਕਰ ਸਕਦਾ ਹੈ। ਜਾਰੀ ਰੱਖਣ ਲਈ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਜਾ ਕੇ \'2G ਨੂੰ ਆਗਿਆ ਦਿਓ\' ਨੂੰ ਚਾਲੂ ਕਰੋ।"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"ਮੋਬਾਈਲ ਨੈੱਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਕਾਲ ਕਰਨ ਲਈ ਕਿਸੇ ਵਾਇਰਲੈੱਸ ਨੈੱਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਕਰੋ।"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"ਮੋਬਾਈਲ ਨੈੱਟਵਰਕ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।\n\nਕਾਲ ਕਰਨ ਲਈ ਵਾਇਰਲੈੱਸ ਨੈੱਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਕਰੋ।\n\nਇਸ ਡੀਵਾਈਸ \'ਤੇ 2G ਬੰਦ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਕਨੈਕਟੀਵਿਟੀ ਨੂੰ ਪ੍ਰਭਾਵਿਤ ਕਰ ਸਕਦਾ ਹੈ। ਜਾਰੀ ਰੱਖਣ ਲਈ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਜਾ ਕੇ \'2G ਨੂੰ ਆਗਿਆ ਦਿਓ\' ਨੂੰ ਚਾਲੂ ਕਰੋ।"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"ਇੱਕ ਕਾਲ ਕਰਨ ਲਈ, ਇੱਕ ਪ੍ਰਮਾਣਿਕ ਨੰਬਰ ਦਰਜ ਕਰੋ।"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"ਕਾਲ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ।"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"ਇਸ ਸਮੇਂ ਕਾਲ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ। ਤੁਸੀਂ ਇੱਕ ਸੁਨੇਹਾ ਭੇਜ ਕੇ ਸੰਪਰਕ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਸਕਦੇ ਹੋ।"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"ਕਾਲਾਂ ਹੋਲਡ ਨਹੀਂ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ ਹਨ।"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"ਇੱਕ ਕਾਲ ਕਰਨ ਲਈ ਇੱਕ ਵਾਇਰਲੈਸ ਨੈਟਵਰਕ ਨਾਲ ਕਨੈਕਟ ਕਰੋ।"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"ਇੱਕ ਕਾਲ ਕਰਨ ਲਈ Wi-Fi ਕਾਲਿੰਗ ਯੋਗ ਬਣਾਓ।"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"ਕਾਲ ਕਰਨ ਲਈ ਉਪਗ੍ਰਹਿ ਮੋਡ ਬੰਦ ਕਰੋ।"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"ਕਾਲ ਕਰਨ ਲਈ, ਪਹਿਲਾਂ ਉਪਗ੍ਰਹਿ ਕਨੈਕਸ਼ਨ ਬੰਦ ਕਰੋ।"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"ਤੁਸੀਂ ਮੋਬਾਈਲ ਜਾਂ ਵਾਈ-ਫਾਈ ਨੈੱਟਵਰਕ ਤੋਂ ਬਿਨਾਂ ਸੁਨੇਹੇ ਭੇਜ ਅਤੇ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ।"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"ਸੰਕਟਕਾਲੀਨ ਜਾਣਕਾਰੀ"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"ਮਾਲਕ"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"ਜਾਣਕਾਰੀ ਦੇਖਣ ਲਈ ਦੁਬਾਰਾ ਟੈਪ ਕਰੋ"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"ਹਟਾਉਣਯੋਗ ਈ-ਸਿਮ ਨੂੰ ਪੂਰਵ-ਨਿਰਧਾਰਿਤ ਵਜੋਂ ਸੈੱਟ ਕਰੋ"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"ਮੋਬਾਈਲ ਰੇਡੀਓ ਪਾਵਰ"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"\'ਸੇਵਾ ਵਿੱਚ ਨਹੀਂ\' ਨੂੰ ਸਿਮੂਲੇਟ ਕਰੋ (ਸਿਰਫ਼ ਡੀਬੱਗ ਬਿਲਡ)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"ਮੌਕ ਕੈਰੀਅਰ ਉਪਗ੍ਰਹਿ ਮੋਡ (ਸਿਰਫ਼ ਡੀਬੱਗ ਬਿਲਡ)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"ਰੀਅਲ ਸੈਟੇਲਾਈਟ eSOS ਮੋਡ ਅਜ਼ਮਾਓ (ਸਿਰਫ਼ ਡੀਬੱਗ ਬਿਲਡ)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"ਸਿਮ ਦੀ ਪਤਾ ਬੁੱਕ ਦੇਖੋ"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"ਫਿਕਸਡ ਡਾਇਲਿੰਗ ਨੰਬਰ ਦੇਖੋ"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"ਸੇਵਾ ਡਾਇਲਿੰਗ ਨੰਬਰ ਦੇਖੋ"</string>

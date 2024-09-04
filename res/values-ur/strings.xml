@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"کال کی ترتیبات"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"صرف منتظم صارف ہی کال کی ترتیبات تبدیل کر سکتا ہے۔"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"صرف منتظم یا دفتر کا صارف ہی فون کے اکاؤنٹ کی ترتیبات تبدیل کر سکتا ہے۔"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"آلہ کے مالک نے موبائل نیٹ ورک کی ترتیبات کو تبدیل کرنے کی صلاحیت کو محدود کر دیا ہے۔"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"ترتیبات (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"کال کی ترتیبات کی خرابی"</string>
     <string name="reading_settings" msgid="1605904432450871183">"ترتیبات کو پڑھ رہا ہے…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"غیر ایمرجنسی کال کرنے کیلئے ایمرجنسی کال بیک موڈ سے اخراج کریں۔"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"نیٹ ورک پر رجسٹرڈ نہیں ہے۔"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"موبائل نیٹ ورک دستیاب نہیں ہے۔"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"‏موبائل نیٹ ورک دستیاب نہیں ہے۔\n\nکال کرنے کے لیے وائرلیس نیٹ ورک سے منسلک ہوں۔\n\n‫2G اس آلے پر غیر فعال ہے، جو آپ کی کنیکٹیوٹی کو متاثر کر سکتا ہے۔ ترتیبات پر جائیں اور \'2G کو جاری رکھنے کی اجازت دیں\' کو فعال کریں۔"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"موبائل نیٹ ورک دستیاب نہیں ہے۔ کال کرنے کیلئے کسی وائرلیس نیٹ ورک سے منسلک ہوں۔"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"‏موبائل نیٹ ورک دستیاب نہیں ہے۔\n\nکال کرنے کے لیے وائرلیس نیٹ ورک سے منسلک ہوں۔\n\n‫2G اس آلے پر غیر فعال ہے، جو آپ کی کنیکٹیوٹی کو متاثر کر سکتا ہے۔ ترتیبات پر جائیں اور \'2G کو جاری رکھنے کی اجازت دیں\' کو فعال کریں۔"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"کال کرنے کیلئے، ایک درست نمبر درج کریں۔"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"کال ناکام ہوگئی۔"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"اس وقت کال شامل نہیں کی جا سکتی۔ آپ ایک پیغام بھیج کر رابطہ کرنے کی کوشش کر سکتے ہیں۔"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"کالز کو ہولڈ نہیں کیا جا سکتا۔"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"کال کرنے کیلئے کسی وائرلیس نیٹ ورک سے منسلک ہوں۔"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"‏کال کرنے کیلئے Wi-Fi کالنگ فعال کریں۔"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"کال کرنے کیلئے سیٹلائٹ موڈ کو غیرفعال کریں"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"کال کرنے کے لیے، پہلے سیٹلائٹ کنکشن ختم کریں۔"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"‏آپ موبائل یا Wi-Fi نیٹ ورک کے بغیر پیغامات بھیج اور موصول کر سکتے ہیں۔"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"ایمرجنسی معلومات"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"مالک"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"معلومات دیکھنے کیلئے دوبارہ تھپتھپائیں"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"‏ہٹانے لائق eSIM کو بطور ڈیفالٹ سیٹ کریں"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"موبائل ریڈیو پاور"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"\'سروس دستیاب نہیں ہے\' موڈ کو سمیولیٹ کریں (صرف ڈیبگ بلڈ کیلئے)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"موک کیریئر سیٹلائٹ موڈ (صرف ڈیبگ بلڈ)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"‏اصل سیٹلائٹ eSOS وضع کی جانچ کریں (صرف ڈیبگ بلڈ)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"‏SIM ایڈریس بک دیکھیں"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"فکسڈ ڈائلنگ نمبرز دیکھیں"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"سروس ڈائلنگ نمبرز دیکھیں"</string>

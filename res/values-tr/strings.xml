@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Çağrı ayarları"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Çağrı ayarları sadece yönetici tarafından değiştirilebilir."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Telefon hesabı ayarları, yalnızca yönetici veya iş kullanıcısı tarafından değiştirilebilir."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Cihaz sahibi, mobil ağ ayarlarını değiştirme özelliğini kısıtladı."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Ayarlar (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Çağrı ayarları hatası"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Ayarlar okunuyor..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Acil durum çağrısı dışında bir çağrı yapmak için acil durumda geri aranma modundan çıkın."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Ağda kayıtlı değil."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Mobil ağ kullanılamıyor."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobil ağ kullanılamıyor.\n\nArama yapmak için kablosuz ağa bağlanın.\n\nBu cihazda 2G devre dışı olduğundan bağlantınız etkilenebilir. Devam etmek için Ayarlar\'a gidip \"2G\'ye izin ver\" ayarını etkinleştirin."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Mobil ağ kullanılamıyor. Telefon etmek için kablosuz ağa bağlanın."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobil ağ kullanılamıyor.\n\nArama yapmak için kablosuz ağa bağlanın.\n\nBu cihazda 2G devre dışı olduğundan bağlantınız etkilenebilir. Devam etmek için Ayarlar\'a gidip \"2G\'ye izin ver\" ayarını etkinleştirin."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Arama yapmak için geçerli bir numara girin."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Sesli arama başarısız oldu."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Çağrı şu anda eklenemiyor. Mesaj göndererek ulaşmayı deneyebilirsiniz."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Çağrılar beklemeye alınamıyor."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Telefon etmek için kablosuz ağa bağlanın."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Telefon etmek için Kablosuz çağrı\'yı etkinleştirin."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Arama yapmak için uydu modunu devre dışı bırakın."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Arama yapmak için önce uydu bağlantısını sonlandırın."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Mobil veya kablosuz ağa bağlı olmadan mesaj alıp gönderebilirsiniz."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Acil durum bilgisi"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Sahip"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Bilgileri görüntülemek için tekrar dokunun"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Çıkarılabilir eSIM\'i Varsayılan Yap"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobil Radyo Gücü"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Hizmet Dışı Simülasyonu (Yalnızca Hata Ayıklama Derlemesi)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Örnek operatör uydu modu (yalnızca hata ayıklama derlemesi)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Gerçek uydu eSOS modunu test et (yalnızca hata ayıklama derlemesi)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM Adres Defterini Görüntüle"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Sabit Arama Numaralarını Görüntüle"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Hizmet Arama Numaralarını Görüntüle"</string>

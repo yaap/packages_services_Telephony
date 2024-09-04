@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"通話設定"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"通話設定は管理者ユーザーのみが変更できます。"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"モバイル デバイスのアカウント設定を変更できるのは、管理者または従業員ユーザーのみに限られています。"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"デバイス所有者によって、モバイル ネットワークの設定を変更する機能が制限されています。"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"設定（<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>）"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"通話設定エラー"</string>
     <string name="reading_settings" msgid="1605904432450871183">"設定を読み取り中..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"緊急通報以外の通話を発信するには、緊急通報待機モードを終了してください。"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"ご加入の通信サービスがありません"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"モバイルネットワークが利用できません。"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"モバイル ネットワークを利用できません。\n\n電話をかけるにはワイヤレス ネットワークに接続してください。\n\nこのデバイスでは 2G が無効になっており、接続性に影響している可能性があります。続行するには、[設定] に移動し、[2G の許可] を有効にしてください。"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"モバイル ネットワークを利用できません。電話をかけるにはワイヤレス ネットワークに接続してください。"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"モバイル ネットワークを利用できません。\n\n電話をかけるにはワイヤレス ネットワークに接続してください。\n\nこのデバイスでは 2G が無効になっており、接続性に影響している可能性があります。続行するには、[設定] に移動し、[2G の許可] を有効にしてください。"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"発信するには、有効な番号を入力してください。"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"発信できませんでした。"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"現在、通話を追加できません。連絡するには、メッセージを送信してみてください。"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"通話を保留にできません。"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"電話をかけるには無線ネットワークに接続してください。"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"電話をかけるには Wi-Fi 通話を有効にしてください。"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"電話をかけるには、衛星モードを無効にしてください。"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"通話を発信するには、まず衛星通信の接続を完了してください。"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"モバイル ネットワークや Wi-Fi ネットワークを使わずにメッセージを送受信できます。"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"緊急時情報"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"所有者"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"もう一度タップすると情報を確認できます"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"リムーバブル eSIM をデフォルトに設定"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"モバイル無線電力"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"圏外状態のシミュレート（デバッグビルドのみ）"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"携帯通信会社の疑似航空写真モード（デバッグビルドのみ）"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"実際に衛星経由の緊急 SOS モードをテストする（デバッグビルドのみ）"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM のアドレス帳を表示"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"発信番号制限を表示"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"サービス電話番号を表示"</string>

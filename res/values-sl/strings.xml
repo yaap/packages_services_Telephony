@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Nastavitve klicev"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Nastavitve klicanja lahko spremeni samo uporabnik s skrbniškim dostopom."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Nastavitve računa telefona lahko spremeni samo uporabnik s skrbniškim ali službenim dostopom."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Lastnik naprave je omejil možnost spreminjanja nastavitev mobilnega omrežja."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Nastavitve (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Napaka nastavitev klicev"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Branje nastavitev …"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Če ne gre za klic v sili, zaprite način za povratni klici v sili."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Ni registrirano v omrežju."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Omrežje prenosnega telefona ni na voljo."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobilno omrežje ni na voljo.\n\nČe želite opraviti klic, vzpostavite povezavo z brezžičnim omrežjem.\n\nOmrežje 2G je v tej napravi onemogočeno, kar lahko vpliva na povezljivost. Odprite nastavitve in vklopite možnost »Omogoči 2G«, če želite nadaljevati."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Mobilno omrežje ni na voljo. Če želite opraviti klic, vzpostavite povezavo z brezžičnim omrežjem."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobilno omrežje ni na voljo.\n\nČe želite opraviti klic, vzpostavite povezavo z brezžičnim omrežjem.\n\nOmrežje 2G je v tej napravi onemogočeno, kar lahko vpliva na povezljivost. Odprite nastavitve in vklopite možnost »Omogoči 2G«, če želite nadaljevati."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Če želite opraviti klic, vnesite veljavno številko."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Klic ni uspel."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Trenutno ni mogoče dodati klica. Poskusite poslati sporočilo."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Klicev ni mogoče zadržati."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Povežite se v omrežje Wi-Fi, če želite opraviti klic."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Če želite opraviti klic, omogočite klicanja prek Wi-Fi-ja."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Če želite opraviti klic, onemogočite satelitski način."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Če želite opraviti klic, najprej prekinite satelitsko povezavo."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Sporočila SMS lahko pošiljate in prejemate brez mobilnega omrežja ali omrežja Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Informacije za nujne primere"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Lastnik"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Znova se dotaknite, da si ogledate podatke"</string>
@@ -594,8 +598,8 @@
     <string name="importToFDNfromContacts" msgid="5068664870738407341">"Uvozi iz stikov"</string>
     <string name="singleContactImportedMsg" msgid="3619804066300998934">"Uvožen je bil stik"</string>
     <string name="failedToImportSingleContactMsg" msgid="228095510489830266">"Uvoz stika ni uspel"</string>
-    <string name="hac_mode_title" msgid="4127986689621125468">"Slušni pripomočki"</string>
-    <string name="hac_mode_summary" msgid="7774989500136009881">"Vključi združljivost s slušnimi pripomočki"</string>
+    <string name="hac_mode_title" msgid="4127986689621125468">"Slušni aparati"</string>
+    <string name="hac_mode_summary" msgid="7774989500136009881">"Vključi združljivost s slušnimi aparati"</string>
     <string name="rtt_mode_title" msgid="3075948111362818043">"Klic s sprotnim besedilom (RTT)"</string>
     <string name="rtt_mode_summary" msgid="8631541375609989562">"Dovoli izmenjavo sporočil v glasovnem klicu"</string>
     <string name="rtt_mode_more_information" msgid="587500128658756318">"Funkcija RTT pomaga klicateljem, ki so gluhi, naglušni, imajo govorno motnjo ali potrebujejo več kot samo glas.&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;Več o tem&lt;/a&gt;\n       &lt;br&gt;&lt;br&gt; – Klici RTT se shranijo kot prepis sporočila\n       &lt;br&gt; – RTT ni na voljo pri videoklicih"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Nastavi izmenljivo kartico e-SIM kot privzeto"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Moč radia mobilne naprave"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulacija nedelovanja (samo za gradnjo za odpravljanje napak)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Lažni satelitski način operaterja (samo gradnja za odpravljanje napak)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Preizkus pravega satelitskega načina eSOS (samo gradnja za odpravljanje napak)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Prikaži imenik na kartici SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Prikaži številke za zaporo odhodnih klicev"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Prikaži številke za klicanje storitev"</string>

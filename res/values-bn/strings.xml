@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"কল সেটিংস"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"কেবলমাত্র প্রশাসক ব্যবহারকারী কল সেটিংস পরিবর্তন করতে পারবেন৷"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"শুধুমাত্র অ্যাডমিন বা অফিস প্রোফাইল ব্যবহারকারী ফোনের অ্যাকাউন্ট সেটিংস পরিবর্তন করতে পারবেন।"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"ডিভাইসের মালিক, মোবাইল নেটওয়ার্ক সেটিংস পরিবর্তন করার সুবিধা সীমাবদ্ধ করে রেখেছেন।"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"সেটিংস (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"কল সেটিংসে ত্রুটি"</string>
     <string name="reading_settings" msgid="1605904432450871183">"সেটিংস পড়ছে…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"একটি সাধারণ কল করতে জরুরি কলব্যাক মোডের বাইরে আসুন৷"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"নেটওয়ার্কে নিবন্ধিত নয়৷"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"মোবাইল নেটওয়ার্ক উপলব্ধ নয়৷"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"মোবাইল নেটওয়ার্ক উপলভ্য নেই।\n\nকল করতে হলে ওয়্যারলেস নেটওয়ার্কের সাথে কানেক্ট করুন।\n\nএই ডিভাইসে 2G পরিষেবা বন্ধ করে দেওয়া হয়েছে, যার ফলে হয়ত আপনার কানেক্টিভিটি প্রভাবিত হচ্ছে। সেটিংসে যান এবং চালিয়ে যেতে \'2G পরিষেবার অনুমতি দিন\' বিকল্পটি চালু করুন।"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"মোবাইল নেটওয়ার্ক উপলব্ধ নেই৷ একটি কল করতে কোনো ওয়্যারলেস নেটওয়ার্কে সংযোগ করুন৷"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"মোবাইল নেটওয়ার্ক উপলভ্য নেই।\n\nকল করতে হলে ওয়্যারলেস নেটওয়ার্কের সাথে কানেক্ট করুন।\n\nএই ডিভাইসে 2G পরিষেবা বন্ধ করে দেওয়া হয়েছে, যার ফলে হয়ত আপনার কানেক্টিভিটি প্রভাবিত হচ্ছে। সেটিংসে যান এবং চালিয়ে যেতে \'2G পরিষেবার অনুমতি দিন\' বিকল্পটি চালু করুন।"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"কোনো কল স্থাপন করতে, একটি বৈধ নম্বর লিখুন৷"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"কল ব্যর্থ হয়েছে৷"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"এই সময়ে কলটি যোগ করা যাবে না। আপনি একটি মেসেজ পাঠিয়ে যোগাযোগ করার চেষ্টা করতে পারেন।"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"কলগুলি ধরে রাখা যাবে না।"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"একটি কল করতে কোনো ওয়্যারলেস নেটওয়ার্কে সংযোগ করুন৷"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"কোনো কল করতে Wi-Fi কলিং সক্ষম করুন৷"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"কল করার জন্য \'উপগ্রহ\' মোড বন্ধ করুন।"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"কল করতে, প্রথমে স্যাটেলাইট কানেকশন বন্ধ করুন।"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"আপনি কোনও মেবাইল বা ওয়াই-ফাই নেটওয়ার্ক ছাড়াই মেসেজ পাঠাতে ও পেতে পারবেন।"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"জরুরি তথ্য"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"মালিক"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"তথ্য দেখার জন্য আবার ট্যাপ করুন"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"সরিয়ে দেওয়া যায় এমন eSIM ডিফল্ট হিসেবে সেট করুন"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"মোবাইল রেডিওর গুণমান"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"আউট-অফ-সার্ভিস সিমুলেট করা (শুধুমাত্র ডিবাগ বিল্ডের জন্য)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"নকল পরিষেবা প্রদানকারী উপগ্রহ মোড (শুধুমাত্র ডিবাগ বিল্ড)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"রিয়েল স্যাটেলাইট eSOS মোড পরীক্ষা করুন (শুধুমাত্র ডিবাগ বিল্ড)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"সিম অ্যাড্রেস বুক দেখুন"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"স্থায়ী ডায়াল নম্বরগুলি দেখুন"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"সার্ভিস ডায়াল নম্বরগুলি দেখুন"</string>

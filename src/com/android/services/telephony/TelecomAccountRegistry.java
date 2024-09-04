@@ -32,12 +32,14 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.PersistableBundle;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Telephony;
@@ -78,6 +80,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -1323,8 +1326,12 @@ public class TelecomAccountRegistry {
      */
     public static synchronized TelecomAccountRegistry getInstance(Context context) {
         if (sInstance == null && context != null) {
-            if (Flags.enforceTelephonyFeatureMappingForPublicApis()) {
-                PackageManager pm = context.getPackageManager();
+            int vendorApiLevel = SystemProperties.getInt("ro.vendor.api_level",
+                    Build.VERSION.DEVICE_INITIAL_SDK_INT);
+            PackageManager pm = context.getPackageManager();
+
+            if (Flags.enforceTelephonyFeatureMappingForPublicApis()
+                    && vendorApiLevel >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
                 if (pm != null && pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
                         && pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY_CALLING)) {
                     sInstance = new TelecomAccountRegistry(context);
@@ -1333,7 +1340,14 @@ public class TelecomAccountRegistry {
                             + "missing telephony/calling feature(s)");
                 }
             } else {
-                sInstance = new TelecomAccountRegistry(context);
+                // One of features is defined, create instance
+                if (pm != null && (pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
+                        || pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY_CALLING))) {
+                    sInstance = new TelecomAccountRegistry(context);
+                } else {
+                    Log.d(LOG_TAG, "Not initializing TelecomAccountRegistry: "
+                            + "missing telephony or calling feature(s)");
+                }
             }
         }
         return sInstance;
@@ -1686,6 +1700,21 @@ public class TelecomAccountRegistry {
                             continue;
                         }
 
+                        // Skip the sim for bootstrap
+                        if (info.getProfileClass() == SubscriptionManager
+                                .PROFILE_CLASS_PROVISIONING) {
+                            Log.d(this, "setupAccounts: skipping bootstrap sub id "
+                                    + subscriptionId);
+                            continue;
+                        }
+
+                        // Skip the sim for satellite as it does not support call for now
+                        if (Flags.oemEnabledSatelliteFlag() && info.isOnlyNonTerrestrialNetwork()) {
+                            Log.d(this, "setupAccounts: skipping satellite sub id "
+                                    + subscriptionId);
+                            continue;
+                        }
+
                         mAccounts.add(new AccountEntry(phone, false /* emergency */,
                                 false /* isTest */));
                     }
@@ -1699,6 +1728,35 @@ public class TelecomAccountRegistry {
                     mAccounts.add(
                             new AccountEntry(PhoneFactory.getDefaultPhone(), true /* emergency */,
                                     false /* isTest */));
+                }
+
+                // In some very rare cases, when setting the default voice sub in
+                // SubscriptionManagerService, the phone accounts here have not yet been built.
+                // So calling setUserSelectedOutgoingPhoneAccount in SubscriptionManagerService
+                // becomes a no-op. The workaround here is to reconcile and make sure the
+                // outgoing phone account is properly set in telecom.
+                int defaultVoiceSubId = SubscriptionManager.getDefaultVoiceSubscriptionId();
+                if (SubscriptionManager.isValidSubscriptionId(defaultVoiceSubId)) {
+                    PhoneAccountHandle defaultVoiceAccountHandle =
+                            getPhoneAccountHandleForSubId(defaultVoiceSubId);
+                    if (defaultVoiceAccountHandle != null) {
+                        PhoneAccountHandle currentAccount = mTelecomManager
+                                .getUserSelectedOutgoingPhoneAccount();
+                        // In some rare cases, the current phone account could be non-telephony
+                        // phone account. We do not override in this case.
+                        boolean wasPreviousAccountSameComponentOrUnset = currentAccount == null
+                                || Objects.equals(defaultVoiceAccountHandle.getComponentName(),
+                                currentAccount.getComponentName());
+
+                        // Set the phone account again if it's out-of-sync.
+                        if (!defaultVoiceAccountHandle.equals(currentAccount)
+                                && wasPreviousAccountSameComponentOrUnset) {
+                            Log.d(this, "setupAccounts: Re-setup phone account "
+                                    + "again for default voice sub " + defaultVoiceSubId);
+                            mTelecomManager.setUserSelectedOutgoingPhoneAccount(
+                                    defaultVoiceAccountHandle);
+                        }
+                    }
                 }
             }
 

@@ -23,7 +23,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.telephony.Rlog;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.internal.telephony.uicc.IccUtils;
 
@@ -37,6 +36,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,9 +45,9 @@ public class CarrierAllowListInfo {
     private static final String LOG_TAG = "CarrierAllowListInfo";
     private JSONObject mDataJSON;
     private static final String JSON_CHARSET = "UTF-8";
-    private static final String MESSAGE_DIGEST_ALGORITHM = "SHA1";
-    private static final String CALLER_SHA_1_ID = "callerSHA1Id";
-    private static final String CALLER_CARRIER_ID = "carrierId";
+    private static final String MESSAGE_DIGEST_256_ALGORITHM = "SHA-256";
+    private static final String CALLER_SHA256_ID = "callerSHA256Ids";
+    private static final String CALLER_CARRIER_ID = "carrierIds";
     public static final int INVALID_CARRIER_ID = -1;
 
     private static final String CARRIER_RESTRICTION_OPERATOR_REGISTERED_FILE =
@@ -68,11 +68,12 @@ public class CarrierAllowListInfo {
         return mInstance;
     }
 
-    public int validateCallerAndGetCarrierId(String packageName) {
+    public Set<Integer> validateCallerAndGetCarrierIds(String packageName) {
         CarrierInfo carrierInfo = parseJsonForCallerInfo(packageName);
         boolean isValid = (carrierInfo != null) && validateCallerSignature(mContext, packageName,
                 carrierInfo.getSHAIdList());
-        return (isValid) ? carrierInfo.getCallerCarrierId() : INVALID_CARRIER_ID;
+        return (isValid) ? carrierInfo.getCallerCarrierIdList() : Collections.singleton(
+                INVALID_CARRIER_ID);
     }
 
     private void loadJsonFile(Context context) {
@@ -94,13 +95,19 @@ public class CarrierAllowListInfo {
         try {
             if (mDataJSON != null && callerPackage != null) {
                 JSONObject callerJSON = mDataJSON.getJSONObject(callerPackage.trim());
-                JSONArray callerJSONArray = callerJSON.getJSONArray(CALLER_SHA_1_ID);
-                int carrierId = callerJSON.getInt(CALLER_CARRIER_ID);
+                JSONArray callerJSONArray = callerJSON.getJSONArray(CALLER_SHA256_ID);
+                JSONArray carrierIdArray = callerJSON.getJSONArray(CALLER_CARRIER_ID);
+
+                Set<Integer> carrierIds = new HashSet<>();
+                for (int index = 0; index < carrierIdArray.length(); index++) {
+                    carrierIds.add(carrierIdArray.getInt(index));
+                }
+
                 List<String> appSignatures = new ArrayList<>();
                 for (int index = 0; index < callerJSONArray.length(); index++) {
                     appSignatures.add((String) callerJSONArray.get(index));
                 }
-                return new CarrierInfo(carrierId, appSignatures);
+                return new CarrierInfo(carrierIds, appSignatures);
             }
         } catch (JSONException ex) {
             Rlog.e(LOG_TAG, "getCallerSignatureInfo: JSONException = " + ex);
@@ -134,7 +141,7 @@ public class CarrierAllowListInfo {
 
     /**
      * API fetches all the related signatures of the given package from the packageManager
-     * and validate all the signatures.
+     * and validate all the signatures using SHA-256.
      *
      * @param context             context
      * @param packageName         package name of the caller to validate the signatures.
@@ -150,13 +157,13 @@ public class CarrierAllowListInfo {
         }
         final PackageManager packageManager = context.getPackageManager();
         try {
-            MessageDigest sha1MDigest = MessageDigest.getInstance(MESSAGE_DIGEST_ALGORITHM);
+            MessageDigest sha256MDigest = MessageDigest.getInstance(MESSAGE_DIGEST_256_ALGORITHM);
             final PackageInfo packageInfo = packageManager.getPackageInfo(packageName,
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : packageInfo.signatures) {
-                final byte[] signatureSha1 = sha1MDigest.digest(signature.toByteArray());
-                final String hexSignatureSha1 = IccUtils.bytesToHexString(signatureSha1);
-                if (!allowListSignatures.contains(hexSignatureSha1)) {
+                final byte[] signatureSha256 = sha256MDigest.digest(signature.toByteArray());
+                final String hexSignatureSha256 = IccUtils.bytesToHexString(signatureSha256);
+                if (!allowListSignatures.contains(hexSignatureSha256)) {
                     return false;
                 }
             }
@@ -183,16 +190,16 @@ public class CarrierAllowListInfo {
     }
 
     private static class CarrierInfo {
-        final private int mCallerCarrierId;
+        final private Set<Integer> mCallerCarrierIdList;
         final private List<String> mSHAIdList;
 
-        public CarrierInfo(int carrierId, List<String> SHAIds) {
-            mCallerCarrierId = carrierId;
+        public CarrierInfo(Set<Integer> carrierIds, List<String> SHAIds) {
+            mCallerCarrierIdList = carrierIds;
             mSHAIdList = SHAIds;
         }
 
-        public int getCallerCarrierId() {
-            return mCallerCarrierId;
+        public Set<Integer> getCallerCarrierIdList() {
+            return mCallerCarrierIdList;
         }
 
         public List<String> getSHAIdList() {
@@ -203,10 +210,10 @@ public class CarrierAllowListInfo {
     @TestApi
     public List<String> getShaIdList(String srcPkg, int carrierId) {
         CarrierInfo carrierInfo = parseJsonForCallerInfo(srcPkg);
-        if (carrierInfo != null && carrierInfo.getCallerCarrierId() == carrierId) {
+        if (carrierInfo != null && carrierInfo.getCallerCarrierIdList().contains(carrierId)) {
             return carrierInfo.getSHAIdList();
         }
-        Rlog.e(LOG_TAG, "getShaIdList carrierId or shaIdList is empty");
+        Rlog.e(LOG_TAG, "getShaIdList: carrierId or shaIdList is empty");
         return Collections.EMPTY_LIST;
     }
 }

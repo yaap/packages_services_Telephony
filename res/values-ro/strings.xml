@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Setări pentru apeluri"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Numai administratorul poate să modifice setările pentru apeluri."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Setările contului de pe telefon pot fi modificate numai de administrator sau de un utilizator profesional."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Proprietarul dispozitivului a restricționat posibilitatea de a modifica setările pentru rețelele mobile."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Setări (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Eroare în setările pentru apeluri"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Se citesc setările..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Ieși din modul de apelare inversă de urgență pentru a efectua un apel care nu este de urgență."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Neînregistrat în rețea."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Rețeaua mobilă nu este disponibilă."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Rețeaua mobilă nu este disponibilă.\n\nConectează-te la o rețea wireless pentru a iniția un apel.\n\n2G este dezactivat pe acest dispozitiv, ceea ce poate afecta conectivitatea. Accesează Setări și activează setarea Permite 2G pentru a continua."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Rețeaua mobilă nu este disponibilă. Pentru a apela, conectează-te la o rețea wireless."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Rețeaua mobilă nu este disponibilă.\n\nConectează-te la o rețea wireless pentru a iniția un apel.\n\n2G este dezactivat pe acest dispozitiv, ceea ce poate afecta conectivitatea. Accesează Setări și activează setarea Permite 2G pentru a continua."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Pentru a apela, introdu un număr valid."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Apelul nu a fost inițiat."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Apelul nu poate fi inițiat în acest moment. Poți lua legătura cu persoana respectivă trimițându-i un mesaj."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Apelurile nu pot fi puse în așteptare."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Pentru a apela, conectează-te la o rețea wireless."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Activează apelarea prin Wi-Fi pentru a iniția un apel."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Dezactivează modul Satelit pentru a apela."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Pentru a apela, mai întâi încheie conexiunea prin satelit."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Poți să trimiți și să primești mesaje fără o rețea mobilă sau Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Informații în caz de urgență"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Proprietar"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Atinge din nou pentru a vedea informațiile"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Setează cartela eSIM portabilă drept prestabilită"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Alimentare radio celular"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulează modul în afara ariei de acoperire (numai în versiunea pentru remedierea erorilor)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mod Satelit al operatorului de testare (numai versiune pentru remedierea erorilor)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Testează modul eSOS prin satelit real (numai versiunea pentru remedierea erorilor)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Afișează agenda de pe SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Afișează numerele pentru apeluri restricționate"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Vezi numere de apelare de serviciu"</string>

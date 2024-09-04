@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"କଲ ସେଟିଂସ"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"କଲ ସେଟିଂସକୁ କେବଳ ଆଡମିନ ୟୁଜର ବଦଳାଇପାରିବେ।"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"ଫୋନ ଆକାଉଣ୍ଟ ସେଟିଂସ କେବଳ ଆଡମିନ କିମ୍ବା ୱାର୍କ ୟୁଜରଙ୍କ ଦ୍ୱାରା ପରିବର୍ତ୍ତନ କରାଯାଇପାରିବ।"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"ମୋବାଇଲ ନେଟୱାର୍କ ସେଟିଂସ ପରିବର୍ତ୍ତନ କରିବାର କ୍ଷମତାକୁ ଡିଭାଇସ ମାଲିକ ପ୍ରତିବନ୍ଧିତ କରିଛନ୍ତି।"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"ସେଟିଙ୍ଗ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"କଲ୍ ସେଟିଙ୍ଗରେ ତ୍ରୁଟି"</string>
     <string name="reading_settings" msgid="1605904432450871183">"ସେଟିଂସକୁ ପଢ଼ାଯାଉଛି…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"ଗୋଟିଏ ସାଧାରଣ କଲ୍ କରିବା ପାଇଁ ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରୁ ବାହାରି ଆସନ୍ତୁ।"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"ନେଟ୍‌ୱର୍କରେ ପଞ୍ଜୀକୃତ କରାଯାଇନାହିଁ।"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ।"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"ମୋବାଇଲ ନେଟୱାର୍କ ଉପଲବ୍ଧ ନାହିଁ।\n\nଏକ କଲ କରିବାକୁ ଗୋଟିଏ ୱେୟାରଲେସ ନେଟୱାର୍କ ସହ କନେକ୍ଟ କରନ୍ତୁ।\n\nଏହି ଡିଭାଇସରେ 2Gକୁ ଅକ୍ଷମ କରାଯାଇଛି, ଯାହା ଆପଣଙ୍କ କନେକ୍ଟିଭିଟିକୁ ପ୍ରଭାବିତ କରୁଥାଇପାରେ। ଜାରି ରଖିବା ପାଇଁ ସେଟିଂସକୁ ଯାଇ \'2Gକୁ ଅନୁମତି ଦିଅନ୍ତୁ\'କୁ ସକ୍ଷମ କରନ୍ତୁ।"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ। କଲ୍ କରିବା ପାଇଁ ଗୋଟିଏ ତାରବିହୀନ ନେଟ୍‌ୱର୍କରେ କନେକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"ମୋବାଇଲ ନେଟୱାର୍କ ଉପଲବ୍ଧ ନାହିଁ।\n\nଏକ କଲ କରିବାକୁ ଗୋଟିଏ ୱେୟାରଲେସ ନେଟୱାର୍କ ସହ କନେକ୍ଟ କରନ୍ତୁ।\n\nଏହି ଡିଭାଇସରେ 2Gକୁ ଅକ୍ଷମ କରାଯାଇଛି, ଯାହା ଆପଣଙ୍କ କନେକ୍ଟିଭିଟିକୁ ପ୍ରଭାବିତ କରୁଥାଇପାରେ। ଜାରି ରଖିବା ପାଇଁ ସେଟିଂସକୁ ଯାଇ \'2Gକୁ ଅନୁମତି ଦିଅନ୍ତୁ\'କୁ ସକ୍ଷମ କରନ୍ତୁ।"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏକ ବୈଧ ନମ୍ବର୍ ପ୍ରବେଶ କରନ୍ତୁ।"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"କଲ୍ ହେଲା ନାହିଁ।"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"ଏବେ କଲ୍‌କୁ ଯୋଡ଼ାଯାଇପାରିବ ନାହିଁ। ଆପଣ ମେସେଜ୍ ପଠାଇ ସମ୍ପର୍କ କରିବା ପାଇଁ ଚେଷ୍ଟା କରିପାରନ୍ତି।"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"କଲ୍‍କୁ ହୋଲ୍ଡ କରାଯାଇପାରିବ ନାହିଁ।"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏକ ତାରବିହୀନ ନେଟ୍‌ୱର୍କ ସହ କନେକ୍ଟ କରନ୍ତୁ।"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ୱାଇ-ଫାଇ କଲିଙ୍ଗକୁ ସକ୍ଷମ କରନ୍ତୁ।"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"ଏକ କଲ କରିବା ପାଇଁ ସେଟେଲାଇଟ ମୋଡକୁ ଅକ୍ଷମ କରନ୍ତୁ।"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"ଏକ କଲ କରିବାକୁ ପ୍ରଥମେ ସେଟେଲାଇଟ କନେକ୍ସନ ସମାପ୍ତ କରନ୍ତୁ।"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"ଏକ ମୋବାଇଲ କିମ୍ବା ୱାଇ-ଫାଇ ନେଟୱାର୍କ ବିନା ଆପଣ ମେସେଜ ପଠାଇପାରିବେ ଏବଂ ପାଇପାରିବେ।"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"ଜରୁରୀକାଳୀନ ସୂଚନା"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"ମାଲିକ"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"ସୂଚନା ଦେଖିବାକୁ ପୁଣିଥରେ ଟାପ୍‍ କରନ୍ତୁ"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"କାଢ଼ି ହେଉଥିବା eSIMକୁ ଡିଫଲ୍ଟ ଭାବେ ସେଟ କରନ୍ତୁ"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"ମୋବାଇଲ୍ ରେଡିଓ ପାୱାର୍"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"\"କାମ କରୁନାହିଁ\"ରେ ସିମୁଲେଟ କରନ୍ତୁ (କେବଳ ଡିବଗ ବିଲ୍ଡ)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"ମକ କେରିଅର ସେଟେଲାଇଟ ମୋଡ (କେବଳ ଡିବଗ ବିଲ୍ଡ)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"ପ୍ରକୃତ ସେଟେଲାଇଟର eSOS ମୋଡ ପରୀକ୍ଷା କରନ୍ତୁ (କେବଳ ଡିବଗ ବିଲ୍ଡ)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"ସିମ୍‌ରେ ଥିବା ଠିକଣା ପୁସ୍ତକ ଦେଖନ୍ତୁ"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"ସ୍ଥାୟୀ ଡାଏଲିଂ ନମ୍ୱରଗୁଡ଼ିକୁ ଦେଖନ୍ତୁ"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"ସର୍ଭିସ୍ ଡାଏଲିଂ ନମ୍ୱରଗୁଡ଼ିକ ଦେଖନ୍ତୁ"</string>

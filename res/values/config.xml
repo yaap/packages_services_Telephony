@@ -318,13 +318,6 @@
     <string-array name="thermal_mitigation_allowlisted_packages" translatable="false">
     </string-array>
 
-    <!-- Array of carriers that don't care about NGRAN's preference in the preferred emergency
-         network scan list after SIM is removed. -->
-    <integer-array name="config_carriers_ignore_ngran_preference_when_sim_removed">
-        <!-- 001-01 Test SIM -->
-        <item>1911</item>
-    </integer-array>
-
     <!-- Array of countries that active SIM is needed for emergency calls. Values should be
          ISO3166 country codes in lowercase. -->
     <string-array name="config_countries_require_sim_for_emergency" translatable="false">
@@ -335,6 +328,16 @@
         <item>sg</item>
         <!-- b/198393826 -->
         <item>de</item>
+        <!-- b/334773484 -->
+        <item>gb</item>
+        <item>fr</item>
+        <item>be</item>
+        <item>ro</item>
+        <item>si</item>
+        <item>hr</item>
+        <item>gr</item>
+        <item>bg</item>
+        <item>my</item>
     </string-array>
 
     <!-- Array of countries that a normal service capable subscription is preferred
@@ -346,8 +349,45 @@
         <item>sg</item>
     </string-array>
 
+    <!-- Array of countries that a CS preferred scan is preferred after CSFB failure
+         due to the failure of extended service request. Values should be ISO3166
+         country codes in lowercase. -->
+    <string-array name="config_countries_prefer_cs_preferred_scan_after_csfb_failure"
+            translatable="false">
+        <!-- b/300022457 -->
+        <item>us</item>
+    </string-array>
+
+    <!-- Array of countries that GERAN is preferred than UTRAN and EUTRAN when SIM is absent.
+         Values should be ISO3166 country codes in lowercase. -->
+    <string-array name="config_countries_prefer_geran_when_sim_absent"
+            translatable="false">
+        <!-- b/335537430 -->
+        <item>cn</item>
+    </string-array>
+
+    <!-- Dynamic routing of emergency calls: trying normal routing if it's available.
+         Otherwise, emergency routing. -->
+    <!-- TODO (b/346398725: temporary code, cleanup) -->
+    <bool name="dynamic_routing_emergency_enabled">false</bool>
+
+    <!-- Array of countries that the dynamic routing is supported.
+         Values should be ISO3166 country codes in lowercase. -->
+    <string-array name="config_countries_dynamic_routing_emergency_enabled"
+            translatable="false">
+    </string-array>
+
+    <!-- Array of emergency numbers for dynamic routing.
+         Values are the tuples of Country ISO, MNC, and numbers. -->
+    <string-array name="config_dynamic_routing_emergency_numbers"
+            translatable="false">
+    </string-array>
+
     <!-- The component name(a flattened ComponentName string) for the telephony domain selection
          service. The device should fallback to the modem based domain selection architecture
          if this is not configured. -->
     <string name="config_domain_selection_service_component_name" translatable="false"></string>
+
+    <!-- Whether to turn off OEM-enabled satellite during emergency call -->
+    <bool name="config_turn_off_oem_enabled_satellite_during_emergency_call">false</bool>
 </resources>

@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"कॉल सेटिंग"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"कॉल सेटिंग केवल व्यवस्थापक उपयोगकर्ता द्वारा ही बदली जा सकती हैं."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"फ़ोन की खाता सेटिंग, सिर्फ़ एडमिन या वर्क प्रोफ़ाइल के उपयोगकर्ता बदल सकते हैं."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"डिवाइस के मालिक ने मोबाइल नेटवर्क की सेटिंग बदलने की सुविधा पर पाबंदी लगा दी है."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"सेटिंग (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"कॉल सेटिंग गड़बड़ी"</string>
     <string name="reading_settings" msgid="1605904432450871183">"सेटिंग पढ़ रहा है..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"गैर-आपातकालीन कॉल करने के लिए आपातकालीन कॉलबैक मोड से बाहर निकलें."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"नेटवर्क पर पंजीकृत नहीं."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"मोबाइल नेटवर्क उपलब्ध नहीं."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"मोबाइल नेटवर्क उपलब्ध नहीं है.\n\nकॉल करने के लिए किसी वायरलेस नेटवर्क से कनेक्ट करें.\n\nइस डिवाइस पर 2G नेटवर्क इस्तेमाल करने की सुविधा बंद है. ऐसा हो सकता है कि इसका असर कनेक्टिविटी पर पड़ा हो. जारी रखने के लिए, Settings में जाकर ‘2G के इस्तेमाल की मंज़ूरी दें’ को चालू करें."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"मोबाइल नेटवर्क उपलब्‍ध नहीं है. कॉल करने के लिए किसी वायरलेस नेटवर्क से कनेक्‍ट करें."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"मोबाइल नेटवर्क उपलब्ध नहीं है.\n\nकॉल करने के लिए किसी वायरलेस नेटवर्क से कनेक्ट करें.\n\nइस डिवाइस पर 2G नेटवर्क इस्तेमाल करने की सुविधा बंद है, जिससे कनेक्टिविटी पर असर पड़ सकता है. जारी रखने के लिए, Settings में जाएं और ‘2G के इस्तेमाल की मंज़ूरी दें’ को चालू करें."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"कॉल करने के लिए, मान्‍य नंबर डालें."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"कॉल विफल."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"अभी कॉल जोड़ा नहीं जा सकता. आप संदेश भेजकर संपर्क करने की कोशिश कर सकते हैं."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"कॉल होल्ड नहीं किए जा सकते."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"कॉल करने के लिए किसी वायरलेस नेटवर्क से कनेक्‍ट करें."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"कॉल करने के लिए वाई-फ़ाई कॉलिंग सक्षम करें."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"कॉल करने के लिए, सैटलाइट मोड को बंद करें."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"कॉल करने के लिए, सैटलाइट कनेक्शन बंद करें."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"आपके पास, मोबाइल या वाई-फ़ाई नेटवर्क के बिना भी मैसेज भेजने और पाने की सुविधा है."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"आपातकाल में दिखने वाली जानकारी"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"मालिक"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"जानकारी देखने के लिए फिर से टैप करें"</string>
@@ -588,7 +592,7 @@
     <string name="onscreenManageConferenceText" msgid="4700574060601755137">"कॉन्फ़्रेंस प्रबंधित करें"</string>
     <string name="onscreenAudioText" msgid="7224226735052019986">"ऑडियो"</string>
     <string name="onscreenVideoCallText" msgid="1743992456126258698">"वीडियो कॉल"</string>
-    <string name="importSimEntry" msgid="3892354284082689894">"आयात करें"</string>
+    <string name="importSimEntry" msgid="3892354284082689894">"इंपोर्ट करें"</string>
     <string name="importAllSimEntries" msgid="2628391505643564007">"सभी आयात करें"</string>
     <string name="importingSimContacts" msgid="4995457122107888932">"सिम संपर्क आयात कर रहा है"</string>
     <string name="importToFDNfromContacts" msgid="5068664870738407341">"संपर्कों से आयात करें"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"हटाए जा सकने वाले ई-सिम को डिफ़ॉल्ट के तौर पर सेट करें"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"मोबाइल रेडियो पावर"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"सिम्युलेट किया गया डिवाइस काम नहीं कर रहा है (सिर्फ़ डीबग के लिए बिल्ड)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"मोबाइल और इंटरनेट सेवा देने वाली कंपनी के सैटलाइट मोड की मॉक टेस्टिंग करें (सिर्फ़ डीबग के लिए बिल्ड)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"रीयल सैटलाइट इमरजेंसी एसओएस मोड को आज़माएं (सिर्फ़ डीबग के लिए बिल्ड)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"सिम में संपर्कों के पते की सूची देखें"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"फ़िक्स्ड डायलिंग नंबर देखें"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"सेवा के डायलिंग नंबर देखें"</string>

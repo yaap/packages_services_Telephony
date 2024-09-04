@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Чалуу параметрлери"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Чалуу параметрлерин администратор гана өзгөртө алат."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Телефондогу аккаунттун параметрлерин администратор же жумуштагы колдонуучу гана өзгөртө алат."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Түзмөктүн ээси мобилдик тармактын параметрлерин өзгөртүүгө тыюу салды."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Параметрлер (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Чалуу жөндөөлөрүндө ката кетти"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Параметрлер окулууда…"</string>
@@ -524,7 +525,7 @@
     <string name="card_title_dialing" msgid="8742182654254431781">"Терилүүдө"</string>
     <string name="card_title_redialing" msgid="18130232613559964">"Кайра терүү"</string>
     <string name="card_title_conf_call" msgid="901197309274457427">"Конференц-чалуу"</string>
-    <string name="card_title_incoming_call" msgid="881424648458792430">"Кирүүчү чалуу"</string>
+    <string name="card_title_incoming_call" msgid="881424648458792430">"Чалып жатат"</string>
     <string name="card_title_call_ended" msgid="650223980095026340">"Чалуу аяктады"</string>
     <string name="card_title_on_hold" msgid="9028319436626975207">"Күтүлүүдө"</string>
     <string name="card_title_hanging_up" msgid="814874106866647871">"Телефон коюлууда"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Кадимки шартта чалуу үчүн шашылыш кайра чалуу режиминен чыгыңыз."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Тармакта катталган эмес."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Мобилдик тармак жок."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Мобилдик тармак жеткиликсиз.\n\nЧалуу үчүн зымсыз тармакка туташыңыз.\n\nБул түзмөктө 2G өчүрүлгөндүктөн, байланышка таасирин тийгизиши мүмкүн. Улантуу үчүн параметрлерге өтүп, \"2G тармагына уруксат берүү\" параметрин иштетиңиз."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Мобилдик тармак жеткиликтүү эмес. Чалуу үчүн зымсыз тармакка туташыңыз."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Мобилдик тармак жеткиликсиз.\n\nЧалуу үчүн зымсыз тармакка туташыңыз.\n\nБул түзмөктө 2G өчүрүлгөндүктөн, байланышка таасирин тийгизиши мүмкүн. Улантуу үчүн параметрлерге өтүп, \"2G тармагына уруксат берүү\" параметрин иштетиңиз."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Чалуу үчүн, жарактуу номер киргизиңиз."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Чалынбай калды."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Чалуу бул жолу кошулбай койду. Билдирүү жөнөтүп, байланышсаңыз болот."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Чалууну кармап туруу мүмкүн эмес."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Чалуу үчүн зымсыз тармакка туташыңыз."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Wi-Fi аркылуу чалыңыз."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Чалуу үчүн спутникти өчүрүңүз."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Чалуу үчүн, адегенде спутникке туташыңыз."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Мобилдик же Wi-Fi тармагы жок эле билдирүүлөрдү жөнөтүп, ала аласыз."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Кырсыктаганда керек болчу маалымат"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Ээси"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Маалыматты көрүү үчүн кайра таптап коюңуз"</string>
@@ -769,19 +773,19 @@
     <string name="sum_call_barring_enabled" msgid="5184331188926370824">"Күйүк"</string>
     <string name="sum_call_barring_disabled" msgid="5699448000600153096">"Өчүк"</string>
     <string name="call_barring_baoc" msgid="7400892586336429326">"Чыгуучу чалуулардын баары"</string>
-    <string name="call_barring_baoc_enabled" msgid="3131509193386668182">"Чыгуучу чалуулардын баарын бөгөттөө функциясы өчүрүлсүнбү?"</string>
+    <string name="call_barring_baoc_enabled" msgid="3131509193386668182">"Чыгуучу чалуулардын баарын бөгөттөө функциясын өчүрөсүзбү?"</string>
     <string name="call_barring_baoc_disabled" msgid="8534224684091141509">"Чыгуучу чалуулардын баары бөгөттөлсүнбү?"</string>
     <string name="call_barring_baoic" msgid="8668125428666851665">"Эл аралык чыгуучу чалуу"</string>
-    <string name="call_barring_baoic_enabled" msgid="1203758092657630123">"Эл аралык чыгуучу чалууларды бөгөттөө функциясы өчүрүлсүнбү?"</string>
+    <string name="call_barring_baoic_enabled" msgid="1203758092657630123">"Эл аралык чыгуучу чалууларды бөгөттөө функциясын өчүрөсүзбү?"</string>
     <string name="call_barring_baoic_disabled" msgid="5656889339002997449">"Эл аралык чыгуучу чалуулар бөгөттөлсүнбү?"</string>
     <string name="call_barring_baoicr" msgid="8566167764432343487">"Роумингдеги эл аралык чыгуучу чалуулар"</string>
-    <string name="call_barring_baoicr_enabled" msgid="1615324165512798478">"Роумингдеги эларалык чыгуучу чалууларды бөгөттөө функциясы өчүрүлсүнбү?"</string>
+    <string name="call_barring_baoicr_enabled" msgid="1615324165512798478">"Роумингдеги эларалык чыгуучу чалууларды бөгөттөө функциясын өчүрөсүзбү?"</string>
     <string name="call_barring_baoicr_disabled" msgid="172010175248142831">"Роумингдеги эларалык чыгуучу чалуулар бөгөттөлсүнбү?"</string>
     <string name="call_barring_baic" msgid="7941393541678658566">"Кирүүчү чалуулардын баары"</string>
-    <string name="call_barring_baic_enabled" msgid="4357332358020337470">"Кирүүчү чалуулардын баарын бөгөттөө функциясы өчүрүлсүнбү?"</string>
+    <string name="call_barring_baic_enabled" msgid="4357332358020337470">"Кирүүчү чалуулардын баарын бөгөттөө функциясын өчүрөсүзбү?"</string>
     <string name="call_barring_baic_disabled" msgid="2355945245938240958">"Кирүүчү чалуулардын баары бөгөттөлсүнбү?"</string>
     <string name="call_barring_baicr" msgid="8712249337313034226">"Роумингдеги эл аралык кирүүчү чалуу"</string>
-    <string name="call_barring_baicr_enabled" msgid="64774270234828175">"Роумингдеги эл аралык кирүүчү чалууларды бөгөттөө функциясы өчүрүлсүнбү?"</string>
+    <string name="call_barring_baicr_enabled" msgid="64774270234828175">"Роумингдеги эл аралык кирүүчү чалууларды бөгөттөө функциясын өчүрөсүзбү?"</string>
     <string name="call_barring_baicr_disabled" msgid="3488129262744027262">"Роумингдеги эл аралык кирүүчү чалуу бөгөттөлсүнбү?"</string>
     <string name="call_barring_deactivate_all" msgid="7837931580047157328">"Баары өчүрүлсүн"</string>
     <string name="call_barring_deactivate_all_description" msgid="4474119585042121604">"Чалууларга тыюу салуу функциясынын параметрлерин өчүрүү"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Чыгарылуучу eSIM-картаны демейки катары коюу"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Мобилдик радионун кубаты"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Тейлөө аймагынын сыртында режимин иштетүү (Мүчүлүштүктөрдү оңдоо үчүн гана)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Симуляцияланган байланыш операторунун спутниги (Мүчүлүштүктөрдү оңдоо үчүн гана)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Чыныгы спутник eSOS режимин сыноо (Мүчүлүштүктөрдү оңдоо үчүн гана)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"SIM картадагы дарек китепчесин көрүү"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Туруктуу терүү номерлерин көрүү"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Кызматтык терүү номерлерин көрүү"</string>

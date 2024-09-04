@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Setelan panggilan"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Setelan panggilan telepon hanya dapat diubah oleh pengguna admin."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Setelan akun Telepon hanya dapat diubah admin atau pengguna untuk kerja."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Pemilik perangkat telah membatasi kemampuan untuk mengubah setelan jaringan seluler."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Setelan (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Kesalahan setelan panggilan"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Membaca setelan…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Keluar dari mode telepon balik darurat untuk melakukan panggilan non-darurat."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Tidak terdaftar pada jaringan."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Jaringan seluler tidak tersedia."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Jaringan seluler tidak tersedia.\n\nHubungkan ke jaringan nirkabel untuk melakukan panggilan.\n\n2G dinonaktifkan di perangkat ini, yang mungkin memengaruhi konektivitas Anda. Buka Setelan dan aktifkan Izinkan 2G untuk melanjutkan."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Jaringan seluler tidak tersedia. Sambungkan ke jaringan nirkabel untuk melakukan panggilan."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Jaringan seluler tidak tersedia.\n\nSambungkan ke jaringan nirkabel untuk melakukan panggilan.\n\n2G dinonaktifkan di perangkat ini, yang mungkin memengaruhi konektivitas Anda. Buka Setelan dan aktifkan Izinkan 2G untuk melanjutkan."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Untuk melakukan panggilan telepon, masukkan nomor yang valid."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Telepon gagal."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Panggilan tidak bisa ditambahkan saat ini. Anda bisa mencoba menghubungi dengan mengirim pesan."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Tidak dapat menahan panggilan."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Sambungkan ke jaringan nirkabel untuk melakukan panggilan"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Aktifkan panggilan Wi-Fi untuk melakukan panggilan."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Nonaktifkan mode satelit untuk melakukan panggilan."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Untuk melakukan panggilan, akhiri koneksi satelit terlebih dahulu."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Anda dapat mengirim dan menerima pesan tanpa jaringan seluler atau Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Informasi darurat"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Pemilik"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Ketuk lagi untuk melihat info"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Tetapkan eSIM yang Dapat Dilepas sebagai Default"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Daya Radio Seluler"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulasi Tidak dapat Digunakan (Khusus Build Debug)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mode Satelit Operator Tiruan (khusus Build Debug)."</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Uji mode eSOS satelit asli (khusus Build Debug)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Lihat Buku Alamat SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Lihat Panggilan Terbatas"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Lihat Nomor Panggilan Layanan"</string>

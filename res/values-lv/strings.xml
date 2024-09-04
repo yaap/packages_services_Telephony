@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Zvanu iestatījumi"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Tikai lietotājs ar administratora tiesībām var mainīt zvanu iestatījumus."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Tikai administrators vai primārais lietotājs var mainīt tālruņa konta iestatījumus."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Ierīces īpašnieks ir ierobežojis iespēju mainīt mobilā tīkla iestatījumus."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Iestatījumi (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Zvanu iestatījumu kļūda"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Notiek iestatījumu lasīšana..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Lai veiktu parastu zvanu, izejiet no ārkārtas atzvana režīma."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Tīklā nav reģistrēts."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Mobilais tīkls nav pieejams."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Mobilais tīkls nav pieejams.\n\nLai veiktu zvanu, izveidojiet savienojumu ar bezvadu tīklu.\n\nŠajā ierīcē ir atspējots 2G, un tas var ietekmēt jūsu savienojamību. Lai turpinātu, pārejiet uz iestatījumiem un iespējojiet opciju “Atļaut 2G”."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Mobilais tīkls nav pieejams. Lai veiktu zvanu, izveidojiet savienojumu ar bezvadu tīklu."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Mobilais tīkls nav pieejams.\n\nLai veiktu zvanu, izveidojiet savienojumu ar bezvadu tīklu.\n\nŠajā ierīcē ir atspējots 2G, un tas var ietekmēt jūsu savienojamību. Lai turpinātu, pārejiet uz iestatījumiem un iespējojiet opciju “Atļaut 2G”."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Lai veiktu zvanu, ievadiet derīgu numuru."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Zvans neizdevās."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Pašlaik nevar pievienot zvanu. Varat mēģināt sūtīt īsziņu."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Nevar aizturēt zvanus."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Lai veiktu zvanu, izveidojiet savienojumu ar bezvadu tīklu."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Lai veiktu zvanu, iespējojiet Wi-Fi zvanus."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Lai zvanītu, atspējojiet satelīta režīmu."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Lai veiktu zvanu, vispirms pārtrauciet savienojumu ar satelītu."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Varat sūtīt un saņemt ziņojumus bez mobilā vai Wi-Fi tīkla."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Ārkārtas informācija"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Īpašnieks"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Pieskarieties vēlreiz, lai skatītu informāciju."</string>
@@ -840,7 +844,9 @@
     <string name="dsds_dialog_cancel" msgid="3245958947099586655">"Atcelt"</string>
     <string name="removable_esim_string" msgid="7931369811671787649">"Iestatīt noņemamu eSIM kā noklusējumu"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobilā tālruņa radio signāla stiprums"</string>
-    <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulācijas ierīce nedarbojas (tikai būvējuma atkļūdošana)"</string>
+    <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Simulācijas ierīce nedarbojas (tikai atkļūdošanas būvējums)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Mobilo sakaru operatora satelīta režīma imitēšana (tikai atkļūdošanas būvējums)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Izmēģināt īsta satelīta eSOS režīmu (tikai atkļūdošanas būvējumā)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Skatīt SIM adrešu grāmatu"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Skatīt ierobežotā zvanu saraksta numurus"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Pakalpojuma iezvanes numuru skatīšana"</string>

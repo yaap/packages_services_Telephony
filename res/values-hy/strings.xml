@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Զանգի կարգավորումներ"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Զանգի կարգավորումները կարող է փոխել միայն ադմինիստրատոր հանդիսացող օգտատերը:"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Հեռախոսի հաշվի կարգավորումները կարող է փոխել միայն ադմինիստրատորը կամ աշխատանքային հաշվի օգտատերը։"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Սարքի սեփականատերը սահմանափակել է բջջային ցանցի կարգավորումները փոխելու հնարավորությունը։"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Կարգավորումներ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Զանգի կարգավորումների սխալ"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Ընթերցման կարգավորումներ..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Սովորական զանգ կատարելու համար դուրս եկեք շտապ կանչի ռեժիմից։"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Ցանցում գրանցված չէ:"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Բջջային ցանցն անհասանելի է:"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Բջջային ցանցն անհասանելի է։\n\nԶանգելու համար միացեք անլար ցանցին։\n\n2G-ն անջատված է այս սարքում, ինչը կարող է ազդել կապի վրա։ Շարունակելու համար անցեք Կարգավորումներ և միացրեք «Թույլատրել 2G-ն»։"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Բջջային ցանցն անհասանելի է: Զանգելու համար միացեք Wi-Fi ցանցին:"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Բջջային ցանցն անհասանելի է։\n\nԶանգելու համար միացեք անլար ցանցին։\n\n2G-ն անջատված է այս սարքում, ինչը կարող է ազդել կապի վրա։ Շարունակելու համար անցեք Կարգավորումներ և միացրեք «Թույլատրել 2G-ն»։"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Զանգ կատարելու համար մուտքագրեք ճիշտ համար:"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Զանգը ձախողվեց:"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Զանգն այս պահին հնարավոր չէ ավելացնել: Փորձեք հաղորդագրություն ուղարկել:"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Հնարավոր չէ հետաձգել զանգերը:"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Զանգ կատարելու համար միացեք անլար ցանցին:"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"Զանգ կատարելու համար միացրեք «Զանգեր Wi-Fi ցանցի միջոցով» գործառույթը:"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"Զանգ կատարելու համար անջատեք արբանյակի ռեժիմը։"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Զանգ կատարելու համար նախ անջատեք արբանյակային կապը։"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Դուք կարող եք ուղարկել և ստանալ հաղորդագրություններ՝ առանց բջջային կամ Wi-Fi կապի։"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Անհետաձգելի բուժօգնության տվյալներ"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"Սեփականատեր"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"Կրկին հպեք՝ տեղեկությունները դիտելու համար"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Սահմանել հեռացվելի eSIM քարտը որպես կանխադրված"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Բջջային ռադիոազդանշանի հզորությունը"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Սպասարկման գոտուց դուրս գտնվելու սիմուլյացիա (միայն վրիպազերծման կառուցում)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Օպերատորի արբանյակի ռեժիմի սիմուլյացիա (միայն վրիպազերծման կառուցում)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Փորձարկել իրական արբանյակային eSOS ռեժիմը (միայն վրիպազերծման կառուցման մեջ)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Դիտել SIM քարտի հասցեագիրքը"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Տեսնել ամրակցված հեռախոսահամարները"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Տեսնել ծառայությունների հեռախոսահամարները"</string>

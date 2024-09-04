@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.OutcomeReceiver;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.telephony.satellite.wrapper.CarrierRoamingNtnModeListenerWrapper;
 import android.telephony.satellite.wrapper.NtnSignalStrengthCallbackWrapper;
 import android.telephony.satellite.wrapper.NtnSignalStrengthWrapper;
 import android.telephony.satellite.wrapper.SatelliteCapabilitiesCallbackWrapper;
@@ -53,6 +54,7 @@ public class TestSatelliteWrapper extends Activity {
     private final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SatelliteManagerWrapper mSatelliteManagerWrapper;
     private NtnSignalStrengthCallback mNtnSignalStrengthCallback = null;
+    private CarrierRoamingNtnModeListener mCarrierRoamingNtnModeListener = null;
     private SatelliteCapabilitiesCallbackWrapper mSatelliteCapabilitiesCallback;
     private SubscriptionManager mSubscriptionManager;
     private int mSubId;
@@ -99,6 +101,10 @@ public class TestSatelliteWrapper extends Activity {
                 .setOnClickListener(this::getAttachRestrictionReasonsForCarrier);
         findViewById(R.id.getSatellitePlmnsForCarrier)
                 .setOnClickListener(this::getSatellitePlmnsForCarrier);
+        findViewById(R.id.registerForCarrierRoamingNtnModeChanged)
+                .setOnClickListener(this::registerForCarrierRoamingNtnModeChanged);
+        findViewById(R.id.unregisterForCarrierRoamingNtnModeChanged)
+                .setOnClickListener(this::unregisterForCarrierRoamingNtnModeChanged);
         findViewById(R.id.Back).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,6 +186,39 @@ public class TestSatelliteWrapper extends Activity {
         }
     }
 
+    private void registerForCarrierRoamingNtnModeChanged(View view) {
+        addLogMessage("registerForCarrierRoamingNtnModeChanged");
+        logd("registerForCarrierRoamingNtnModeChanged()");
+        if (mCarrierRoamingNtnModeListener == null) {
+            logd("Creating new CarrierRoamingNtnModeListener instance.");
+            mCarrierRoamingNtnModeListener = new CarrierRoamingNtnModeListener();
+        }
+
+        try {
+            mSatelliteManagerWrapper.registerForCarrierRoamingNtnModeChanged(mSubId, mExecutor,
+                    mCarrierRoamingNtnModeListener);
+        } catch (Exception ex) {
+            String errorMessage = "registerForCarrierRoamingNtnModeChanged: " + ex.getMessage();
+            logd(errorMessage);
+            addLogMessage(errorMessage);
+            mCarrierRoamingNtnModeListener = null;
+        }
+    }
+
+    private void unregisterForCarrierRoamingNtnModeChanged(View view) {
+        addLogMessage("unregisterForCarrierRoamingNtnModeChanged");
+        logd("unregisterForCarrierRoamingNtnModeChanged()");
+        if (mCarrierRoamingNtnModeListener != null) {
+            mSatelliteManagerWrapper.unregisterForCarrierRoamingNtnModeChanged(mSubId,
+                    mCarrierRoamingNtnModeListener);
+            mCarrierRoamingNtnModeListener = null;
+            addLogMessage("mCarrierRoamingNtnModeListener was unregistered");
+        } else {
+            addLogMessage("mCarrierRoamingNtnModeListener is null, ignored.");
+        }
+    }
+
+
     private void registerForNtnSignalStrengthChanged(View view) {
         addLogMessage("registerForNtnSignalStrengthChanged");
         logd("registerForNtnSignalStrengthChanged()");
@@ -248,7 +287,7 @@ public class TestSatelliteWrapper extends Activity {
                         String message = "Received SatelliteCapabillities : "
                                 + SatelliteCapabilities;
                         logd(message);
-                        runOnUiThread(() -> addLogMessage(message));
+                        addLogMessage(message);
                     };
         }
 
@@ -281,7 +320,17 @@ public class TestSatelliteWrapper extends Activity {
                 @NonNull NtnSignalStrengthWrapper ntnSignalStrength) {
             String message = "Received NTN SignalStrength : " + ntnSignalStrength.getLevel();
             logd(message);
-            runOnUiThread(() -> addLogMessage(message));
+            addLogMessage(message);
+        }
+    }
+
+    private class CarrierRoamingNtnModeListener implements CarrierRoamingNtnModeListenerWrapper {
+
+        @Override
+        public void onCarrierRoamingNtnModeChanged(boolean active) {
+            String message = "Received onCarrierRoamingNtnModeChanged active: " + active;
+            logd(message);
+            addLogMessage(message);
         }
     }
 
@@ -317,7 +366,7 @@ public class TestSatelliteWrapper extends Activity {
         }
 
         Consumer<Integer> callback = result -> {
-            runOnUiThread(() -> addLogMessage("requestAttachEnabledForCarrier result: " + result));
+            addLogMessage("requestAttachEnabledForCarrier result: " + result);
             logd("requestAttachEnabledForCarrier result: " + result);
         };
 
@@ -342,7 +391,7 @@ public class TestSatelliteWrapper extends Activity {
         }
 
         Consumer<Integer> callback = result -> {
-            runOnUiThread(() -> addLogMessage("requestAttachEnabledForCarrier result: " + result));
+            addLogMessage("requestAttachEnabledForCarrier result: " + result);
             logd("requestAttachEnabledForCarrier result: " + result);
         };
 
@@ -409,7 +458,7 @@ public class TestSatelliteWrapper extends Activity {
         int reason = SatelliteManagerWrapper.SATELLITE_COMMUNICATION_RESTRICTION_REASON_USER;
 
         Consumer<Integer> callback = result -> {
-            runOnUiThread(() -> addLogMessage("addAttachRestrictionForCarrier result: " + result));
+            addLogMessage("addAttachRestrictionForCarrier result: " + result);
             logd("addAttachRestrictionForCarrier result: " + result);
         };
 
@@ -436,8 +485,7 @@ public class TestSatelliteWrapper extends Activity {
         int reason = SatelliteManagerWrapper.SATELLITE_COMMUNICATION_RESTRICTION_REASON_USER;
 
         Consumer<Integer> callback = result -> {
-            runOnUiThread(
-                    () -> addLogMessage("removeAttachRestrictionForCarrier result: " + result));
+            addLogMessage("removeAttachRestrictionForCarrier result: " + result);
             logd("removeAttachRestrictionForCarrier result: " + result);
         };
 
@@ -569,9 +617,11 @@ public class TestSatelliteWrapper extends Activity {
     }
 
     private void addLogMessage(String message) {
-        mLogMessages.add(message);
-        mAdapter.notifyDataSetChanged();
-        mLogListView.setSelection(mAdapter.getCount() - 1);
+        runOnUiThread(() -> {
+            mLogMessages.add(message);
+            mAdapter.notifyDataSetChanged();
+            mLogListView.setSelection(mAdapter.getCount() - 1);
+        });
     }
 
     private static void logd(String message) {

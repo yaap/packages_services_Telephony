@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"Mga setting ng tawag"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"Ang admin user lang ang maaaring magbago sa mga setting ng tawag."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"Ang admin o user sa trabaho lang ang puwedeng magbago sa mga setting ng account ng telepono."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"Pinaghigpitan ng may-ari ng device ang kakayahang baguhin ang mga setting ng mobile network."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"Mga Setting (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"Error sa mga setting ng tawag"</string>
     <string name="reading_settings" msgid="1605904432450871183">"Binabasa ang mga setting…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"Lumabas sa emergency callback mode upang makapagsagawa ng hindi pang-emergency na pagtawag."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"Hindi nakarehistro sa network."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"Hindi available ang mobile network."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"Hindi available ang mobile network.\n\nKumonekta sa wireless network para tumawag.\n\nNaka-disable ang 2G sa device na ito, na posibleng nakakaapekto sa iyong pagkakonekta. Pumunta sa Mga Setting at i-enable ang Payagan ang 2G para magpatuloy."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"Hindi available ang mobile network. Kumonekta sa isang wireless network upang tumawag."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"Hindi available ang mobile network.\n\nKumonekta sa wireless network para tumawag.\n\nNaka-disable ang 2G sa device na ito, na posibleng nakakaapekto sa iyong pagkakonekta. Pumunta sa Mga Setting at i-enable ang Payagan ang 2G para magpatuloy."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"Upang tumawag, maglagay ng wastong numero."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"Nabigo ang tawag."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"Hindi maidaragdag ang tawag na ito sa ngayon. Maaari mong subukang makipag-ugnayan sa pamamagitan ng pagpapadala ng isang mensahe."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"Hindi makakapag-hold ng mga tawag."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"Kumonekta sa isang wireless network upang makatawag."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"I-enable ang pagtawag sa Wi-Fi upang tumawag."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"I-disable ang satellite mode para tumawag."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"Para tumawag, wakasan muna ang koneksyon sa satellite."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"Puwede kang magpadala at tumanggap ng mga mensahe nang walang mobile o Wi-Fi network."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"Impormasyong pang-emergency"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"May-ari"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"I-tap muli para tingnan ang impormasyon"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"Itakda na Default ang Naaalis na eSIM"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"Mobile Radio Power"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"Mag-simulate ng Hindi Gumagana (Build sa Pag-debug lang)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"Satellite Mode ng Mock Carrier (Debug Build lang)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"Test real satellite eSOS mode (Build sa Pag-debug lang)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"Tingnan ang Address Book ng SIM"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"Tingnan ang Mga Fixed Dialing Number"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"Tingnan ang Mga Service Dialing Number"</string>

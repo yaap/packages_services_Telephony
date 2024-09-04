@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"ການຕັ້ງຄ່າການໂທ"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"ມີ​ແຕ່​ຜູ້​ໃຊ້​ທີ່​ເປັນ​ຜູ້ດູແລລະບົບ​ເທົ່າ​ນັ້ນ​ທີ່​ສາ​ມາດ​ປ່ຽນການ​ຕັ້ງ​ຄ່າ​ການ​ໂທ​ໄດ້."</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"ສະເພາະຜູ້ເບິ່ງແຍງລະບົບ ຫຼື ຜູ້ໃຊ້ຢູ່ບ່ອນເຮັດວຽກເທົ່ານັ້ນທີ່ສາມາດປ່ຽນການຕັ້ງຄ່າບັນຊີຂອງໂທລະສັບໄດ້."</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"ເຈົ້າຂອງອຸປະກອນໄດ້ຈຳກັດຄວາມສາມາດໃນການປ່ຽນການຕັ້ງຄ່າເຄືອຂ່າຍມືຖື."</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"ການ​ຕັ້ງ​ຄ່າ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"ການຕັ້ງຄ່າການໂທຜິດພາດ"</string>
     <string name="reading_settings" msgid="1605904432450871183">"ກຳລັງອ່ານການຕັ້ງຄ່າ..."</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"ອອກ​ຈາກໂໝດ​ໂທ​ກັບ​ສຸກ​ເສີນ ເພື່ອ​ເຮັດ​ການ​ໂທ​ປົກກະຕິ."</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"ບໍ່ໄດ້ລົງທະບຽນໃນເຄືອຂ່າຍ."</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"ເຄືອຂ່າຍມືຖືບໍ່ສາມາດໃຊ້ໄດ້."</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"ເຄືອຂ່າຍມືຖືບໍ່ມີໃຫ້ໃຊ້.\n\nເຊື່ອມຕໍ່ຫາເຄືອຂ່າຍໄຮ້ສາຍເພື່ອໂທອອກ.\n\n2G ປິດໄວ້ຢູ່ອຸປະກອນນີ້, ເຊິ່ງອາດສົ່ງຜົນຕໍ່ການເຊື່ອມຕໍ່ຂອງທ່ານ. ໄປຫາການຕັ້ງຄ່າ ແລະ ເປີດການນຳໃຊ້ອະນຸຍາດ 2G ເພື່ອສືບຕໍ່."</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"ບໍ່ສາມາດໃຊ້ອິນເຕີເນັດມືຖືໄດ້. ກະລຸນາເຊື່ອມຕໍ່ຫາ Wi-Fi ເພື່ອໂທ."</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"ເຄືອຂ່າຍມືຖືບໍ່ມີໃຫ້ໃຊ້.\n\nເຊື່ອມຕໍ່ຫາເຄືອຂ່າຍໄຮ້ສາຍເພື່ອໂທອອກ.\n\n2G ປິດໄວ້ຢູ່ອຸປະກອນນີ້, ເຊິ່ງອາດສົ່ງຜົນຕໍ່ການເຊື່ອມຕໍ່ຂອງທ່ານ. ໄປຫາການຕັ້ງຄ່າ ແລະ ເປີດການນຳໃຊ້ອະນຸຍາດ 2G ເພື່ອສືບຕໍ່."</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"ເພື່ອ​ທີ່​ຈະ​ໂທ, ປ້ອນ​ເບີ​ໂທ​ທີ່​ໃຊ້​ໄດ້​ເຂົ້າ​ໄປ."</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"ໂທບໍ່ສຳເລັດ."</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"ບໍ່ສາມາດໂທໄດ້ໃນຕອນນີ້. ທ່ານສາມາດລອງຕິດຕໍ່ຫາໄດ້ໂດຍການສົ່ງຂໍ້ຄວາມ."</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"ບໍ່ສາມາດພັກສາຍໄດ້."</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"ເຊື່ອມຕໍ່ກັບເຄືອຂ່າຍໄຮ້ສາຍເພື່ອເຮັດການໂທ."</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"ກະລຸນາເປີດໃຊ້ການໂທ Wi-Fi ເພື່ອໂທ."</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"ປິດການນຳໃຊ້ໂໝດດາວທຽມເພື່ອໂທອອກ."</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"ເພື່ອໂທອອກ, ໃຫ້ສິ້ນສຸດການເຊື່ອມຕໍ່ຜ່ານດາວທຽມກ່ອນ."</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"ທ່ານສາມາດສົ່ງ ແລະ ຮັບຂໍ້ຄວາມໂດຍບໍ່ຕ້ອງໃຊ້ເຄືອຂ່າຍມືຖື ຫຼື Wi-Fi."</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"ຂໍ້ມູນສຸກເສີນ"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"ເຈົ້າຂອງ"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"ແຕະອີກເທື່ອໜຶ່ງເພື່ອເບິ່ງຂໍ້ມູນ"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"ຕັ້ງຄ່າ eSIM ແບບຖອດໄດ້ໃຫ້ເປັນຄ່າເລີ່ມຕົ້ນ"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"ພະລັງງານວິທະຍຸມືຖື"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"ຈໍາລອງເຫດການບໍ່ພ້ອມໃຫ້ບໍລິການ (ສໍາລັບ Build ດີບັກເທົ່ານັ້ນ)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"ຈຳລອງໂໝດດາວທຽມຂອງຜູ້ໃຫ້ບໍລິການ (ສຳລັບ Build ດີບັກເທົ່ານັ້ນ)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"ທົດສອບໂໝດ eSOS ດາວທຽມແທ້ (ສຳລັບ Build ດີບັກເທົ່ານັ້ນ)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"ເບິ່ງສະໝຸດທີ່ຢູ່ໃນຊິມ"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"ເບິ່ງໝາຍເລກໂທອອກທີ່ກຳນົດ"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"ເບິ່ງໝາຍເລກບໍລິການໂທອອກ"</string>

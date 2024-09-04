@@ -134,6 +134,7 @@
     <string name="updating_title" msgid="6130548922615719689">"การตั้งค่าการโทร"</string>
     <string name="call_settings_admin_user_only" msgid="7238947387649986286">"ผู้ใช้ระดับผู้ดูแลระบบเท่านั้นที่สามารถเปลี่ยนแปลงการตั้งค่าการโทรได้"</string>
     <string name="phone_account_settings_user_restriction" msgid="9142685151087208396">"เฉพาะผู้ดูแลระบบหรือผู้ใช้ที่ทำงานเท่านั้นที่สามารถเปลี่ยนการตั้งค่าบัญชีของโทรศัพท์ได้"</string>
+    <string name="phone_account_no_config_mobile_networks" msgid="7351062247756521227">"เจ้าของอุปกรณ์ได้จำกัดความสามารถในการเปลี่ยนการตั้งค่าเครือข่ายมือถือ"</string>
     <string name="call_settings_with_label" msgid="8460230435361579511">"การตั้งค่า (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="error_updating_title" msgid="2024290892676808965">"ข้อผิดพลาดในการตั้งค่าการโทร"</string>
     <string name="reading_settings" msgid="1605904432450871183">"กำลังประมวลการตั้งค่า…"</string>
@@ -542,7 +543,9 @@
     <string name="incall_error_ecm_emergency_only" msgid="5622379058883722080">"โปรดออกจากโหมดการโทรกลับกรณีฉุกเฉินเพื่อโทรไปยังหมายเลขที่ไม่ใช่หมายเลขฉุกเฉิน"</string>
     <string name="incall_error_emergency_only" msgid="8786127461027964653">"ยังไม่ได้ลงทะเบียนบนเครือข่าย"</string>
     <string name="incall_error_out_of_service" msgid="1927265196942672791">"เครือข่ายมือถือใช้งานไม่ได้"</string>
+    <string name="incall_error_out_of_service_2g" msgid="904434080740846116">"เครือข่ายมือถือไม่พร้อมใช้งาน\n\nเชื่อมต่อเครือข่ายไร้สายเพื่อโทรออก\n\nอุปกรณ์นี้ปิดใช้งาน 2G อยู่ซึ่งอาจส่งผลต่อการเชื่อมต่อ โปรดไปที่การตั้งค่าและเปิด \"อนุญาตให้ใช้ 2G\" เพื่อดำเนินการต่อ"</string>
     <string name="incall_error_out_of_service_wfc" msgid="4497663185857190885">"เครือข่ายมือถือไม่พร้อมใช้งาน โปรดเชื่อมต่อเครือข่ายไร้สายเพื่อโทรออก"</string>
+    <string name="incall_error_out_of_service_wfc_2g_user" msgid="8218768986365299663">"เครือข่ายมือถือไม่พร้อมใช้งาน\n\nเชื่อมต่อเครือข่ายไร้สายเพื่อโทรออก\n\nอุปกรณ์นี้ปิดใช้งาน 2G อยู่ซึ่งอาจส่งผลต่อการเชื่อมต่อ โปรดไปที่การตั้งค่าและเปิด \"อนุญาตให้ใช้ 2G\" เพื่อดำเนินการต่อ"</string>
     <string name="incall_error_no_phone_number_supplied" msgid="8680831089508851894">"หากต้องการโทรออก โปรดป้อนหมายเลขที่ถูกต้อง"</string>
     <string name="incall_error_call_failed" msgid="393508653582682539">"การโทรล้มเหลว"</string>
     <string name="incall_error_cannot_add_call" msgid="5425764862628655443">"เพิ่มการโทรไม่ได้ในขณะนี้ คุณสามารถพยายามติดต่อได้โดยการส่งข้อความ"</string>
@@ -557,7 +560,8 @@
     <string name="incall_error_supp_service_hold" msgid="8535056414643540997">"ไม่สามารถถือสายรอได้"</string>
     <string name="incall_error_wfc_only_no_wireless_network" msgid="5860742792811400109">"เชื่อมต่อเครือข่ายไร้สายเพื่อโทรออก"</string>
     <string name="incall_error_promote_wfc" msgid="9164896813931363415">"เปิดใช้การโทรผ่าน Wi-Fi เพื่อโทรออก"</string>
-    <string name="incall_error_satellite_enabled" msgid="1936541518147323016">"ปิดโหมดดาวเทียมเพื่อโทรออก"</string>
+    <string name="incall_error_satellite_enabled" msgid="5247740814607087814">"หากต้องการโทรออก ให้หยุดการเชื่อมต่อดาวเทียมก่อน"</string>
+    <string name="incall_error_carrier_roaming_satellite_mode" msgid="678603203562886361">"คุณรับส่งข้อความผ่านดาวเทียมได้โดยไม่ต้องใช้เครือข่ายมือถือหรือ Wi-Fi"</string>
     <string name="emergency_information_hint" msgid="9208897544917793012">"ข้อมูลสำหรับกรณีฉุกเฉิน"</string>
     <string name="emergency_information_owner_hint" msgid="6256909888049185316">"เจ้าของ"</string>
     <string name="emergency_information_confirm_hint" msgid="5109017615894918914">"แตะอีกครั้งเพื่อดูข้อมูล"</string>
@@ -841,6 +845,8 @@
     <string name="removable_esim_string" msgid="7931369811671787649">"กำหนดให้ eSIM แบบนำออกได้เป็นค่าเริ่มต้น"</string>
     <string name="radio_info_radio_power" msgid="8805595022160471587">"กำลังส่งของวิทยุเครือข่ายมือถือ"</string>
     <string name="simulate_out_of_service_string" msgid="7787925611727597193">"จําลองความไม่พร้อมให้บริการ (บิลด์การแก้ไขข้อบกพร่องเท่านั้น)"</string>
+    <string name="mock_carrier_roaming_satellite_string" msgid="4796300252858292593">"โหมดดาวเทียมของผู้ให้บริการจำลอง (บิลด์การแก้ไขข้อบกพร่องเท่านั้น)"</string>
+    <string name="esos_satellite_string" msgid="7274794226125968657">"ทดสอบโหมด eSOS ของดาวเทียมจริง (บิลด์การแก้ไขข้อบกพร่องเท่านั้น)"</string>
     <string name="radioInfo_menu_viewADN" msgid="4533179730908559846">"ดูสมุดที่อยู่ของซิม"</string>
     <string name="radioInfo_menu_viewFDN" msgid="1847236480527032061">"ดูการจำกัดหมายเลขโทรออก"</string>
     <string name="radioInfo_menu_viewSDN" msgid="2613431584522392842">"ดูหมายเลขรับบริการโทรออก"</string>
