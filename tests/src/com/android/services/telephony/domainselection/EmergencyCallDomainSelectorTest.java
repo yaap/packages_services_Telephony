@@ -38,6 +38,7 @@ import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_OVER_IMS_SUPPORTED_3GPP_NETWORK_TYPES_INT_ARRAY;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_IMS_REGISTRATION_BOOL;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_VOLTE_ENABLED_BOOL;
+import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_SCAN_TIMER_SEC_INT;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_VOWIFI_REQUIRES_CONDITION_INT;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_IMS_REASONINFO_CODE_TO_RETRY_EMERGENCY_INT_ARRAY;
@@ -102,6 +103,8 @@ import android.os.IThermalService;
 import android.os.Looper;
 import android.os.PersistableBundle;
 import android.os.PowerManager;
+import android.platform.test.annotations.EnableFlags;
+import android.platform.test.flag.junit.SetFlagsRule;
 import android.telecom.PhoneAccount;
 import android.telecom.TelecomManager;
 import android.telephony.AccessNetworkConstants;
@@ -130,10 +133,14 @@ import android.view.Display;
 import androidx.test.filters.SmallTest;
 
 import com.android.TestContext;
+import com.android.internal.telephony.flags.Flags;
+import com.android.internal.telephony.subscription.SubscriptionInfoInternal;
+import com.android.internal.telephony.subscription.SubscriptionManagerService;
 import com.android.phone.R;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -149,6 +156,8 @@ import java.util.function.Consumer;
  * Unit tests for EmergencyCallDomainSelector
 */
 public class EmergencyCallDomainSelectorTest {
+    @Rule public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
+
     private static final String TAG = "EmergencyCallDomainSelectorTest";
     private static final int SLOT_0 = 0;
     private static final int SLOT_0_SUB_ID = 1;
@@ -167,6 +176,8 @@ public class EmergencyCallDomainSelectorTest {
     @Mock private DataConnectionStateHelper mEpdnHelper;
     @Mock private Resources mResources;
     @Mock private ImsEmergencyRegistrationStateHelper mImsEmergencyRegistrationHelper;
+    @Mock private SubscriptionManagerService mSubscriptionManagerService;
+    @Mock private SubscriptionInfoInternal mSubscriptionInfoInternal;
 
     private TelecomManager mTelecomManager;
 
@@ -304,6 +315,13 @@ public class EmergencyCallDomainSelectorTest {
         when(mResources.getStringArray(anyInt())).thenReturn(null);
 
         doReturn(false).when(mCsrdCtrl).isThereOtherSlot();
+
+        // Enable VoNR setting.
+        replaceInstance(SubscriptionManagerService.class, "sInstance", null,
+                mSubscriptionManagerService);
+        doReturn(mSubscriptionInfoInternal).when(mSubscriptionManagerService)
+                .getSubscriptionInfoInternal(SLOT_0_SUB_ID);
+        doReturn(true).when(mSubscriptionInfoInternal).isNrAdvancedCallingEnabled();
     }
 
     @After
@@ -1500,8 +1518,66 @@ public class EmergencyCallDomainSelectorTest {
 
         bindImsServiceUnregistered();
 
-        // Requires VoLTE enabled but VoLTE is'nt enabled.
+        // Requires VoLTE enabled but VoLTE isn't enabled.
         verifyScanCsPreferred();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_EMERGENCY_OVER_NR_REQUIRES_VONR_ENABLED)
+    public void testVoNrOnEpsImsNotRegisteredSelectPs() throws Exception {
+        PersistableBundle bundle = getDefaultPersistableBundle();
+        bundle.putBoolean(KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL, true);
+        bundle.putIntArray(KEY_EMERGENCY_OVER_IMS_SUPPORTED_3GPP_NETWORK_TYPES_INT_ARRAY,
+                new int[] { NGRAN, EUTRAN });
+        when(mCarrierConfigManager.getConfigForSubId(anyInt(), any())).thenReturn(bundle);
+
+        createSelector(SLOT_0_SUB_ID);
+        unsolBarringInfoChanged(false);
+
+        EmergencyRegistrationResult regResult = getEmergencyRegResult(NGRAN,
+                REGISTRATION_STATE_HOME,
+                NetworkRegistrationInfo.DOMAIN_PS,
+                true, true, 1, 1, "", "");
+        SelectionAttributes attr = getSelectionAttributes(SLOT_0, SLOT_0_SUB_ID, regResult);
+        mDomainSelector.selectDomain(attr, mTransportSelectorCallback);
+        processAllMessages();
+
+        bindImsServiceUnregistered();
+
+        // Requires VoNR enabled and VoNR is enabled.
+        verifyPsDialed();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_EMERGENCY_OVER_NR_REQUIRES_VONR_ENABLED)
+    public void testVoNrOffEpsImsNotRegisteredScanEutranPreferred() throws Exception {
+        PersistableBundle bundle = getDefaultPersistableBundle();
+        bundle.putBoolean(KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL, true);
+        bundle.putIntArray(KEY_EMERGENCY_OVER_IMS_SUPPORTED_3GPP_NETWORK_TYPES_INT_ARRAY,
+                new int[] { NGRAN, EUTRAN });
+        when(mCarrierConfigManager.getConfigForSubId(anyInt(), any())).thenReturn(bundle);
+
+        // Disable VoNR.
+        doReturn(false).when(mSubscriptionInfoInternal).isNrAdvancedCallingEnabled();
+
+        doReturn(mSubscriptionInfoInternal).when(mSubscriptionManagerService)
+                .getSubscriptionInfoInternal(SLOT_0_SUB_ID);
+
+        createSelector(SLOT_0_SUB_ID);
+        unsolBarringInfoChanged(false);
+
+        EmergencyRegistrationResult regResult = getEmergencyRegResult(NGRAN,
+                REGISTRATION_STATE_HOME,
+                NetworkRegistrationInfo.DOMAIN_PS,
+                true, true, 1, 1, "", "");
+        SelectionAttributes attr = getSelectionAttributes(SLOT_0, SLOT_0_SUB_ID, regResult);
+        mDomainSelector.selectDomain(attr, mTransportSelectorCallback);
+        processAllMessages();
+
+        bindImsServiceUnregistered();
+
+        // Requires VoNR enabled but VoNR isn't enabled.
+        verifyScanPreferred(DomainSelectionService.SCAN_TYPE_NO_PREFERENCE, EUTRAN);
     }
 
     @Test
@@ -4816,6 +4892,7 @@ public class EmergencyCallDomainSelectorTest {
         int scanType = SCAN_TYPE_NO_PREFERENCE;
         boolean requiresImsRegistration = false;
         boolean requiresVoLteEnabled = false;
+        boolean requiresVoNrEnabled = false;
         boolean ltePreferredAfterNrFailed = false;
         String[] cdmaPreferredNumbers = new String[] {};
 
@@ -4823,7 +4900,8 @@ public class EmergencyCallDomainSelectorTest {
                 domainPreference, roamDomainPreference, imsWhenVoiceOnCs,
                 voWifiRequiresCondition, maxRetriesOverWiFi, cellularScanTimerSec,
                 maxCellularTimerSec, scanType, voWifiOverEmergencyPdn, requiresImsRegistration,
-                requiresVoLteEnabled, ltePreferredAfterNrFailed, cdmaPreferredNumbers);
+                requiresVoLteEnabled, requiresVoNrEnabled, ltePreferredAfterNrFailed,
+                cdmaPreferredNumbers);
     }
 
     private static PersistableBundle getPersistableBundle(
@@ -4834,8 +4912,8 @@ public class EmergencyCallDomainSelectorTest {
             int maxRetriesOverWiFi, int cellularScanTimerSec,
             int maxCellularTimerSec, int scanType,
             boolean voWifiOverEmergencyPdn, boolean requiresImsRegistration,
-            boolean requiresVoLteEnabled, boolean ltePreferredAfterNrFailed,
-            @Nullable String[] cdmaPreferredNumbers) {
+            boolean requiresVoLteEnabled, boolean requiresVoNrEnabled,
+            boolean ltePreferredAfterNrFailed, @Nullable String[] cdmaPreferredNumbers) {
 
         PersistableBundle bundle  = new PersistableBundle();
         if (imsRats != null) {
@@ -4872,6 +4950,7 @@ public class EmergencyCallDomainSelectorTest {
         bundle.putInt(KEY_EMERGENCY_NETWORK_SCAN_TYPE_INT, scanType);
         bundle.putBoolean(KEY_EMERGENCY_REQUIRES_IMS_REGISTRATION_BOOL, requiresImsRegistration);
         bundle.putBoolean(KEY_EMERGENCY_REQUIRES_VOLTE_ENABLED_BOOL, requiresVoLteEnabled);
+        bundle.putBoolean(KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL, requiresVoNrEnabled);
         bundle.putInt(KEY_EMERGENCY_CALL_SETUP_TIMER_ON_CURRENT_NETWORK_SEC_INT, 0);
         bundle.putBoolean(KEY_EMERGENCY_LTE_PREFERRED_AFTER_NR_FAILED_BOOL,
                 ltePreferredAfterNrFailed);

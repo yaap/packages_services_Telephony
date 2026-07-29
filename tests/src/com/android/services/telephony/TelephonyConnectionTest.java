@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.platform.test.flag.junit.SetFlagsRule;
 import android.telecom.Connection;
 import android.telephony.CarrierConfigManager;
 import android.telephony.DisconnectCause;
@@ -38,12 +37,10 @@ import com.android.internal.telephony.Call;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.d2d.DtmfTransport;
 import com.android.internal.telephony.d2d.RtpTransport;
-import com.android.internal.telephony.flags.Flags;
 import com.android.internal.telephony.imsphone.ImsPhoneConnection;
 import com.android.phone.R;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -52,7 +49,6 @@ import java.util.ArrayList;
 
 @RunWith(AndroidJUnit4.class)
 public class TelephonyConnectionTest extends TelephonyTestBase {
-    @Rule public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
     @Mock
     private ImsPhoneConnection mImsPhoneConnection;
     @Mock
@@ -64,7 +60,6 @@ public class TelephonyConnectionTest extends TelephonyTestBase {
 
         when(mImsPhoneConnection.getState()).thenReturn(Call.State.ACTIVE);
         when(mImsPhoneConnection.getPhoneType()).thenReturn(PhoneConstants.PHONE_TYPE_IMS);
-        mSetFlagsRule.disableFlags(Flags.FLAG_IGNORE_STATE_DETAILS_UPDATE_FOR_DOMAIN_RESELECTION);
     }
 
     /**
@@ -322,29 +317,7 @@ public class TelephonyConnectionTest extends TelephonyTestBase {
     }
 
     @Test
-    public void testDomainSelectionDisconnected_Redial_disableIgnoreStateDetailsUpdate() {
-        doReturn(true).when(mImsPhoneConnection).isRttEnabledForCall();
-        TestTelephonyConnection c = new TestTelephonyConnection();
-        c.requestToClearOriginalConnection(true);
-        c.setOriginalConnection(mImsPhoneConnection);
-
-        doReturn(Call.State.DISCONNECTED).when(mImsPhoneConnection)
-                .getState();
-        c.setTelephonyConnectionService(mTelephonyConnectionService);
-        doReturn(true).when(mTelephonyConnectionService)
-                .maybeReselectDomain(any(), any(), anyBoolean(), anyInt());
-        c.resetOriginalConnectionCleared();
-        c.updateState();
-
-        assertNotEquals(STATE_DISCONNECTED, c.getState());
-        assertTrue(c.isOriginalConnectionCleared());
-        // The connection properties are updated in the DISCONNECTED state.
-        assertEquals(0, c.getConnectionProperties() & Connection.PROPERTY_IS_RTT);
-    }
-
-    @Test
-    public void testDomainSelectionDisconnected_Redial_enableIgnoreStateDetailsUpdate() {
-        mSetFlagsRule.enableFlags(Flags.FLAG_IGNORE_STATE_DETAILS_UPDATE_FOR_DOMAIN_RESELECTION);
+    public void testDomainSelectionDisconnected_redial() {
         doReturn(true).when(mImsPhoneConnection).isRttEnabledForCall();
         TestTelephonyConnection c = new TestTelephonyConnection();
         c.requestToClearOriginalConnection(true);
@@ -423,6 +396,37 @@ public class TelephonyConnectionTest extends TelephonyTestBase {
         c.setOriginalConnection(mImsPhoneConnection);
         assertTrue(c.shouldTreatAsEmergencyCall());
         assertTrue(c.isNetworkIdentifiedEmergencyCall());
+    }
+
+    @Test
+    public void testMaybePersistDropsFgCallExtra() {
+        TestTelephonyConnection c = new TestTelephonyConnection();
+        c.setOriginalConnection(mImsPhoneConnection);
+        when(mImsPhoneConnection.isActiveCallDisconnectedOnAnswer()).thenReturn(false);
+
+        // 1. Extra not set, config off -> extra should be removed
+        c.getCarrierConfigBundle().putBoolean(
+                CarrierConfigManager.KEY_SHOW_VOWIFI_DROP_DIALOG_ON_DSDS_BOOL, false);
+        c.setOriginalConnection(mImsPhoneConnection);
+        assertFalse(c.getExtras() != null && c.getExtras().containsKey(
+                Connection.EXTRA_ANSWERING_DROPS_FG_CALL));
+
+        // 2. Extra set (e.g. by Telecom), config on -> extra should be persisted
+        c.getCarrierConfigBundle().putBoolean(
+                CarrierConfigManager.KEY_SHOW_VOWIFI_DROP_DIALOG_ON_DSDS_BOOL, true);
+        Bundle extras = new Bundle();
+        extras.putBoolean(Connection.EXTRA_ANSWERING_DROPS_FG_CALL, true);
+        c.putTelephonyExtras(extras);
+
+        c.setOriginalConnection(mImsPhoneConnection);
+        assertTrue(c.getExtras().getBoolean(Connection.EXTRA_ANSWERING_DROPS_FG_CALL));
+
+        // 3. Extra set, config off -> extra should be removed
+        c.getCarrierConfigBundle().putBoolean(
+                CarrierConfigManager.KEY_SHOW_VOWIFI_DROP_DIALOG_ON_DSDS_BOOL, false);
+        c.setOriginalConnection(mImsPhoneConnection);
+        assertFalse(c.getExtras() != null && c.getExtras().containsKey(
+                Connection.EXTRA_ANSWERING_DROPS_FG_CALL));
     }
 
     private EmergencyNumber getEmergencyNumber(int eccCategory) {

@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"டேட்டா பிளான் வகை:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"சேவை வகை:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"சேவைக் கொள்கை:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"PLMN ஐடி:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"PLMN பட்டியலில் சேர்"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"BARR PLMN"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"எல்லாம் அழி"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"DataPlanType சேர்க்கப்பட்டுள்ளது"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"டேட்டா சேவை"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"குரல் சேவை:"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"தடைசெய்யப்பட்ட PLMN ஐடி:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"கட்டண நெட்வொர்க்"</item>
+    <item msgid="847694900028477007">"கணக்கிடப்படாத"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"டேட்டா"</item>
+    <item msgid="6815202494927703427">"குரல்"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"கட்டுப்பாடுகள் இல்லை"</item>
+    <item msgid="5432811344446551182">"வரையறுக்கப்பட்டது"</item>
+    <item msgid="2865228900925141156">"கட்டுப்படுத்தப்பட்டது"</item>
+  </string-array>
 </resources>

@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"レイテンシを優先する"</string>
     <string name="bw_title" msgid="3902162973688221344">"帯域幅を優先する"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"ユニファイド コミュニケーションを優先"</string>
     <string name="purchase" msgid="7843181995697372128">"ネットワーク プレミアムを購入"</string>
     <string name="network_available" msgid="4780293262690730734">"結果: リクエストされたネットワークが利用できるようになりました。"</string>
     <string name="network_requested" msgid="5646123922691865991">"結果: ネットワークがリクエストされました。"</string>

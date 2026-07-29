@@ -16,12 +16,14 @@
 
 package com.android.phone;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Intent;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
 
 import org.junit.Test;
 
@@ -36,24 +38,26 @@ public class SubscriptionInfoHelperTest {
     @Test
     public void testAddExtrasToIntentWithNullDisplayName() {
         Intent intent = new Intent();
-        SubscriptionInfo info = new SubscriptionInfo(1, // id
-                "90210", // iccId
-                1, // simSlotIndex
-                null, // displayName
-                null, // carrierName
-                SubscriptionManager.NAME_SOURCE_CARRIER_ID, // nameSource
-                0, //iconTint
-                "555-1212", // number
-                0, // roaming
-                null, // icon
-                "401", // mcc
-                "384", // mnc
-                "us", // countryIso
-                false, // isEmbedded
-                null, // nativeAccessRules
-                ""); // cardString
+        SubscriptionInfo info = new SubscriptionInfo.Builder()
+                .setId(1)
+                .setIccId("90210")
+                .setSimSlotIndex(1)
+                .setDisplayName(null)
+                .setCarrierName(null)
+                .setDisplayNameSource(SubscriptionManager.NAME_SOURCE_CARRIER_ID)
+                .setIconTint(0)
+                .setNumber("555-1212")
+                .setDataRoaming(0)
+                .setIcon(null)
+                .setMcc("401")
+                .setMnc("384")
+                .setCountryIso("us")
+                .setEmbedded(false)
+                .setNativeAccessRules(null)
+                .setCardString("")
+                .build();
         SubscriptionInfoHelper.addExtrasToIntent(intent, info);
-        assertNull(intent.getStringExtra(EXTRA_SUBSCRIPTION_LABEL));
         assertTrue(intent.hasExtra(EXTRA_SUBSCRIPTION_LABEL));
+        assertTrue(TextUtils.isEmpty(intent.getStringExtra(EXTRA_SUBSCRIPTION_LABEL)));
     }
 }

@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Determinar configuración da conta"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Todas as contas de chamadas"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Selecciona as contas que poden facer chamadas"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Aplicacións de terceiros"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Permite que outras aplicacións mostren as chamadas no teu historial. Se se desactiva esta opción, só aparecerán nas súas aplicacións específicas."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Chamadas por wifi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Servizo de conexión integrado"</string>
     <string name="voicemail" msgid="7697769412804195032">"Correo de voz"</string>
@@ -271,7 +273,7 @@
     <string name="preferred_network_mode_nr_lte_tdscdma_wcdma_summary" msgid="5912457779733343522">"Modo de rede preferido: NR/LTE/TDSCDMA/WCDMA"</string>
     <string name="preferred_network_mode_nr_lte_tdscdma_gsm_wcdma_summary" msgid="6769797110309412576">"Modo de rede preferido: NR/LTE/TDSCDMA/GSM/WCDMA"</string>
     <string name="preferred_network_mode_nr_lte_tdscdma_cdma_evdo_gsm_wcdma_summary" msgid="4260661428277578573">"Modo de rede preferido: NR/LTE/TDSCDMA/CDMA/EvDo/GSM/WCDMA"</string>
-    <string name="call_category" msgid="4394703838833058138">"Chamando"</string>
+    <string name="call_category" msgid="4394703838833058138">"Chamadas"</string>
     <string name="network_operator_category" msgid="4992217193732304680">"Rede"</string>
     <string name="enhanced_4g_lte_mode_title" msgid="4213420368777080540">"Modo LTE 4G mellorado"</string>
     <!-- no translation found for enhanced_4g_lte_mode_title_variant:0 (7240155150166394308) -->
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Eliminar número de marcación fixa"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Eliminando número de marcación fixa..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Eliminouse o número de marcación fixa."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Non se actualizaron os NMF porque escribiches un PIN incorrecto."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 incorrecto. Non se actualizou o NMF."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Non se puido actualizar o NMF porque o número supera os <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> díxitos."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Non se actualizaron os NMF. O PIN2 era incorrecto ou rexeitouse o número de teléfono."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Produciuse un fallo no funcionamento dos NMF."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Introducir código PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Contrasinal incorrecto. O PIN2 está bloqueado agora. Para tentalo de novo, cambia o PIN2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Contrasinal incorrecto. A SIM está bloqueada agora. Introduce o PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"O PIN2 está bloqueado. Introduce o PUK2 para desbloquear a SIM."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"O PUK2 está permanentemente bloqueado."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Quédanche <xliff:g id="NUMBER">%d</xliff:g> intentos."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 bloqueado. Contacta co fornecedor de servizo para desbloquealo."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Ignorar"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Activar conexión de datos"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Desactivar conexión de datos"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Aplicar"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Todos"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"Fornecemento VoLTE"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Videochamadas activadas"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Chamadas por wifi activadas"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"versión:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"versión de Skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"modo de datos máximos permitidos:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"todos os plmns de fornecedores de satélite:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"versión de Starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

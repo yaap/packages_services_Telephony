@@ -21,9 +21,15 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.os.PersistableBundle;
 import android.telephony.CarrierConfigManager;
-
+import android.telephony.SubscriptionInfo;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.satellite.SatelliteConfig;
+import com.android.internal.telephony.satellite.SatelliteController;
+import com.android.internal.telephony.subscription.SubscriptionManagerService;
 import com.android.libraries.entitlement.CarrierConfig;
 import com.android.libraries.entitlement.ServiceEntitlement;
 import com.android.libraries.entitlement.ServiceEntitlementException;
@@ -37,6 +43,10 @@ import com.android.libraries.entitlement.ServiceEntitlementRequest;
 public class SatelliteEntitlementApi {
     private static final String TAG = "SatelliteEntitlementApi";
     private static final String DEFAULT_APP_NAME = "androidSatmode";
+    @VisibleForTesting(visibility = VisibleForTesting.Visibility.PRIVATE)
+    public static final String ENTITLEMENT_VERSION = "12.0";
+    @VisibleForTesting(visibility = VisibleForTesting.Visibility.PRIVATE)
+    public static final int CONFIGURATION_VERSION = 1;
     @NonNull
     private final ServiceEntitlement mServiceEntitlement;
     private final Context mContext;
@@ -49,7 +59,7 @@ public class SatelliteEntitlementApi {
             @NonNull PersistableBundle carrierConfig, @NonNull int subId) {
         mContext = context;
         mServiceEntitlement = new ServiceEntitlement(mContext,
-                getCarrierConfigFromEntitlementServerUrl(carrierConfig), subId);
+                getCarrierConfigFromEntitlementServerUrl(carrierConfig, subId), subId);
         mCarrierConfig = carrierConfig;
     }
 
@@ -61,6 +71,8 @@ public class SatelliteEntitlementApi {
         ServiceEntitlementRequest.Builder requestBuilder = ServiceEntitlementRequest.builder();
         requestBuilder.setAcceptContentType(ServiceEntitlementRequest.ACCEPT_CONTENT_TYPE_JSON);
         requestBuilder.setAppName(getSatelliteEntitlementAppName(mCarrierConfig));
+        requestBuilder.setEntitlementVersion(ENTITLEMENT_VERSION);
+        requestBuilder.setConfigurationVersion(CONFIGURATION_VERSION);
         ServiceEntitlementRequest request = requestBuilder.build();
 
         String response = queryEntitlementStatus(
@@ -84,13 +96,38 @@ public class SatelliteEntitlementApi {
         mShouldThrowExceptionForCtsTest = throwException;
     }
 
+    @Nullable
+    private String getEntitlementServerUrlFromSatelliteConfig(int subId) {
+        SatelliteConfig config = SatelliteController.getInstance().getSatelliteConfig();
+        if (config == null) {
+            Log.d(TAG, "getEntitlementServerUrlFromSatelliteConfig return null"
+                    + " (SatelliteConfig is null)");
+            return null;
+        }
+
+        return config.getSatelliteEntitlementServerUrlBySubId(subId);
+    }
+
+    private String getSatelliteEntitlementServerUrl(
+            @NonNull PersistableBundle carrierConfig, int subId) {
+        // 1. get from SatelliteConfig
+        String url = getEntitlementServerUrlFromSatelliteConfig(subId);
+        if (!TextUtils.isEmpty(url)) {
+            Log.d(TAG, "getSatelliteEntitlementServerUrl: "
+                    + "using SatelliteConfig for subId=" + subId
+                    + ", entitlementServerUrl=" + url);
+            return url;
+        }
+        // 2. get from CarrierConfig
+        return carrierConfig.getString(
+                CarrierConfigManager.ImsServiceEntitlement.KEY_ENTITLEMENT_SERVER_URL_STRING, "");
+    }
+
     @NonNull
     private CarrierConfig getCarrierConfigFromEntitlementServerUrl(
-            @NonNull PersistableBundle carrierConfig) {
-        String entitlementServiceUrl = carrierConfig.getString(
-                CarrierConfigManager.ImsServiceEntitlement.KEY_ENTITLEMENT_SERVER_URL_STRING,
-                "");
-        return CarrierConfig.builder().setServerUrl(entitlementServiceUrl).build();
+            @NonNull PersistableBundle carrierConfig, int subId) {
+        String entitlementServerUrl = getSatelliteEntitlementServerUrl(carrierConfig, subId);
+        return CarrierConfig.builder().setServerUrl(entitlementServerUrl).build();
     }
 
     @NonNull

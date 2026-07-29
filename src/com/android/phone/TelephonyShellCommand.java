@@ -223,6 +223,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             "override-satellite-entitlement-status-response-for-cts-test";
     private static final String SET_MAX_ALLOWED_SATELLITE_DATA_MODE_FOR_CTS_TEST =
             "set-max-allowed-satellite-data-mode-for-cts-test";
+    private static final String UNCAP_MAX_ALLOWED_SATELLITE_DATA_MODE =
+            "uncap-max-allowed-satellite-data-mode";
 
     private static final String  ADD_ATTACH_RESTRICTION_FOR_CARRIER =
             "add-attach-restriction-for-carrier";
@@ -261,6 +263,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
     private static final String SET_SATELLITE_IGNORE_PLMN_LIST_FROM_STORAGE =
             "set-satellite-ignore-plmn-list-from-storage";
 
+    private static final String GET_PHONE_NUMBER = "get-phone-number";
+
     // Take advantage of existing methods that already contain permissions checks when possible.
     private final ITelephony mInterface;
 
@@ -271,7 +275,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
     private FakeRil mFakeRil;
 
     private enum CcType {
-        BOOLEAN, DOUBLE, DOUBLE_ARRAY, INT, INT_ARRAY, LONG, LONG_ARRAY, STRING,
+        BOOLEAN, BOOLEAN_ARRAY, DOUBLE, DOUBLE_ARRAY, INT, INT_ARRAY, LONG, LONG_ARRAY, STRING,
                 STRING_ARRAY, PERSISTABLE_BUNDLE, UNKNOWN
     }
 
@@ -418,6 +422,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 return handleAllowedNetworkTypesCommand(cmd);
             case GET_IMEI:
                 return handleGetImei();
+            case GET_PHONE_NUMBER:
+                return handleGetPhoneNumber();
             case GET_SIM_SLOTS_MAPPING:
                 return handleGetSimSlotsMapping();
             case RADIO_SUBCOMMAND:
@@ -460,6 +466,8 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 return handleOverrideSatelliteEntitlementStatusResponseForCtsTest();
             case SET_MAX_ALLOWED_SATELLITE_DATA_MODE_FOR_CTS_TEST:
                 return handleSetMaxAllowedSatelliteDataModeForCtsTest();
+            case UNCAP_MAX_ALLOWED_SATELLITE_DATA_MODE:
+                return handleUncapMaxAllowedSatelliteDataMode();
             case OVERRIDE_CONFIG_DATA_VERSION:
                 return handleOverrideConfigDataVersion();
             case SET_COUNTRY_CODES:
@@ -548,8 +556,15 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
         onHelpDomainSelection();
         onHelpRilEvent();
         onHelpSimCommands();
+        onHelpGetPhoneNumber();
     }
 
+    private void onHelpGetPhoneNumber() {
+        PrintWriter pw = getOutPrintWriter();
+        pw.println("  get-phone-number <subId> <source>");
+        pw.println("    Returns the phone number for the subId from the specific source.");
+        pw.println("    Source values: 1 (UICC), 2 (CARRIER), 3 (IMS), 4 (TS43).");
+    }
     private void onHelpSimCommands() {
         PrintWriter pw = getOutPrintWriter();
         pw.println("SIM Commands:");
@@ -2046,6 +2061,9 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             if (value instanceof Boolean) {
                 return CcType.BOOLEAN;
             }
+            if (value instanceof boolean[]) {
+                return CcType.BOOLEAN_ARRAY;
+            }
             if (value instanceof Double) {
                 return CcType.DOUBLE;
             }
@@ -2077,6 +2095,9 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             // Current value was null and can therefore not be used in order to find the type.
             // Check the name of the key to infer the type. This check is not needed for primitive
             // data types (boolean, double, int and long), since they can not be null.
+            if (key.endsWith("bool_array")) {
+                return CcType.BOOLEAN_ARRAY;
+            }
             if (key.endsWith("double_array")) {
                 return CcType.DOUBLE_ARRAY;
             }
@@ -2113,6 +2134,17 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
             valueString.append("null");
         } else {
             switch (type) {
+                case BOOLEAN_ARRAY: {
+                    // Format the string representation of the boolean array as value1 value2......
+                    boolean[] valueArray = (boolean[]) value;
+                    for (int i = 0; i < valueArray.length; i++) {
+                        if (i != 0) {
+                            valueString.append(" ");
+                        }
+                        valueString.append(valueArray[i]);
+                    }
+                    break;
+                }
                 case DOUBLE_ARRAY: {
                     // Format the string representation of the int array as value1 value2......
                     double[] valueArray = (double[]) value;
@@ -2203,6 +2235,25 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
 
         // Parse the value according to type and add it to the Bundle.
         switch (type) {
+            case BOOLEAN_ARRAY: {
+                boolean[] valueBooleanArray = null;
+                if (valueList.size() > 0) {
+                    valueBooleanArray = new boolean[valueList.size()];
+                    for (int i = 0; i < valueList.size(); i++) {
+                        if ("true".equalsIgnoreCase(valueList.get(i))) {
+                            valueBooleanArray[i] = true;
+                        } else if ("false".equalsIgnoreCase(valueList.get(i))) {
+                            valueBooleanArray[i] = false;
+                        } else {
+                            errPw.println(tag + "Unable to parse " + valueList.get(i)
+                                    + " as a boolean.");
+                            return null;
+                        }
+                    }
+                }
+                bundle.putBooleanArray(key, valueBooleanArray);
+                break;
+            }
             case BOOLEAN: {
                 if ("true".equalsIgnoreCase(valueList.get(0))) {
                     bundle.putBoolean(key, true);
@@ -2374,6 +2425,39 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
         getOutPrintWriter().println("Device IMEI: " + imei);
 
         Binder.restoreCallingIdentity(identity);
+        return 0;
+    }
+
+    private int handleGetPhoneNumber() {
+        if (!checkShellUid()) {
+            Log.v(LOG_TAG, "handleGetPhoneNumber checkShellUid fails");
+            return -1;
+        }
+
+        PrintWriter pw = getOutPrintWriter();
+        int subId;
+        int source;
+
+        try {
+            // Both subId and source are mandatory arguments as requested.
+            subId = Integer.parseInt(getNextArgRequired());
+            source = Integer.parseInt(getNextArgRequired());
+        } catch (Exception e) {
+            pw.println("Error: subId and source are required and must be integers.");
+            onHelpGetPhoneNumber(); // Show specific help on error
+            return -1;
+        }
+
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            String phoneNumber = mSubscriptionManager.getPhoneNumber(subId, source);
+            pw.println(phoneNumber != null ? phoneNumber : "");
+        } catch (Exception e) {
+            pw.println("Error: " + e.getMessage());
+            return -1;
+        }  finally {
+            Binder.restoreCallingIdentity(identity);
+        }
         return 0;
     }
 
@@ -3840,7 +3924,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 Log.v(LOG_TAG, "handleSetShouldSendDatagramToModemInDemoMode returns: "
                         + result);
             }
-            getOutPrintWriter().println(false);
+            getOutPrintWriter().println(result);
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "setShouldSendDatagramToModemInDemoMode(" + shouldSendToDemoMode
                     + "), error = " + e.getMessage());
@@ -3942,7 +4026,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                     "handleOverrideSatelliteEntitlementStatusResponseForCtsTest returns: "
                     + result);
             }
-            getOutPrintWriter().println(false);
+            getOutPrintWriter().println(result);
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "handleOverrideSatelliteEntitlementStatusResponseForCtsTest("
                     + overriddenResponse
@@ -3984,7 +4068,7 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                     "handleOverrideSatelliteEntilementQueryConditions returns: "
                     + result);
             }
-            getOutPrintWriter().println(false);
+            getOutPrintWriter().println(result);
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "handleOverrideSatelliteEntilementQueryConditions("
                 + ignoreInternetConnection + ", entilementRefreshDays=" + ignoreRefreshCondition
@@ -4019,10 +4103,30 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
                 Log.v(LOG_TAG,
                     "handleSetMaxAllowedSatelliteDataModeForCtsTest returns: " + result);
             }
-            getOutPrintWriter().println(false);
+            getOutPrintWriter().println(result);
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "handleSetMaxAllowedSatelliteDataModeForCtsTest("
                     + maxAllowedDataMode + "), error = " + e.getMessage());
+            errPw.println("Exception: " + e.getMessage());
+            return -1;
+        }
+        return 0;
+    }
+
+    private int handleUncapMaxAllowedSatelliteDataMode() {
+        PrintWriter errPw = getErrPrintWriter();
+        Log.d(LOG_TAG, "handleUncapMaxAllowedSatelliteDataMode");
+        if (!UserHandle.isSameApp(Binder.getCallingUid(), Process.ROOT_UID)
+                || TelephonyUtils.IS_USER) {
+            getErrPrintWriter().println("Permission denied.");
+            return -1;
+        }
+        try {
+            boolean result = mInterface.uncapMaxAllowedSatelliteDataMode();
+            Log.v(LOG_TAG, "handleUncapMaxAllowedSatelliteDataMode returns: " + result);
+            getOutPrintWriter().println("Result: " + result);
+        } catch (RemoteException e) {
+            Log.w(LOG_TAG, "handleUncapMaxAllowedSatelliteDataMode, error = " + e.getMessage());
             errPw.println("Exception: " + e.getMessage());
             return -1;
         }
@@ -4200,11 +4304,19 @@ public class TelephonyShellCommand extends BasicShellCommandHandler {
         } else {
             switch (opt) {
                 case "-p": {
-                    name = opt + "/" + "android.telephony.cts";
+                    String packageName = getNextArg();
+                    if (packageName == null) {
+                        packageName = "android.telephony.satellite.cts";
+                    }
+                    name = opt + "/" + packageName;
                     break;
                 }
                 case "-c": {
-                    name = opt + "/" + "android.telephony.cts.SatelliteReceiver";
+                    String className = getNextArg();
+                    if (className == null) {
+                        className = "android.telephony.satellite.cts.SatelliteReceiver";
+                    }
+                    name = opt + "/" + className;
                     break;
                 }
                 case "-r": {

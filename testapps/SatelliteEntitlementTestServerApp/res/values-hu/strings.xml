@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"Adatcsomag típusa:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"Szolgáltatás típusa:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"Szolgáltatási irányelvek:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"PLMN-azonosító:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"HOZZÁADÁS A PLMN-LISTÁHOZ"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"PLMN TILTÁSA"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"ÖSSZES TÖRLÉSE"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"DataPlanType szerepeltetése"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"Adatszolgáltatás"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"Hangszolgáltatás"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"Tiltott PLMN-azonosító:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"forgalomkorlátos"</item>
+    <item msgid="847694900028477007">"nem forgalomkorlátos"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"adatok"</item>
+    <item msgid="6815202494927703427">"hang"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"korlátlan"</item>
+    <item msgid="5432811344446551182">"korlátozott"</item>
+    <item msgid="2865228900925141156">"korlátozott"</item>
+  </string-array>
 </resources>

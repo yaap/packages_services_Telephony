@@ -384,6 +384,11 @@ public class PssActivity extends Activity implements AdapterView.OnItemSelectedL
                 public void onTerrestrialNetworkAvailableChanged(boolean isAvailable) {
                     logi("onTerrestrialNetworkAvailableChanged: " + isAvailable);
                 }
+
+                @Override
+                public void prioritizedScanModeChanged(boolean prioritized) {
+                    logi("prioritizedScanModeChanged: " + prioritized);
+                }
             };
 
     private void logi(String str) {

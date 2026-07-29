@@ -1,0 +1,24 @@
+<telephony_config>
+  <dataconfig>
+    <version>10</version>
+    <connection_capability_configs>
+      <default_connection_capability_config>
+        <rules>10:20:true</rules>
+      </default_connection_capability_config>
+      <carrier_connection_capability_configs>
+        <carrier_id>1001</carrier_id>
+        <rules>30:40:false</rules>
+      </carrier_connection_capability_configs>
+    </connection_capability_configs>
+    <home_metered_capability_configs>
+      <default_metered_capability_config>
+        <capability_ids>123</capability_ids>
+      </default_metered_capability_config>
+    </home_metered_capability_configs>
+    <roam_metered_capability_configs>
+      <default_metered_capability_config>
+        <capability_ids>789</capability_ids>
+      </default_metered_capability_config>
+    </roam_metered_capability_configs>
+  </dataconfig>
+</telephony_config>

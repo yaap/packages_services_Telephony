@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"უპირატესობა მიანიჭეთ რეაგირების დროს"</string>
     <string name="bw_title" msgid="3902162973688221344">"პრიორიტეტული გამტარუნარიანობა"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"ერთიანი კომუნიკაციისთვის პრიორიტეტის მინიჭება"</string>
     <string name="purchase" msgid="7843181995697372128">"შეიძინეთ ქსელის პრემიუმი"</string>
     <string name="network_available" msgid="4780293262690730734">"შედეგი: მოთხოვნილი ქსელი უკვე ხელმისაწვდომია!"</string>
     <string name="network_requested" msgid="5646123922691865991">"შედეგი: ქსელი მოთხოვნილია!"</string>

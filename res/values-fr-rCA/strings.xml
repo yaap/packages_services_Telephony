@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Configurer les paramètres du compte"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Tous les comptes d\'appel"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Sélectionner les comptes pour lesquels les appels sont activés"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Applis tierces"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Autorisez d\'autres applis à afficher les appels dans votre historique des appels. Si cette option est désactivée, ces appels s\'afficheront uniquement dans leurs applis respectives."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Appels Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Service de connexion intégré"</string>
     <string name="voicemail" msgid="7697769412804195032">"Messagerie vocale"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Supprimer un numéro autorisé"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Suppression du numéro autorisé…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Numéro autorisé supprimé"</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Le numéro autorisé n\'a pas été mis à jour, car vous avez saisi un NIP incorrect."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"NIP2 incorrect. Le NAF n\'a pas été mis à jour."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Le NAF n\'a pas été mis à jour, car le numéro comporte plus de <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> chiffres."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Le numéro autorisé n\'a pas été mis à jour. Soit le NIP2 est incorrect, soit le numéro de téléphone a été rejeté."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Échec de l\'opération FDN."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Entrez le code PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Mot de passe erroné. Le NIP2 est maintenant bloqué. Pour réessayer, veuillez changer le NIP2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Le mot de passe est erroné. La carte SIM a été verrouillée. Entrez  le code PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Le code PIN2 est bloqué. Entrez le code PUK2 pour le débloquer."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"Le code PUK2 est bloqué définitivement."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Il vous reste <xliff:g id="NUMBER">%d</xliff:g> tentatives."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Verrouillage PUK2. Communiquez avec le fournisseur de services pour procéder au déverrouillage."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Ignorer"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Activer la connexion de données"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Désactiver la connexion de données"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Appliquer"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Tous"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE approvisionné"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Appel vidéo approvisionné"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Appel Wi-Fi approvisionné"</string>
@@ -906,8 +915,8 @@
     <string name="radioInfo_cid" msgid="1423185536264406705">"CID ou IDC"</string>
     <string name="radio_info_subid" msgid="6839966868621703203">"Sous-identifiant actuel :"</string>
     <string name="radio_info_dds" msgid="1122593144425697126">"Sous-identifiant de la carte SIM par défaut :"</string>
-    <string name="radio_info_dl_kbps" msgid="2382922659525318726">"Bande passante de téléchargement (kb/s) :"</string>
-    <string name="radio_info_ul_kbps" msgid="2102225400904799036">"Bande passante de téléversement (kb/s) :"</string>
+    <string name="radio_info_dl_kbps" msgid="2382922659525318726">"Bande passante de téléchargement (kbit/s) :"</string>
+    <string name="radio_info_ul_kbps" msgid="2102225400904799036">"Bande passante de téléversement (kbit/s) :"</string>
     <string name="radio_info_phy_chan_config" msgid="608045501232211303">"Configurations des canaux physiques :"</string>
     <string name="radio_info_cell_info_refresh_rate" msgid="670511448975997340">"Taux d\'actualisation des données de la cellule :"</string>
     <string name="radio_info_cellinfo_label" msgid="8199062974670377659">"Données des mesures de toutes les cellules :"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"version :"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"Version Skylo :"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"Mode de données maximales autorisées :"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"tous les réseaux publics mobiles des fournisseurs de services par satellite :"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"Version de Starlink :"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"sous-identifiant/plmn/type de service :"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"autoriser_accès :"</string>

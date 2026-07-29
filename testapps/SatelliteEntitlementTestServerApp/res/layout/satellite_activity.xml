@@ -6,160 +6,248 @@
     android:layout_height="match_parent"
     tools:context=".SatelliteEntitlementTestServerApp"
     android:orientation="vertical"
-    android:gravity="center_vertical">>
+    android:gravity="center_vertical">
     <Button
         android:id="@+id/serverButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center|center_horizontal"
         android:text="@string/start_server"/>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:id="@+id/serverStatusTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/server_down"
-            android:textColor="#4CAF50"
-            android:textSize="20sp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/entitlementStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/entitlement_status_textview"
-                android:textColor="#4CAF50"
-                android:textSize="20sp"/>
-
-            <Spinner
-                android:id="@+id/entitlementStatusSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:textColor="#4CAF50"
-                android:textSize="20sp"/>
-
-        </LinearLayout>
-        <TextView
-            android:id="@+id/clientRequestTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/client_request_textview"
-            android:textColor="#0000CD"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:id="@+id/plmnChangeTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/plmn_change_textView"
-            android:textColor="#4CAF50"
-            android:textSize="20sp"/>
-        <EditText
-            android:id="@+id/plmnChangeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:lines="6"
-            android:autofillHints=""
-            android:hint=""/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="10dp">
-            <Button
-                android:id="@+id/plmnChangeButton"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/serverStatusTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|center_horizontal"
-                android:text="@string/plmn_change_button"/>
-            <Button
-                android:id="@+id/plmnRestoreButton"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/server_down"
+                android:textColor="#4CAF50"
+                android:textSize="20sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|center_horizontal"
-                android:text="@string/plmn_restore_button"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+                <TextView
+                    android:id="@+id/entitlementStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/entitlement_status_textview"
+                    android:textColor="#4CAF50"
+                    android:textSize="20sp"/>
+
+                <Spinner
+                    android:id="@+id/entitlementStatusSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    android:textColor="#4CAF50"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/clientRequestTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/client_request_textview"
+                android:textColor="#0000CD"
+                android:textSize="20sp"/>
 
             <TextView
-                android:id="@+id/responseCode"
-                android:layout_width="0dp"
+                android:id="@+id/plmnChangeTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/response_code_textview"
+                android:layout_marginTop="20dp"
+                android:text="@string/plmn_change_textView"
                 android:textColor="#4CAF50"
+                android:textSize="20sp"/>
+            <EditText
+                android:id="@+id/plmnChangeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:scrollbars="vertical"
+                android:autofillHints=""
+                android:hint=""/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:id="@+id/plmnChangeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal"
+                    android:text="@string/plmn_change_button"/>
+                <Button
+                    android:id="@+id/plmnRestoreButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal"
+                    android:text="@string/plmn_restore_button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/responseCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/response_code_textview"
+                    android:textColor="#4CAF50"
+                    android:textSize="20sp"/>
+
+                <Spinner
+                    android:id="@+id/responseSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    android:textColor="#4CAF50"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/serverResponseCodeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/server_response_textview"
+                android:textColor="#0000FF"
                 android:textSize="20sp"/>
 
-            <Spinner
-                android:id="@+id/responseSpinner"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/currentPlmn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:textColor="#4CAF50"
-                android:textSize="20sp"/>
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/getIsNtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/getPlmnsDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/getIsUsingNtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/availableServices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+            <!-- Satellite Payload Builder Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Satellite Payload Builder"
+                android:textColor="#FF4500"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Allowed PLMNs"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView android:text="@string/plmn_id_label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <EditText android:id="@+id/plmnIdBuilder" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="e.g. 40445" android:inputType="number" android:imeOptions="actionDone" android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox android:id="@+id/dataPlanTypeCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/data_plan_type_checkbox" />
+                <Spinner android:id="@+id/dataPlanTypeSpinner" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox android:id="@+id/dataServiceCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/data_service_checkbox" />
+                <Spinner android:id="@+id/dataServicePolicySpinner" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox android:id="@+id/voiceServiceCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/voice_service_checkbox" />
+                <Spinner android:id="@+id/voiceServicePolicySpinner" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addPlmnButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_plmn_button" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Barred PLMNs"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView android:text="@string/barred_plmn_id_label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+                <EditText android:id="@+id/barredPlmnIdBuilder" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="e.g. 31017" android:inputType="number" android:imeOptions="actionDone" android:singleLine="true" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/barPlmnButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bar_plmn_button" />
+
+            <Button
+                android:id="@+id/clearAllButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/clear_all_button" />
+
         </LinearLayout>
-        <TextView
-            android:id="@+id/serverResponseCodeTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/server_response_textview"
-            android:textColor="#0000FF"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:id="@+id/currentPlmn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/getIsNtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/getPlmnsDisplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/getIsUsingNtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/availableServices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"/>
-    </LinearLayout>
+    </ScrollView>
     <Button
         android:id="@+id/refreshButton"
         android:layout_width="wrap_content"

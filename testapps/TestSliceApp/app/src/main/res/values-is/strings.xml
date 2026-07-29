@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Forgangsraða biðtíma"</string>
     <string name="bw_title" msgid="3902162973688221344">"Forgangsraða bandvídd"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Setja samræmd samskipti í forgang"</string>
     <string name="purchase" msgid="7843181995697372128">"Kaupa úrvalsnetkerfi"</string>
     <string name="network_available" msgid="4780293262690730734">"Niðurstaða: Netkerfið sem beðið var um er nú í boði!"</string>
     <string name="network_requested" msgid="5646123922691865991">"Niðurstaða: Beiðni um netkerfið hefur verið send!"</string>

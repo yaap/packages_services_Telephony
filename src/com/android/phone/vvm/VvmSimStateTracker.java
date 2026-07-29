@@ -35,7 +35,6 @@ import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 
-import com.android.internal.telephony.flags.Flags;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
@@ -124,21 +123,16 @@ public class VvmSimStateTracker extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Flags.vvmAsyncSimStateHandling()) {
-            // move all work to a background thread immediately,
-            // freeing up the main thread and preventing ANRs.
-            final PendingResult pendingResult = goAsync();
-            sBackgroundHandler.post(() -> {
-                try {
-                    handleIntent(context, intent);
-                } finally {
-                    pendingResult.finish();
-                }
-            });
-        } else {
-            // handling work on the main thread is causing ANRs
-            handleIntent(context, intent);
-        }
+        // move all work to a background thread immediately,
+        // freeing up the main thread and preventing ANRs.
+        final PendingResult pendingResult = goAsync();
+        sBackgroundHandler.post(() -> {
+            try {
+                handleIntent(context, intent);
+            } finally {
+                pendingResult.finish();
+            }
+        });
     }
 
     private void handleIntent(Context context, Intent intent) {

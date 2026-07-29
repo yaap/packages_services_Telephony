@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"پیکربندی تنظیمات حساب"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"همه حساب‌های تماس"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"انتخاب حساب‌هایی که می‌توانند تماس بگیرند"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"برنامه‌های کاربردی شخص ثالث"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"به برنامه‌های دیگر اجازه می‌دهد تماس‌ها را در سابقه تماستان نشان دهند. اگر خاموش شود، این تماس‌ها فقط در برنامه‌های خاص خودشان نشان داده می‌شود."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"‏تماس از طریق Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"سرویس اتصال داخلی"</string>
     <string name="voicemail" msgid="7697769412804195032">"پست صوتی"</string>
@@ -298,7 +300,7 @@
     <string name="limited_sim_function_notification_message" msgid="5338638075496721160">"ممکن است درحین استفاده از سیم‌کارت دیگر، سرویس‌های داده و تماس <xliff:g id="CARRIER_NAME">%1$s</xliff:g> مسدود شوند."</string>
     <string name="sip_accounts_removed_notification_title" msgid="3528076957535736095">"‏حساب‌های SIP منسوخ‌شده پیدا و برداشته شدند"</string>
     <string name="sip_accounts_removed_notification_message" msgid="1916856744869791592">"‏تماس SIP دیگر در پلاتفرم Android پشتیبانی نمی‌شود.\nحساب‌های SIP موجود شما (<xliff:g id="REMOVED_SIP_ACCOUNTS">%s</xliff:g>) برداشته شدند.\nلطفاً تنظیم حساب تماس پیش‌فرض را تأیید کنید."</string>
-    <string name="sip_accounts_removed_notification_action" msgid="3772778402370555562">"رفتن به تنظیمات"</string>
+    <string name="sip_accounts_removed_notification_action" msgid="3772778402370555562">"رفتن به «تنظیمات»"</string>
     <string name="data_usage_title" msgid="8438592133893837464">"مصرف داده برنامه"</string>
     <string name="data_usage_template" msgid="6287906680674061783">"<xliff:g id="ID_1">%1$s</xliff:g> داده تلفن همراه مصرف‌شده در <xliff:g id="ID_2">%2$s</xliff:g>"</string>
     <string name="advanced_options_title" msgid="9208195294513520934">"پیشرفته"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"حذف شماره شماره گیری ثابت"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"در حال حذف شماره شماره گیری ثابت..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"شماره شماره گیری ثابت حذف شد."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"‏FDN به‌روز نشد زیرا یک پین نادرست تایپ کردید."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"‏پین ۲ اشتباه است. FDN به‌روز نشد."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"‏FDN به‌روزرسانی نشد، زیرا شماره از <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> رقم بیشتر است."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"‏FDN به‌روز نشد. پین۲ اشتباه بود یا شماره تلفن رد شد."</string>
     <string name="fdn_failed" msgid="216592346853420250">"‏عملیات FDN ناموفق بود."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"‏کد PUK2 را وارد کنید"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"گذرواژه نادرست است. اکنون پین۲ مسدود شده است. برای امتحان مجدد، پین۲ را تغییر دهید."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"‏گذرواژه نادرست است. اکنون سیم‌کارت قفل شده است. PUK2 را وارد کنید."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"‏‫PIN2 مسدود شده است. برای رفع انسداد، PUK2 را وارد کنید."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"‏PUK2 به صورت دائمی مسدود شده است."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"<xliff:g id="NUMBER">%d</xliff:g> تلاش باقی‌مانده دارید."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"‏PUK2 قفل است. برای باز کردن قفل، با ارائه دهنده خدمات تماس بگیرید."</string>
@@ -588,7 +591,7 @@
     <string name="onscreenHoldText" msgid="4025348842151665191">"نگهداشت"</string>
     <string name="onscreenEndCallText" msgid="6138725377654842757">"پایان"</string>
     <string name="onscreenShowDialpadText" msgid="658465753816164079">"دکمه‌های شماره گیری"</string>
-    <string name="onscreenMuteText" msgid="5470306116733843621">"بی‌صدا"</string>
+    <string name="onscreenMuteText" msgid="5470306116733843621">"صامت"</string>
     <string name="onscreenAddCallText" msgid="9075675082903611677">"افزودن تماس"</string>
     <string name="onscreenMergeCallsText" msgid="3692389519611225407">"ادغام تماس‌ها"</string>
     <string name="onscreenSwapCallsText" msgid="2682542150803377991">"تعویض"</string>
@@ -605,7 +608,7 @@
     <string name="hac_mode_title" msgid="4127986689621125468">"سمعک"</string>
     <string name="hac_mode_summary" msgid="7774989500136009881">"روشن کردن سازگاری دستگاه کمک‌شنوایی"</string>
     <string name="rtt_mode_title" msgid="3075948111362818043">"‏تماس با نوشتار هم‌زمان (RTT)"</string>
-    <string name="rtt_mode_summary" msgid="8631541375609989562">"پیام‌رسانی در تماس صوتی مجاز است"</string>
+    <string name="rtt_mode_summary" msgid="8631541375609989562">"اجازه دادن پیام‌رسانی در تماس صوتی"</string>
     <string name="rtt_mode_more_information" msgid="587500128658756318">"‏«نوشتار هم‌زمان» به تماس گیرندگان ناشنوا، دارای مشکل شنوایی، دارای ناتوانی گفتاری یا افرادی که به چیزی بیش از صدا نیاز دارند کمک می‌کند.&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;بیشتر بدانید&lt;/a&gt;\n       ‏&lt;br&gt;&lt;br&gt; تماس‌های «نوشتار هم‌زمان» به‌صورت ترانویسی پیام ذخیره می‌شود\n       &lt;br&gt; «نوشتار هم‌زمان» برای تماس‌های تصویری دردسترس نیست"</string>
     <string name="no_rtt_when_roaming" msgid="5268008247378355389">"نکته: «نوشتار هم‌زمان» در هنگام فراگردی دردسترس نیست"</string>
   <string-array name="tty_mode_entries">
@@ -639,7 +642,7 @@
     <string name="ota_successful" msgid="1106825981548107774">"گوشی شما در حال حاضر فعال است. راه‌اندازی سرویس ممکن است ۱۵ دقیقه طول بکشد."</string>
     <string name="ota_unsuccessful" msgid="8531037653803955754">"تلفن شما فعال نشد. \nممکن است لازم باشد منطقه‌ای با پوشش بهتر (در نزدیکی پنجره، یا خارج از ساختمان) پیدا کنید. \n\nدوباره امتحان کنید یا برای اطلاع از گزینه‌های بیشتر، با سرویس مشتری تماس بگیرید."</string>
     <string name="ota_spc_failure" msgid="904092035241370080">"‏خطاهای SPC بسیار زیاد"</string>
-    <string name="ota_call_end" msgid="8657746378290737034">"برگشت"</string>
+    <string name="ota_call_end" msgid="8657746378290737034">"برگشتن"</string>
     <string name="ota_try_again" msgid="6914781945599998550">"دوباره امتحان کنید"</string>
     <string name="ota_next" msgid="2041016619313475914">"بعدی"</string>
     <string name="ecm_exit_dialog" msgid="4200691880721429078">"EcmExitDialog"</string>
@@ -702,7 +705,7 @@
     <string name="change_pin_enter_new_pin_header" msgid="4739465616733486118">"تنظیم پین جدید"</string>
     <string name="change_pin_enter_new_pin_hint" msgid="2326038476516364210">"پین باید <xliff:g id="MIN">%1$d</xliff:g> تا <xliff:g id="MAX">%2$d</xliff:g> رقم باشد."</string>
     <string name="change_pin_confirm_pin_header" msgid="2606303906320705726">"تأیید پین"</string>
-    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"پین‌ها با یکدیگر مطابقت ندارند"</string>
+    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"پین‌ها مطابقت ندارند"</string>
     <string name="change_pin_succeeded" msgid="2504705600693014403">"پین پست صوتی به‌روزرسانی شد"</string>
     <string name="change_pin_system_error" msgid="7772788809875146873">"پین تنظیم نشد"</string>
     <string name="mobile_data_status_roaming_turned_off_subtext" msgid="6840673347416227054">"فراگردی داده خاموش است"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"بستن"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"فعال کردن اتصال داده"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"غیرفعال کردن اتصال داده"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"اعمال کردن"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"همه"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"‏مشروط به VoLTE"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"مجوز تماس تصویری داده شد"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"‏مجوز تماس با Wifi داده شد"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"نسخه:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"‏نسخه skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"حالت بیشترین داده مجاز:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"‏همه فهرست‌های plmn ارائه‌دهندگان ماهواره:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"‏نسخه starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"اجازه دسترسی:"</string>

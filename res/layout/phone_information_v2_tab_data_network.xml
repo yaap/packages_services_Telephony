@@ -168,18 +168,80 @@
             </LinearLayout>
 
             <!-- Preferred Network Type -->
-            <LinearLayout style="@style/RadioInfo_entry_layout">
+            <LinearLayout
+                style="@style/RadioInfo_entry_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/radio_info_set_perferred_label"
-                    style="@style/info_label"
-                    />
+                    style="@style/info_label" />
 
-                <Spinner android:id="@+id/preferredNetworkType"
+                <LinearLayout
+                    android:id="@+id/preferredNetworkTypeMultiSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/filter_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/radio_info_all_label"
+                        android:layout_marginTop="8dp"/>
+
+                    <!-- Row 1: NR and LTE -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/filter_nr"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/radio_info_nr_label"/>
+
+                        <CheckBox
+                            android:id="@+id/filter_lte"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/radio_info_lte_label"/>
+                    </LinearLayout>
+
+                    <!-- Row 2: WCDMA and GSM -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/filter_wcdma"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/radio_info_wcdma_label"/>
+
+                        <CheckBox
+                            android:id="@+id/filter_gsm"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/radio_info_gsm_label"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/preferredNetworkTypeApply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/radio_info_apply_preferred_network_type"/>
+                </LinearLayout>
             </LinearLayout>
 
             <!-- Mock signal strength -->

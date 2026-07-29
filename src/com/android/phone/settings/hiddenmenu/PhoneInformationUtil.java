@@ -15,36 +15,61 @@
  */
 package com.android.phone.settings.hiddenmenu;
 
+import static android.telephony.CarrierConfigManager.KEY_CARRIER_ROAMING_NTN_CONNECT_TYPE_INT;
+import static android.telephony.CarrierConfigManager.KEY_CARRIER_ROAMING_NTN_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE_INT;
 import static android.telephony.CarrierConfigManager.KEY_CARRIER_ROAMING_SATELLITE_DEFAULT_SERVICES_INT_ARRAY;
+import static android.telephony.CarrierConfigManager.KEY_CARRIER_SUPPORTED_SATELLITE_NOTIFICATION_HYSTERESIS_SEC_INT;
 import static android.telephony.CarrierConfigManager.KEY_CARRIER_SUPPORTED_SATELLITE_SERVICES_PER_PROVIDER_BUNDLE;
+import static android.telephony.CarrierConfigManager.KEY_EMERGENCY_CALL_TO_SATELLITE_T911_HANDOVER_TIMEOUT_MILLIS_INT;
+import static android.telephony.CarrierConfigManager.KEY_EMERGENCY_MESSAGING_SUPPORTED_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_REGIONAL_SATELLITE_EARFCN_BUNDLE;
 import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ATTACH_SUPPORTED_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_CONFIGS_PER_PLMN_BUNDLE;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_CONNECTED_NOTIFICATION_THROTTLE_MILLIS_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_CONNECTION_HYSTERESIS_SEC_INT;
 import static android.telephony.CarrierConfigManager.KEY_SATELLITE_DATA_SUPPORT_MODE_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_DISPLAY_NAME_STRING;
 import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ESOS_SUPPORTED_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_NIDD_APN_NAME_STRING;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ROAMING_ESOS_INACTIVITY_TIMEOUT_SEC_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ROAMING_P2P_SMS_INACTIVITY_TIMEOUT_SEC_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ROAMING_P2P_SMS_SUPPORTED_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ROAMING_SCREEN_OFF_INACTIVITY_TIMEOUT_SEC_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_ROAMING_TURN_OFF_SESSION_FOR_EMERGENCY_CALL_BOOL;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_SOS_MAX_DATAGRAM_SIZE_BYTES_INT;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_SUPPORTED_DISASTER_PLMN_STRING_ARRAY;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_SUPPORTED_EMERGENCY_PLMN_STRING_ARRAY;
+import static android.telephony.CarrierConfigManager.KEY_SATELLITE_SUPPORTED_MSG_APPS_STRING_ARRAY;
 
 import static com.android.internal.telephony.configupdate.ConfigProviderAdaptor.DOMAIN_SATELLITE;
 
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PersistableBundle;
 import android.os.SystemProperties;
+import android.provider.Telephony;
+import android.telephony.AccessNetworkConstants;
 import android.telephony.CarrierConfigManager;
-import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
 import android.telephony.CellIdentityNr;
 import android.telephony.CellIdentityWcdma;
 import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
-import android.telephony.CellSignalStrengthCdma;
 import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthNr;
@@ -53,6 +78,7 @@ import android.telephony.NetworkRegistrationInfo;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.telephony.data.ApnSetting;
 import android.telephony.ims.ImsMmTelManager;
 import android.telephony.ims.feature.MmTelFeature;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
@@ -65,11 +91,15 @@ import android.widget.TextView;
 
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
+import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.configupdate.TelephonyConfigUpdateInstallReceiver;
 import com.android.internal.telephony.satellite.SatelliteConfig;
 import com.android.internal.telephony.satellite.SatelliteConfigParser;
+import com.android.phone.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PhoneInformationUtil {
     private static final String DSDS_MODE_PROPERTY = "ro.boot.hardware.dsds";
@@ -156,23 +186,6 @@ public class PhoneInformationUtil {
         return regStr + connector + connStatStr;
     }
 
-    private static String buildCdmaInfoString(CellInfoCdma ci) {
-        CellIdentityCdma cidCdma = ci.getCellIdentity();
-        CellSignalStrengthCdma ssCdma = ci.getCellSignalStrength();
-
-        return String.format(
-                "%-3.3s %-5.5s %-5.5s %-5.5s %-6.6s %-6.6s %-6.6s %-6.6s %-5.5s",
-                getConnectionStatusString(ci),
-                getCellInfoDisplayString(cidCdma.getSystemId()),
-                getCellInfoDisplayString(cidCdma.getNetworkId()),
-                getCellInfoDisplayString(cidCdma.getBasestationId()),
-                getCellInfoDisplayString(ssCdma.getCdmaDbm()),
-                getCellInfoDisplayString(ssCdma.getCdmaEcio()),
-                getCellInfoDisplayString(ssCdma.getEvdoDbm()),
-                getCellInfoDisplayString(ssCdma.getEvdoEcio()),
-                getCellInfoDisplayString(ssCdma.getEvdoSnr()));
-    }
-
     private static String buildGsmInfoString(CellInfoGsm ci) {
         CellIdentityGsm cidGsm = ci.getCellIdentity();
         CellSignalStrengthGsm ssGsm = ci.getCellSignalStrength();
@@ -213,7 +226,7 @@ public class PhoneInformationUtil {
         CellSignalStrengthNr ssNr = (CellSignalStrengthNr) ci.getCellSignalStrength();
 
         return String.format(
-                "%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s %-6.6s %-4.4s %-4.4s\n",
+                "%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s %-7.7s %-7.7s %-7.7s\n",
                 getConnectionStatusString(ci),
                 cidNr.getMccString(),
                 cidNr.getMncString(),
@@ -249,8 +262,7 @@ public class PhoneInformationUtil {
      */
     public static String buildCellInfoString(java.util.List<CellInfo> arrayCi) {
         String value = new String();
-        StringBuilder cdmaCells = new StringBuilder(),
-                gsmCells = new StringBuilder(),
+        StringBuilder gsmCells = new StringBuilder(),
                 lteCells = new StringBuilder(),
                 wcdmaCells = new StringBuilder(),
                 nrCells = new StringBuilder();
@@ -264,8 +276,6 @@ public class PhoneInformationUtil {
                     wcdmaCells.append(buildWcdmaInfoString((CellInfoWcdma) ci));
                 } else if (ci instanceof CellInfoGsm) {
                     gsmCells.append(buildGsmInfoString((CellInfoGsm) ci));
-                } else if (ci instanceof CellInfoCdma) {
-                    cdmaCells.append(buildCdmaInfoString((CellInfoCdma) ci));
                 } else if (ci instanceof CellInfoNr) {
                     nrCells.append(buildNrInfoString((CellInfoNr) ci));
                 }
@@ -274,7 +284,7 @@ public class PhoneInformationUtil {
                 value +=
                         String.format(
                                 "NR\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s"
-                                        + " %-6.6s %-4.4s %-4.4s\n",
+                                        + " %-7.7s %-7.7s %-7.7s\n",
                                 "SRV", "MCC", "MNC", "TAC", "NCI", "PCI", "NRARFCN", "SS-RSRP",
                                 "SS-RSRQ");
                 value += nrCells.toString();
@@ -302,15 +312,6 @@ public class PhoneInformationUtil {
                                 "GSM\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-6.6s %-4.4s %-4.4s\n",
                                 "SRV", "MCC", "MNC", "LAC", "CID", "ARFCN", "BSIC", "RSSI");
                 value += gsmCells.toString();
-            }
-            if (cdmaCells.length() != 0) {
-                value +=
-                        String.format(
-                                "CDMA/EVDO\n%-3.3s %-5.5s %-5.5s %-5.5s"
-                                        + " %-6.6s %-6.6s %-6.6s %-6.6s %-5.5s\n",
-                                "SRV", "SID", "NID", "BSID", "C-RSSI", "C-ECIO", "E-RSSI", "E-ECIO",
-                                "E-SNR");
-                value += cdmaCells.toString();
             }
         } else {
             value = "unknown";
@@ -408,18 +409,12 @@ public class PhoneInformationUtil {
         return isAvailable;
     }
 
-    public static final String[] PREFERRED_NETWORK_LABELS = {
+    public static final String[] PREFERRED_NETWORK_LABELS_RF = {
             "GSM/WCDMA preferred",
             "GSM only",
             "WCDMA only",
             "GSM/WCDMA auto (PRL)",
-            "CDMA/EvDo auto (PRL)",
-            "CDMA only",
-            "EvDo only",
-            "CDMA/EvDo/GSM/WCDMA (PRL)",
-            "CDMA + LTE/EvDo (PRL)",
             "GSM/WCDMA/LTE (PRL)",
-            "LTE/CDMA/EvDo/GSM/WCDMA (PRL)",
             "LTE only",
             "LTE/WCDMA",
             "TDSCDMA only",
@@ -430,21 +425,43 @@ public class PhoneInformationUtil {
             "TDSCDMA/GSM/WCDMA",
             "LTE/TDSCDMA/WCDMA",
             "LTE/TDSCDMA/GSM/WCDMA",
-            "TDSCDMA/CDMA/EvDo/GSM/WCDMA ",
-            "LTE/TDSCDMA/CDMA/EvDo/GSM/WCDMA",
             "NR only",
             "NR/LTE",
-            "NR/LTE/CDMA/EvDo",
             "NR/LTE/GSM/WCDMA",
-            "NR/LTE/CDMA/EvDo/GSM/WCDMA",
             "NR/LTE/WCDMA",
             "NR/LTE/TDSCDMA",
             "NR/LTE/TDSCDMA/GSM",
             "NR/LTE/TDSCDMA/WCDMA",
             "NR/LTE/TDSCDMA/GSM/WCDMA",
-            "NR/LTE/TDSCDMA/CDMA/EvDo/GSM/WCDMA",
             "Unknown"
     };
+
+    public static final List<Integer> PREFERRED_NETWORK_MODES_RF = Arrays.asList(
+            RILConstants.NETWORK_MODE_WCDMA_PREF,
+            RILConstants.NETWORK_MODE_GSM_ONLY,
+            RILConstants.NETWORK_MODE_WCDMA_ONLY,
+            RILConstants.NETWORK_MODE_GSM_UMTS,
+            RILConstants.NETWORK_MODE_LTE_GSM_WCDMA,
+            RILConstants.NETWORK_MODE_LTE_ONLY,
+            RILConstants.NETWORK_MODE_LTE_WCDMA,
+            RILConstants.NETWORK_MODE_TDSCDMA_ONLY,
+            RILConstants.NETWORK_MODE_TDSCDMA_WCDMA,
+            RILConstants.NETWORK_MODE_LTE_TDSCDMA,
+            RILConstants.NETWORK_MODE_TDSCDMA_GSM,
+            RILConstants.NETWORK_MODE_LTE_TDSCDMA_GSM,
+            RILConstants.NETWORK_MODE_TDSCDMA_GSM_WCDMA,
+            RILConstants.NETWORK_MODE_LTE_TDSCDMA_WCDMA,
+            RILConstants.NETWORK_MODE_LTE_TDSCDMA_GSM_WCDMA,
+            RILConstants.NETWORK_MODE_NR_ONLY,
+            RILConstants.NETWORK_MODE_NR_LTE,
+            RILConstants.NETWORK_MODE_NR_LTE_GSM_WCDMA,
+            RILConstants.NETWORK_MODE_NR_LTE_WCDMA,
+            RILConstants.NETWORK_MODE_NR_LTE_TDSCDMA,
+            RILConstants.NETWORK_MODE_NR_LTE_TDSCDMA_GSM,
+            RILConstants.NETWORK_MODE_NR_LTE_TDSCDMA_WCDMA,
+            RILConstants.NETWORK_MODE_NR_LTE_TDSCDMA_GSM_WCDMA,
+            -1  // Unknown
+    );
 
     public static final Integer[]SIGNAL_STRENGTH_LEVEL =
             new Integer[] {
@@ -462,16 +479,9 @@ public class PhoneInformationUtil {
                 ServiceState.RIL_RADIO_TECHNOLOGY_GPRS,
                 ServiceState.RIL_RADIO_TECHNOLOGY_EDGE,
                 ServiceState.RIL_RADIO_TECHNOLOGY_UMTS,
-                ServiceState.RIL_RADIO_TECHNOLOGY_IS95A,
-                ServiceState.RIL_RADIO_TECHNOLOGY_IS95B,
-                ServiceState.RIL_RADIO_TECHNOLOGY_1xRTT,
-                ServiceState.RIL_RADIO_TECHNOLOGY_EVDO_0,
-                ServiceState.RIL_RADIO_TECHNOLOGY_EVDO_A,
                 ServiceState.RIL_RADIO_TECHNOLOGY_HSDPA,
                 ServiceState.RIL_RADIO_TECHNOLOGY_HSUPA,
                 ServiceState.RIL_RADIO_TECHNOLOGY_HSPA,
-                ServiceState.RIL_RADIO_TECHNOLOGY_EVDO_B,
-                ServiceState.RIL_RADIO_TECHNOLOGY_EHRPD,
                 ServiceState.RIL_RADIO_TECHNOLOGY_LTE,
                 ServiceState.RIL_RADIO_TECHNOLOGY_HSPAP,
                 ServiceState.RIL_RADIO_TECHNOLOGY_GSM,
@@ -536,14 +546,16 @@ public class PhoneInformationUtil {
         log("restoreMaxAllowedDataMode: restoring max allowed data mode by restoring the backed"
                 + " up satellite config parser: " + sBackedUpSatelliteConfigParser + " and config: "
                 + sBackedUpSatelliteConfig);
-        TelephonyConfigUpdateInstallReceiver.getInstance().overrideConfigParser(
-                sBackedUpSatelliteConfigParser);
         if (sBackedUpSatelliteConfigParser == null) {
             log("restoreMaxAllowedDataMode: mBackedUpSatelliteConfigParser is null, therefore"
                     + " don't have to override mBackedUpSatelliteConfig, as it would null" + " as"
                     + " well");
+            TelephonyConfigUpdateInstallReceiver.getInstance().clearOverriddenConfigParser(
+                    DOMAIN_SATELLITE);
             return;
         }
+        TelephonyConfigUpdateInstallReceiver.getInstance().overrideConfigParser(
+                sBackedUpSatelliteConfigParser);
         TelephonyConfigUpdateInstallReceiver.getInstance().getConfigParser(
                 DOMAIN_SATELLITE).overrideConfig(sBackedUpSatelliteConfig);
     }
@@ -573,11 +585,11 @@ public class PhoneInformationUtil {
      */
     public static boolean shouldHideNonEmergencyMode(Context context, int mSubId) {
         if (!Build.isDebuggable()) {
-            return false;
+            return true;
         }
         String action = SatelliteManager.ACTION_SATELLITE_START_NON_EMERGENCY_SESSION;
         if (TextUtils.isEmpty(action)) {
-            return false;
+            return true;
         }
         if (mNonEsosIntent != null) {
             mNonEsosIntent = null;
@@ -586,18 +598,18 @@ public class PhoneInformationUtil {
                 context.getSystemService(CarrierConfigManager.class);
         if (carrierConfigManager == null) {
             loge("shouldHideNonEmergencyMode: cm is null");
-            return false;
+            return true;
         }
         android.os.PersistableBundle bundle = carrierConfigManager.getConfigForSubId(mSubId,
                 KEY_SATELLITE_ATTACH_SUPPORTED_BOOL,
                 CarrierConfigManager.KEY_SATELLITE_ESOS_SUPPORTED_BOOL);
         if (!bundle.getBoolean(CarrierConfigManager.KEY_SATELLITE_ESOS_SUPPORTED_BOOL, false)) {
             log("shouldHideNonEmergencyMode: esos_supported false");
-            return false;
+            return true;
         }
         if (!bundle.getBoolean(KEY_SATELLITE_ATTACH_SUPPORTED_BOOL, false)) {
             log("shouldHideNonEmergencyMode: attach_supported false");
-            return false;
+            return true;
         }
 
         String packageName = getStringFromOverlayConfig(context,
@@ -609,17 +621,17 @@ public class PhoneInformationUtil {
         if (packageName == null || className == null || packageName.isEmpty()
                 || className.isEmpty()) {
             log("shouldHideNonEmergencyMode:" + " packageName or className is null or empty.");
-            return false;
+            return true;
         }
         PackageManager pm = context.getPackageManager();
         Intent intent = new Intent(action);
         intent.setComponent(new ComponentName(packageName, className));
         if (pm.queryBroadcastReceivers(intent, 0).isEmpty()) {
             log("shouldHideNonEmergencyMode: Broadcast receiver not found for intent: " + intent);
-            return false;
+            return true;
         }
         mNonEsosIntent = intent;
-        return true;
+        return false;
     }
 
     /**
@@ -754,14 +766,18 @@ public class PhoneInformationUtil {
     public static void configurePhoneSelectionUi(LinearLayout phoneButton0,
             LinearLayout phoneButton1, TextView phoneTitle0, TextView phoneTitle1,
             String[] phoneIndexLabels) {
+        Context context = phoneButton0.getContext();
+        boolean phone0Restricted = isRadioInfoRestricted(context, 0);
+        boolean phone1Restricted = isRadioInfoRestricted(context, 1);
+
         if (phoneIndexLabels.length > 1) {
             phoneTitle0.setText(phoneIndexLabels[0]);
             phoneTitle1.setText(phoneIndexLabels[1]);
-            phoneButton0.setVisibility(View.VISIBLE);
-            phoneButton1.setVisibility(View.VISIBLE);
+            phoneButton0.setVisibility(phone0Restricted ? View.GONE : View.VISIBLE);
+            phoneButton1.setVisibility(phone1Restricted ? View.GONE : View.VISIBLE);
         } else if (phoneIndexLabels.length == 1) {
             phoneTitle0.setText(phoneIndexLabels[0]);
-            phoneButton0.setVisibility(View.VISIBLE);
+            phoneButton0.setVisibility(phone0Restricted ? View.GONE : View.VISIBLE);
             phoneButton1.setVisibility(View.GONE);
         } else {
             phoneButton0.setVisibility(View.GONE);
@@ -775,5 +791,443 @@ public class PhoneInformationUtil {
 
     private static void loge(String s) {
         Log.e(TAG, s);
+    }
+
+    // Starlink configs
+    public static final int SATELLITE_CHANNEL_STARLINK_US = 8665;
+    public static final int[] STARLINK_CHANNELS = {SATELLITE_CHANNEL_STARLINK_US};
+    public static final int[] STARLINK_BAND = {AccessNetworkConstants.EutranBand.BAND_25};
+
+    // AST configs
+    public static final int SATELLITE_CHANNEL_AST_US_1 = 2625;
+    public static final int SATELLITE_CHANNEL_AST_US_2 = 2630;
+    public static final int[] AST_CHANNELS = {SATELLITE_CHANNEL_AST_US_1,
+            SATELLITE_CHANNEL_AST_US_2};
+    public static final int[] AST_BAND = {AccessNetworkConstants.EutranBand.BAND_5};
+
+    public static final Integer[] BAND_VALUES =
+            new Integer[]{
+                    -1,
+                    AccessNetworkConstants.EutranBand.BAND_1,
+                    AccessNetworkConstants.EutranBand.BAND_2,
+                    AccessNetworkConstants.EutranBand.BAND_3,
+                    AccessNetworkConstants.EutranBand.BAND_4,
+                    AccessNetworkConstants.EutranBand.BAND_5,
+                    AccessNetworkConstants.EutranBand.BAND_6,
+                    AccessNetworkConstants.EutranBand.BAND_7,
+                    AccessNetworkConstants.EutranBand.BAND_8,
+                    AccessNetworkConstants.EutranBand.BAND_9,
+                    AccessNetworkConstants.EutranBand.BAND_10,
+                    AccessNetworkConstants.EutranBand.BAND_11,
+                    AccessNetworkConstants.EutranBand.BAND_12,
+                    AccessNetworkConstants.EutranBand.BAND_13,
+                    AccessNetworkConstants.EutranBand.BAND_14,
+                    AccessNetworkConstants.EutranBand.BAND_17,
+                    AccessNetworkConstants.EutranBand.BAND_18,
+                    AccessNetworkConstants.EutranBand.BAND_19,
+                    AccessNetworkConstants.EutranBand.BAND_20,
+                    AccessNetworkConstants.EutranBand.BAND_21,
+                    AccessNetworkConstants.EutranBand.BAND_22,
+                    AccessNetworkConstants.EutranBand.BAND_23,
+                    AccessNetworkConstants.EutranBand.BAND_24,
+                    AccessNetworkConstants.EutranBand.BAND_25,
+                    AccessNetworkConstants.EutranBand.BAND_26,
+                    AccessNetworkConstants.EutranBand.BAND_27,
+                    AccessNetworkConstants.EutranBand.BAND_28,
+                    AccessNetworkConstants.EutranBand.BAND_30,
+                    AccessNetworkConstants.EutranBand.BAND_31,
+                    AccessNetworkConstants.EutranBand.BAND_33,
+                    AccessNetworkConstants.EutranBand.BAND_34,
+                    AccessNetworkConstants.EutranBand.BAND_35,
+                    AccessNetworkConstants.EutranBand.BAND_36,
+                    AccessNetworkConstants.EutranBand.BAND_37,
+                    AccessNetworkConstants.EutranBand.BAND_38,
+                    AccessNetworkConstants.EutranBand.BAND_39,
+                    AccessNetworkConstants.EutranBand.BAND_40,
+                    AccessNetworkConstants.EutranBand.BAND_41,
+                    AccessNetworkConstants.EutranBand.BAND_42,
+                    AccessNetworkConstants.EutranBand.BAND_43,
+                    AccessNetworkConstants.EutranBand.BAND_44,
+                    AccessNetworkConstants.EutranBand.BAND_45,
+                    AccessNetworkConstants.EutranBand.BAND_46,
+                    AccessNetworkConstants.EutranBand.BAND_47,
+                    AccessNetworkConstants.EutranBand.BAND_48,
+                    AccessNetworkConstants.EutranBand.BAND_49,
+                    AccessNetworkConstants.EutranBand.BAND_50,
+                    AccessNetworkConstants.EutranBand.BAND_51,
+                    AccessNetworkConstants.EutranBand.BAND_52,
+                    AccessNetworkConstants.EutranBand.BAND_53,
+                    AccessNetworkConstants.EutranBand.BAND_65,
+                    AccessNetworkConstants.EutranBand.BAND_66,
+                    AccessNetworkConstants.EutranBand.BAND_68,
+                    AccessNetworkConstants.EutranBand.BAND_70,
+                    AccessNetworkConstants.EutranBand.BAND_71,
+                    AccessNetworkConstants.EutranBand.BAND_72,
+                    AccessNetworkConstants.EutranBand.BAND_73,
+                    AccessNetworkConstants.EutranBand.BAND_74,
+                    AccessNetworkConstants.EutranBand.BAND_85,
+                    AccessNetworkConstants.EutranBand.BAND_87,
+                    AccessNetworkConstants.EutranBand.BAND_88
+            };
+
+    public static final String[] BAND_LABELS = {
+            "SELECT", "BAND_1", "BAND_2", "BAND_3", "BAND_4", "BAND_5", "BAND_6", "BAND_7",
+            "BAND_8", "BAND_9", "BAND_10", "BAND_11", "BAND_12", "BAND_13", "BAND_14", "BAND_17",
+            "BAND_18", "BAND_19", "BAND_20", "BAND_21", "BAND_22", "BAND_23", "BAND_24", "BAND_25",
+            "BAND_26", "BAND_27", "BAND_28", "BAND_30", "BAND_31", "BAND_33", "BAND_34", "BAND_35",
+            "BAND_36", "BAND_37", "BAND_38", "BAND_39", "BAND_40", "BAND_41", "BAND_42", "BAND_43",
+            "BAND_44", "BAND_45", "BAND_46", "BAND_47", "BAND_48", "BAND_49", "BAND_50", "BAND_51",
+            "BAND_52", "BAND_53", "BAND_65", "BAND_66", "BAND_68", "BAND_70", "BAND_71", "BAND_72",
+            "BAND_73", "BAND_74", "BAND_85", "BAND_87", "BAND_88"
+    };
+
+    public static final String KEY_SATELLITE_BANDS = "force_camp_satellite_bands";
+    public static final String KEY_FORCE_CAMP_SATELLITE_BAND_SELECTED =
+            "force_camp_satellite_band_selected";
+    public static final String KEY_SATELLITE_CHANNELS = "force_camp_satellite_channels";
+
+    /**
+     * Utility function to take an old APN setting and a Infrastructure bitmask value
+     * to construct new APN setting to be updated with the infrastructure bitmask value
+     * to allow satellite on current APN
+     *
+     * @param oldApn
+     * @param newInfrastructureBitmask
+     * @return newApnSetting with correct new bitmask and other old values
+     */
+    public static ApnSetting createUpdatedApnSetting(ApnSetting oldApn,
+            int newInfrastructureBitmask) {
+        if (oldApn == null) {
+            return null;
+        }
+        return new ApnSetting.Builder()
+                .setEntryName(oldApn.getEntryName())
+                .setApnName(oldApn.getApnName())
+                .setProxyAddress(oldApn.getProxyAddressAsString())
+                .setProxyPort(oldApn.getProxyPort())
+                .setMmsc(oldApn.getMmsc())
+                .setMmsProxyAddress(oldApn.getMmsProxyAddressAsString())
+                .setMmsProxyPort(oldApn.getMmsProxyPort())
+                .setUser(oldApn.getUser())
+                .setPassword(oldApn.getPassword())
+                .setAuthType(oldApn.getAuthType())
+                .setApnTypeBitmask(oldApn.getApnTypeBitmask())
+                .setOperatorNumeric(oldApn.getOperatorNumeric())
+                .setProtocol(oldApn.getProtocol())
+                .setRoamingProtocol(oldApn.getRoamingProtocol())
+                .setMtuV4(oldApn.getMtuV4())
+                .setMtuV6(oldApn.getMtuV6())
+                .setCarrierEnabled(oldApn.isEnabled())
+                .setNetworkTypeBitmask(oldApn.getNetworkTypeBitmask())
+                .setLingeringNetworkTypeBitmask(oldApn.getLingeringNetworkTypeBitmask())
+                .setProfileId(oldApn.getProfileId())
+                .setPersistent(oldApn.isPersistent())
+                .setMaxConns(oldApn.getMaxConns())
+                .setWaitTime(oldApn.getWaitTime())
+                .setMaxConnsTime(oldApn.getMaxConnsTime())
+                .setMvnoType(oldApn.getMvnoType())
+                .setMvnoMatchData(oldApn.getMvnoMatchData())
+                .setApnSetId(oldApn.getApnSetId())
+                .setCarrierId(oldApn.getCarrierId())
+                .setSkip464Xlat(oldApn.getSkip464Xlat())
+                .setAlwaysOn(oldApn.isAlwaysOn())
+                .setInfrastructureBitmask(newInfrastructureBitmask)
+                .setEsimBootstrapProvisioning(oldApn.isEsimBootstrapProvisioning())
+                .build();
+    }
+
+    // In PhoneInformationUtil.java
+
+    private static String apnTypesToString(int bitmask) {
+        List<String> types = new ArrayList<>();
+        if ((bitmask & ApnSetting.TYPE_DEFAULT) == ApnSetting.TYPE_DEFAULT) {
+            types.add("DEFAULT");
+        }
+        if ((bitmask & ApnSetting.TYPE_MMS) == ApnSetting.TYPE_MMS) {
+            types.add("MMS");
+        }
+        if ((bitmask & ApnSetting.TYPE_SUPL) == ApnSetting.TYPE_SUPL) {
+            types.add("SUPL");
+        }
+        if ((bitmask & ApnSetting.TYPE_DUN) == ApnSetting.TYPE_DUN) {
+            types.add("DUN");
+        }
+        if ((bitmask & ApnSetting.TYPE_HIPRI) == ApnSetting.TYPE_HIPRI) {
+            types.add("HIPRI");
+        }
+        if ((bitmask & ApnSetting.TYPE_FOTA) == ApnSetting.TYPE_FOTA) {
+            types.add("FOTA");
+        }
+        if ((bitmask & ApnSetting.TYPE_IMS) == ApnSetting.TYPE_IMS) {
+            types.add("IMS");
+        }
+        if ((bitmask & ApnSetting.TYPE_CBS) == ApnSetting.TYPE_CBS) {
+            types.add("CBS");
+        }
+        if ((bitmask & ApnSetting.TYPE_IA) == ApnSetting.TYPE_IA) {
+            types.add("IA");
+        }
+        if ((bitmask & ApnSetting.TYPE_EMERGENCY) == ApnSetting.TYPE_EMERGENCY) {
+            types.add("EMERGENCY");
+        }
+        return TextUtils.join(", ", types);
+    }
+
+
+    /**
+     *
+     * Update Infrastructure bitmask value in APN setting to enable satellite
+     *
+     * @param context
+     * @param subId
+     * @param logTag
+     * @return
+     */
+    public static List<ContentValues> updateApnInfrastructureBitmaskForSatellite(
+            Context context, int subId, String logTag) {
+        List<ContentValues> originalApnSettings = new ArrayList<>();
+        try {
+            ContentResolver resolver = context.getContentResolver();
+            // Use the modern SIM_APN_URI, which is aware of the current subscription.
+            Uri uri = Telephony.Carriers.SIM_APN_URI;
+            Cursor cursor = resolver.query(uri, null,
+                    Telephony.Carriers.CARRIER_ENABLED + " = 1", null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    ApnSetting oldApn = ApnSetting.makeApnSetting(cursor);
+
+                    Log.d(logTag, "UpdateAPN: Checking APN: " + oldApn.getApnName()
+                            + ", Types: " + apnTypesToString(oldApn.getApnTypeBitmask())
+                            + ", Infrastructure Bitmask: " + oldApn.getInfrastructureBitmask());
+
+                    if ((oldApn.canHandleType(ApnSetting.TYPE_DEFAULT))
+                            || (oldApn.canHandleType(ApnSetting.TYPE_IA))) {
+
+                        if ((oldApn.getInfrastructureBitmask()
+                                & ApnSetting.INFRASTRUCTURE_SATELLITE) == 0) {
+                            ContentValues originalValues = new ContentValues();
+                            DatabaseUtils.cursorRowToContentValues(cursor, originalValues);
+                            originalApnSettings.add(originalValues);
+
+                            int newInfrastructureBitmask =
+                                    oldApn.getInfrastructureBitmask()
+                                            | ApnSetting.INFRASTRUCTURE_SATELLITE;
+                            ApnSetting newApn = createUpdatedApnSetting(oldApn,
+                                    newInfrastructureBitmask);
+
+                            Log.d(logTag, "UpdateAPN: New APN: " + newApn.getApnName()
+                                    + ", Types: " + apnTypesToString(newApn.getApnTypeBitmask())
+                                    + ", Infrastructure Bitmask: "
+                                    + newApn.getInfrastructureBitmask());
+
+                            if (newApn != null) {
+                                ContentValues newValues = newApn.toContentValues();
+                                String where = Telephony.Carriers.APN + " = ?";
+                                String[] selectionArgs = new String[]{oldApn.getApnName()};
+
+                                int rowsUpdated = resolver.update(Telephony.Carriers.CONTENT_URI,
+                                        newValues, where, selectionArgs);
+                                Log.d(logTag, "UpdateAPN: Rows updated: " + rowsUpdated);
+                            }
+                        }
+                    }
+                }
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.e(logTag, "Error modifying APN for satellite mock: " + e);
+        }
+        return originalApnSettings;
+    }
+
+    /**
+     *
+     * Restore APN settings to original values
+     *
+     * @param context
+     * @param originalApnSettings
+     * @param logTag
+     */
+    public static void restoreOriginalApns(Context context,
+            List<ContentValues> originalApnSettings, String logTag) {
+        if (originalApnSettings == null || originalApnSettings.isEmpty()) {
+            return;
+        }
+        try {
+            ContentResolver resolver = context.getContentResolver();
+            for (ContentValues values : originalApnSettings) {
+                String where = Telephony.Carriers.APN + " = ?";
+                String[] selectionArgs = new String[]{values.getAsString(Telephony.Carriers.APN)};
+                ContentValues restoreValues = new ContentValues();
+                restoreValues.put(Telephony.Carriers.INFRASTRUCTURE_BITMASK,
+                        values.getAsInteger(Telephony.Carriers.INFRASTRUCTURE_BITMASK));
+                int rowsUpdated = resolver.update(Telephony.Carriers.CONTENT_URI,
+                        restoreValues, where, selectionArgs);
+                Log.d(logTag, "UpdateAPN: RestoreAPN: Rows updated: " + rowsUpdated);
+            }
+        } catch (Exception e) {
+            Log.e(logTag, "Error restoring APNs: " + e);
+        }
+    }
+
+    /**
+     * Returns the Subscriber ID (IMSI).
+     *
+     * @param subIdTelephonyManager The TelephonyManager instance.
+     * @param r The Resources object to fetch strings.
+     * @return The Subscriber ID string or "Unknown".
+     */
+    public static String getSubscriberId(TelephonyManager subIdTelephonyManager, Resources r) {
+        String subscriberId = subIdTelephonyManager.getSubscriberId();
+        return subscriberId != null ? subscriberId : r.getString(R.string.radioInfo_unknown);
+    }
+
+    /**
+     * Returns the Group Identifier Level 1 (GID1).
+     *
+     * @param subIdTelephonyManager The TelephonyManager instance.
+     * @param r The Resources object to fetch strings.
+     * @return The GID1 string or "Unknown".
+     */
+    public static String getGid1(TelephonyManager subIdTelephonyManager, Resources r) {
+        String gid1 = subIdTelephonyManager.getGroupIdLevel1();
+        return gid1 != null ? gid1 : r.getString(R.string.radioInfo_unknown);
+    }
+
+    /**
+     * Returns the Carrier ID and Name.
+     *
+     * @param subIdTelephonyManager The TelephonyManager instance.
+     * @param r The Resources object to fetch strings.
+     * @return The formatted Carrier ID string or "Unknown".
+     */
+    public static String getCarrierIdString(
+            TelephonyManager subIdTelephonyManager, Resources r) {
+        int carrierId = subIdTelephonyManager.getSimCarrierId();
+        CharSequence carrierIdName = subIdTelephonyManager.getSimCarrierIdName();
+
+        if (carrierId == TelephonyManager.UNKNOWN_CARRIER_ID) {
+            return r.getString(R.string.radioInfo_unknown);
+        }
+
+        if (TextUtils.isEmpty(carrierIdName)) {
+            return String.valueOf(carrierId);
+        }
+
+        return carrierId + " (" + carrierIdName + ")";
+    }
+
+    public static boolean isUserBuild() {
+        return "user".equals(Build.TYPE);
+    }
+
+    /**
+     * Checks if the RadioInfo access is restricted for a specific phone ID.
+     *
+     * @param context The context.
+     * @param phoneId The phone ID to check configuration for.
+     * @return true if the activity should be disabled for this phone, false otherwise.
+     */
+    public static boolean isRadioInfoRestricted(Context context, int phoneId) {
+        if (!isUserBuild()) return false;
+        int subId = SubscriptionManager.getSubscriptionId(phoneId);
+        // If subId is invalid, we check default config.
+        // If default is false (allowed), then return false.
+        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
+            return false;
+        }
+        return isRadioInfoMenuDisabled(context, subId);
+    }
+
+    /**
+     * Checks if the RadioInfo access is restricted for ANY active phone.
+     * If there are no active phones, it checks the default config.
+     * Returns true if the activity should be restricted (i.e., any SIM is restricted).
+     */
+    public static boolean isRadioInfoAccessRestricted(Context context) {
+        if (!isUserBuild()) return false;
+        TelephonyManager tm = context.getSystemService(TelephonyManager.class);
+        int phoneCount = tm.getActiveModemCount();
+
+        for (int phoneIndex = 0; phoneIndex < phoneCount; phoneIndex++) {
+            int subId = SubscriptionManager.getSubscriptionId(phoneIndex);
+            if (SubscriptionManager.isValidSubscriptionId(subId)) {
+                if (isRadioInfoMenuDisabled(context, subId)) {
+                    // ANY SIM restricted -> Restricted access
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if RadioInfo and related activities should be disabled on user builds based on
+     * build type and carrier configuration.
+     *
+     * @param context The context.
+     * @param subId The subscription ID to check configuration for.
+     * @return true if the activity should be disabled, false otherwise.
+     */
+    private static boolean isRadioInfoMenuDisabled(Context context, int subId) {
+        CarrierConfigManager configManager = getCarrierConfig(context);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfigForSubId(subId);
+            if (b != null) {
+                return b.getBoolean(CarrierConfigManager.KEY_HIDE_RADIO_INFO_ON_USER_BUILD_BOOL,
+                        false);
+            }
+        }
+        return false;
+    }
+
+    public static PersistableBundle getSatelliteConfigsForSubId(Context context, int subId) {
+        Log.d(TAG, "getSatelliteConfigsForSubId: " + subId);
+        CarrierConfigManager carrierConfigManager = getCarrierConfig(context);
+        if (carrierConfigManager == null) {
+            Log.w(TAG, "getSatelliteConfigsForSubId: carrierConfigManager is null");
+            return CarrierConfigManager.getDefaultConfig();
+        }
+        PersistableBundle config = null;
+        try {
+            config = carrierConfigManager.getConfigForSubId(subId,
+                    KEY_CARRIER_SUPPORTED_SATELLITE_SERVICES_PER_PROVIDER_BUNDLE,
+                    KEY_SATELLITE_ATTACH_SUPPORTED_BOOL,
+                    KEY_SATELLITE_DISPLAY_NAME_STRING,
+                    KEY_SATELLITE_ROAMING_TURN_OFF_SESSION_FOR_EMERGENCY_CALL_BOOL,
+                    KEY_SATELLITE_CONNECTION_HYSTERESIS_SEC_INT,
+                    KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL,
+                    KEY_CARRIER_ROAMING_SATELLITE_DEFAULT_SERVICES_INT_ARRAY,
+                    KEY_EMERGENCY_MESSAGING_SUPPORTED_BOOL,
+                    KEY_EMERGENCY_CALL_TO_SATELLITE_T911_HANDOVER_TIMEOUT_MILLIS_INT,
+                    KEY_SATELLITE_ESOS_SUPPORTED_BOOL,
+                    KEY_SATELLITE_ROAMING_P2P_SMS_SUPPORTED_BOOL,
+                    KEY_SATELLITE_NIDD_APN_NAME_STRING,
+                    KEY_CARRIER_ROAMING_NTN_CONNECT_TYPE_INT,
+                    KEY_CARRIER_SUPPORTED_SATELLITE_NOTIFICATION_HYSTERESIS_SEC_INT,
+                    KEY_CARRIER_ROAMING_NTN_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE_INT,
+                    KEY_SATELLITE_ROAMING_SCREEN_OFF_INACTIVITY_TIMEOUT_SEC_INT,
+                    KEY_SATELLITE_ROAMING_P2P_SMS_INACTIVITY_TIMEOUT_SEC_INT,
+                    KEY_SATELLITE_ROAMING_ESOS_INACTIVITY_TIMEOUT_SEC_INT,
+                    KEY_SATELLITE_SOS_MAX_DATAGRAM_SIZE_BYTES_INT,
+                    KEY_SATELLITE_SUPPORTED_MSG_APPS_STRING_ARRAY,
+                    KEY_REGIONAL_SATELLITE_EARFCN_BUNDLE,
+                    KEY_SATELLITE_DATA_SUPPORT_MODE_INT,
+                    KEY_SATELLITE_CONNECTED_NOTIFICATION_THROTTLE_MILLIS_INT,
+                    KEY_SATELLITE_CONFIGS_PER_PLMN_BUNDLE,
+                    KEY_SATELLITE_SUPPORTED_EMERGENCY_PLMN_STRING_ARRAY,
+                    KEY_SATELLITE_SUPPORTED_DISASTER_PLMN_STRING_ARRAY
+            );
+        } catch (Exception e) {
+            Log.w(TAG, "getSatelliteConfigsForSubId: " + e);
+        }
+        if (config == null || config.isEmpty()) {
+            Log.w(TAG, "getSatelliteConfigsForSubId: config is null or empty,"
+                    + " using default config");
+            config = CarrierConfigManager.getDefaultConfig();
+        }
+        return config;
     }
 }

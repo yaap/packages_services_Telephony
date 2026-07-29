@@ -16,6 +16,23 @@
 
 package com.android.phone;
 
+import static android.telephony.TelephonyManager.CHANGE_ICC_LOCK_SUCCESS;
+import static android.telephony.TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_FAILED_NOT_ENROLLED;
+import static android.telephony.TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_SUCCESSFUL;
+import static android.telephony.TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_USER_AUTH_REQUIRED;
+import static android.telephony.TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_FAILED_INVALID_SIM;
+import static android.telephony.TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_FAILED_SIM_LOCK_ALREADY_ACTIVE;
+import static android.telephony.TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_FAILED_WRONG_PIN;
+import static android.telephony.TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_SUCCESSFUL;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_CANNOT_CHANGE_PIN;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_CANNOT_DISABLE_PIN;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_NOT_ENROLLED;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_PIN_UNAVAILABLE;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_SIM_NOT_PRESENT;
+import static android.telephony.TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_SUCCESSFUL;
+
+import static com.android.internal.telephony.util.TelephonyUtils.TELEPHONY_FEATURE_ENFORCEMENT_VENDOR_API_LEVEL;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,10 +40,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -36,30 +56,40 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.Manifest;
 import android.app.AppOpsManager;
 import android.compat.testing.PlatformCompatChangeRule;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Build;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.os.UserHandle;
 import android.platform.test.annotations.EnableFlags;
 import android.platform.test.flag.junit.SetFlagsRule;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.telephony.CarrierConfigManager;
+import android.telephony.NetworkSecurityEvent;
 import android.telephony.RadioAccessFamily;
 import android.telephony.Rlog;
+import android.telephony.SubscriptionInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.UiccPortInfo;
 import android.telephony.UiccSlotInfo;
 import android.telephony.UiccSlotMapping;
+import android.telephony.satellite.EnableRequestAttributes;
+import android.telephony.satellite.SatelliteManager;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
+import android.util.Pair;
 
 import androidx.test.annotation.UiThreadTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.TelephonyTestBase;
+import com.android.internal.telephony.HalVersion;
 import com.android.internal.telephony.IIntegerConsumer;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.RILConstants;
@@ -68,6 +98,7 @@ import com.android.internal.telephony.flags.Flags;
 import com.android.internal.telephony.satellite.SatelliteController;
 import com.android.internal.telephony.subscription.SubscriptionManagerService;
 import com.android.internal.telephony.uicc.IccCardStatus;
+import com.android.internal.telephony.uicc.PinStorage;
 import com.android.internal.telephony.uicc.UiccController;
 import com.android.internal.telephony.uicc.UiccSlot;
 import com.android.phone.satellite.accesscontrol.SatelliteAccessController;
@@ -79,6 +110,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
@@ -95,6 +127,7 @@ import java.util.Locale;
 @RunWith(AndroidTestingRunner.class)
 @TestableLooper.RunWithLooper(setAsMainLooper = true)
 public class PhoneInterfaceManagerTest extends TelephonyTestBase {
+    private static final String CARD_STRING = "8944303493379959293F";
     @Rule
     public TestRule compatChangeRule = new PlatformCompatChangeRule();
 
@@ -114,11 +147,19 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
     PackageManager mPackageManager;
     @Mock
     private SubscriptionManagerService mSubscriptionManagerService;
+    @Mock
+    private com.android.internal.telephony.data.DataNetworkController mDataNetworkController;
 
     @Mock
     private AppOpsManager mAppOps;
+    @Mock
+    private android.media.AudioManager mAudioManager;
+    @Mock
+    private SatelliteController mSatelliteController;
 
     @Rule public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
+    private UiccController mUiccController = null;
+    private PinStorage mPinStorage = null;
 
     @Before
     @UiThreadTest
@@ -129,8 +170,12 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         replaceInstance(SatelliteAccessController.class, "sInstance", null,
                 Mockito.mock(SatelliteAccessController.class));
 
-        replaceInstance(SatelliteController.class, "sInstance", null,
-                Mockito.mock(SatelliteController.class));
+        replaceInstance(SatelliteController.class, "sInstance", null, mSatelliteController);
+
+        // Some message handlers query this method of the satellite controller, so return an empty
+        // pair.
+        doReturn(new Pair<>(false, null)).when(
+                mSatelliteController).isUsingNonTerrestrialNetworkViaCarrier();
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
@@ -139,6 +184,12 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         mSharedPreferences.edit().remove(Phone.PREF_NULL_CIPHER_AND_INTEGRITY_ENABLED).commit();
         mSharedPreferences.edit().remove(Phone.PREF_NULL_CIPHER_NOTIFICATIONS_ENABLED).commit();
 
+        mUiccController = Mockito.mock(UiccController.class);
+        mPinStorage = Mockito.mock(PinStorage.class);
+        doReturn(mPinStorage).when(mUiccController).getPinStorage();
+        doReturn(new UiccSlot[]{}).when(mUiccController).getUiccSlots();
+
+        replaceInstance(UiccController.class, "mInstance", null, mUiccController);
         // Trigger sInstance restore in tearDown, after PhoneInterfaceManager.init.
         replaceInstance(PhoneInterfaceManager.class, "sInstance", null, null);
         // Note that PhoneInterfaceManager is a singleton. Calling init gives us a handle to the
@@ -149,9 +200,20 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         doReturn(mPhoneGlobals).when(mPhoneGlobals).getBaseContext();
         doReturn(mPhoneGlobals).when(mPhoneGlobals).createContextAsUser(
                 any(UserHandle.class), anyInt());
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        doReturn(context.getContentResolver()).when(mPhoneGlobals).getContentResolver();
+        doReturn(context.getUserId()).when(mPhoneGlobals).getUserId();
         doReturn(mSubscriptionManagerService).when(mPhoneInterfaceManager)
                 .getSubscriptionManagerService();
         TelephonyManager.setupISubForTest(mSubscriptionManagerService);
+
+        // Some message handlers query these methods on the default phone instance.
+        // Make sure they return sensible values and the mPhone mock instance is set
+        // as the default phone.
+        doReturn(new HalVersion(2, 1)).when(mPhone).getHalVersion(anyInt());
+        when(mPhone.getContext()).thenReturn(mPhoneGlobals);
+        doReturn(mDataNetworkController).when(mPhone).getDataNetworkController();
+        doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
 
         // In order not to affect the existing implementation, define a telephony features
         // and disabled enforce_telephony_feature_mapping_for_public_apis feature flag
@@ -167,6 +229,13 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         when(mPhoneGlobals.getSystemService(AppOpsManager.class)).thenReturn(mAppOps);
         when(mPhoneGlobals.getSystemService(Context.APP_OPS_SERVICE)).thenReturn(mAppOps);
         doNothing().when(mAppOps).checkPackage(anyInt(), anyString());
+
+        when(mPhoneGlobals.getSystemServiceName(android.media.AudioManager.class)).thenReturn(
+                Context.AUDIO_SERVICE);
+        when(mPhoneGlobals.getSystemService(android.media.AudioManager.class)).thenReturn(
+                mAudioManager);
+        when(mPhoneGlobals.getSystemService(Context.AUDIO_SERVICE)).thenReturn(mAudioManager);
+        when(mAudioManager.isWiredHeadsetOn()).thenReturn(false);
     }
 
     @Test
@@ -449,6 +518,59 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
     }
 
+    @Test
+    @EnableFlags(Flags.FLAG_NETWORK_SECURITY_EVENT_INDICATIONS)
+    public void getSupportedNetworkAlertCategories_allReqsMet_returnsCategories() {
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+        doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
+        doReturn(204).when(mPhoneInterfaceManager).getHalVersion(anyInt());
+
+        int[] expectedCategories = new int[]{
+                NetworkSecurityEvent.ALERT_CATEGORY_DOWNGRADE,
+                NetworkSecurityEvent.ALERT_CATEGORY_IMPRISONMENT
+        };
+        doReturn(expectedCategories).when(mPhone).getSupportedNetworkAlertCategories();
+
+        int[] actualCategories = mPhoneInterfaceManager.getSupportedNetworkAlertCategories();
+
+        assertArrayEquals(expectedCategories, actualCategories);
+    }
+
+    @Test
+    public void getSupportedNetworkAlertCategories_lackingHalVersion_throwsException() {
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+        doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
+        doReturn(203).when(mPhoneInterfaceManager).getHalVersion(anyInt());
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> mPhoneInterfaceManager.getSupportedNetworkAlertCategories());
+    }
+
+    @Test
+    public void getSupportedNetworkAlertCategories_lackingPermissions_throwsException() {
+        doThrow(new SecurityException("Test Exception")).when(mPhoneInterfaceManager)
+                .enforceReadPrivilegedPermission(anyString());
+        doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
+        doReturn(204).when(mPhoneInterfaceManager).getHalVersion(anyInt());
+
+        assertThrows(SecurityException.class,
+                () -> mPhoneInterfaceManager.getSupportedNetworkAlertCategories());
+    }
+
+    @Test
+    public void getSupportedNetworkAlertCategories_modemUnsupported_returnsEmptyArray() {
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+        doReturn(mPhone).when(mPhoneInterfaceManager).getDefaultPhone();
+        doReturn(204).when(mPhoneInterfaceManager).getHalVersion(anyInt());
+        doThrow(new UnsupportedOperationException()).when(mPhone)
+                .getSupportedNetworkAlertCategories();
+
+        int[] categories = mPhoneInterfaceManager.getSupportedNetworkAlertCategories();
+
+        assertEquals(0, categories.length);
+    }
+
+
     /**
      * Verify getCarrierRestrictionStatus throws exception for invalid caller package name.
      */
@@ -542,10 +664,9 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
     @Test
     @EnableCompatChanges({TelephonyManager.ENABLE_FEATURE_MAPPING})
     public void testWithoutTelephonyFeatureAndCompatChanges() throws Exception {
-        // Replace field to set SDK version of vendor partition to Android V
-        int vendorApiLevel = Build.VERSION_CODES.VANILLA_ICE_CREAM;
+        // Replace field to set vendor API level to the one where the exceptions are enabled.
         replaceInstance(PhoneInterfaceManager.class, "mVendorApiLevel", mPhoneInterfaceManager,
-                vendorApiLevel);
+                TELEPHONY_FEATURE_ENFORCEMENT_VENDOR_API_LEVEL);
 
         // telephony features is not defined, expect UnsupportedOperationException.
         doReturn(false).when(mPackageManager).hasSystemFeature(
@@ -582,14 +703,14 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
     public void testGetSatelliteDataOptimizedApps() throws Exception {
         mPhoneInterfaceManager.setFeatureFlags(mFeatureFlags);
         loge("FeatureFlagApi is set to return true");
-
         boolean containsCtsApp = false;
         String ctsPackageName = "android.telephony.cts";
+        String satelliteCtsPackageName = "android.telephony.satellite.cts";
         List<String> listSatelliteApplications =
                 mPhoneInterfaceManager.getSatelliteDataOptimizedApps();
 
         for (String packageName : listSatelliteApplications) {
-            if (ctsPackageName.equals(packageName)) {
+            if (ctsPackageName.equals(packageName) || satelliteCtsPackageName.equals(packageName)) {
                 containsCtsApp = true;
             }
         }
@@ -632,11 +753,9 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
         doReturn(true).when(mPackageManager).hasSystemFeature(anyString());
 
-        UiccController uiccController = Mockito.mock(UiccController.class);
-        replaceInstance(UiccController.class, "mInstance", null, uiccController);
         UiccSlot slot = Mockito.mock(UiccSlot.class);
 
-        doReturn(new UiccSlot[] {slot}).when(uiccController).getUiccSlots();
+        doReturn(new UiccSlot[]{slot}).when(mUiccController).getUiccSlots();
 
         doReturn(true).when(slot).isActive();
         doReturn(IccCardStatus.CardState.CARDSTATE_PRESENT).when(slot).getCardState();
@@ -708,11 +827,9 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         doReturn(true).when(mPackageManager).hasSystemFeature(anyString());
         doReturn(true).when(mFeatureFlags).supportSlotSwitching2psim1esimConfig();
 
-        UiccController uiccController = Mockito.mock(UiccController.class);
-        replaceInstance(UiccController.class, "mInstance", null, uiccController);
         UiccSlot slot = Mockito.mock(UiccSlot.class);
 
-        doReturn(new UiccSlot[] {slot}).when(uiccController).getUiccSlots();
+        doReturn(new UiccSlot[]{slot}).when(mUiccController).getUiccSlots();
 
         doReturn(true).when(slot).isActive();
         doReturn(IccCardStatus.CardState.CARDSTATE_PRESENT).when(slot).getCardState();
@@ -737,5 +854,480 @@ public class PhoneInterfaceManagerTest extends TelephonyTestBase {
         assertNotNull(actualSimTypes);
         assertEquals(1, actualSimTypes.length);
         assertArrayEquals(expectedSimTypes, actualSimTypes);
+    }
+
+    @Test
+    public void testGetCurrentTtyMode_headsetNotConnected_returnsTtyOff() {
+        // Setup: Mock permissions and feature checks to pass
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+
+        // Set the TTY mode setting to a specific value (not OFF)
+        int preferredTtyMode = TelephonyManager.TTY_MODE_HCO;
+        Settings.Secure.putIntForUser(mPhoneGlobals.getContentResolver(),
+                Settings.Secure.PREFERRED_TTY_MODE, preferredTtyMode, mPhoneGlobals.getUserId());
+
+        // Mock AudioManager to report no wired headset
+        when(mAudioManager.isWiredHeadsetOn()).thenReturn(false);
+
+        // Action: Call the method under test
+        int actualTtyMode = mPhoneInterfaceManager.getCurrentTtyMode();
+
+        // Assert: TTY_MODE_OFF is returned because headset is not connected
+        assertEquals(TelephonyManager.TTY_MODE_OFF, actualTtyMode);
+
+        // Cleanup
+        Settings.Secure.putIntForUser(mPhoneGlobals.getContentResolver(),
+                Settings.Secure.PREFERRED_TTY_MODE, TelephonyManager.TTY_MODE_OFF,
+                mPhoneGlobals.getUserId());
+    }
+
+    @Test
+    public void testGetCurrentTtyMode_headsetConnected_returnsCorrectValue() {
+        // Setup: Mock permissions and feature checks to pass
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+
+        // Set the TTY mode setting to a specific value
+        int expectedTtyMode = TelephonyManager.TTY_MODE_HCO;
+        Settings.Secure.putIntForUser(mPhoneGlobals.getContentResolver(),
+                Settings.Secure.PREFERRED_TTY_MODE, expectedTtyMode, mPhoneGlobals.getUserId());
+
+        // Mock AudioManager to report wired headset is connected
+        when(mAudioManager.isWiredHeadsetOn()).thenReturn(true);
+
+        // Action: Call the method under test
+        int actualTtyMode = mPhoneInterfaceManager.getCurrentTtyMode();
+
+        // Assert: The correct TTY mode is returned because headset is connected
+        assertEquals(expectedTtyMode, actualTtyMode);
+
+        // Cleanup
+        Settings.Secure.putIntForUser(mPhoneGlobals.getContentResolver(),
+                Settings.Secure.PREFERRED_TTY_MODE, TelephonyManager.TTY_MODE_OFF,
+                mPhoneGlobals.getUserId());
+    }
+
+    @Test
+    public void testGetCurrentTtyMode_settingNotFound_returnsDefault() {
+        // Setup: Mock permissions and feature checks to pass
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+
+        // Ensure the setting is not present
+        Settings.Secure.putIntForUser(mPhoneGlobals.getContentResolver(),
+                Settings.Secure.PREFERRED_TTY_MODE, TelephonyManager.TTY_MODE_OFF,
+                mPhoneGlobals.getUserId());
+
+        // Action: Call the method under test
+        int actualTtyMode = mPhoneInterfaceManager.getCurrentTtyMode();
+
+        // Assert: The default TTY mode is returned
+        assertEquals(TelephonyManager.TTY_MODE_OFF, actualTtyMode);
+    }
+
+    @Test
+    public void testGetCurrentTtyMode_noPermission_throwsSecurityException() {
+        // Setup: Mock permission check to fail
+        doThrow(new SecurityException("Test Exception")).when(mPhoneInterfaceManager)
+                .enforceReadPrivilegedPermission(anyString());
+
+        // Action & Assert: Expect a SecurityException
+        assertThrows(SecurityException.class, () -> mPhoneInterfaceManager.getCurrentTtyMode());
+    }
+
+    @Test
+    public void testGetCurrentTtyMode_featureNotSupported_throwsException() throws Exception {
+        // Setup: Mock permissions to pass, but feature check to fail
+        doNothing().when(mPhoneInterfaceManager).enforceReadPrivilegedPermission(anyString());
+        replaceInstance(PhoneInterfaceManager.class, "mVendorApiLevel", mPhoneInterfaceManager,
+                TELEPHONY_FEATURE_ENFORCEMENT_VENDOR_API_LEVEL);
+        doReturn(false).when(mPackageManager)
+                .hasSystemFeature(PackageManager.FEATURE_TELEPHONY_CALLING);
+
+        // Action & Assert: Expect an UnsupportedOperationException
+        assertThrows(UnsupportedOperationException.class,
+                () -> mPhoneInterfaceManager.getCurrentTtyMode());
+    }
+
+    @Test
+    public void uncapMaxAllowedSatelliteDataMode_noShellPermission_throwsSecurityException() {
+        // This method is protected by TelephonyPermissions.enforceShellOnly.
+        // The test runner does not have shell UID, so this should throw a SecurityException.
+        // This test verifies that the permission check is in place.
+        assertThrows(SecurityException.class,
+                () -> mPhoneInterfaceManager.uncapMaxAllowedSatelliteDataMode());
+
+        // Verify that the underlying controller method is not called due to permission failure.
+        verify(mSatelliteController, never()).uncapMaxAllowedDataMode();
+    }
+
+    @Test
+    public void testGetSimAutoPinManagementEnrollmentStatus_noSubscription() {
+        doReturn(null).when(mSubscriptionManagerService).getSubscriptionInfo(1);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            mPhoneInterfaceManager.getSimAutoPinManagementEnrollmentStatus(1);
+        });
+    }
+
+    private void addSubscriptionInfo(int subId, String cardString) {
+        SubscriptionInfo.Builder siBuilder = new SubscriptionInfo.Builder();
+        siBuilder.setCardString(cardString).setId(subId).setSimSlotIndex(0);
+
+        SubscriptionInfo si = siBuilder.build();
+        doReturn(si).when(mSubscriptionManagerService).getSubscriptionInfo(subId);
+    }
+
+    @Test
+    public void testGetSimAutoPinManagementEnrollmentStatus_notEnrolled() throws Exception {
+        addSubscriptionInfo(1, CARD_STRING);
+
+        doReturn(false).when(mPinStorage).isPinPlatformManaged(CARD_STRING);
+
+        assertEquals(TelephonyManager.SIM_PIN_ENROLLMENT_STATUS_MANUALLY_MANAGED,
+                mPhoneInterfaceManager.getSimAutoPinManagementEnrollmentStatus(1));
+    }
+
+    @Test
+    public void testGetSimAutoPinManagementEnrollmentStatus_isPlatformManaged() throws Exception {
+        addSubscriptionInfo(1, CARD_STRING);
+
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(CARD_STRING);
+
+        assertEquals(TelephonyManager.SIM_PIN_ENROLLMENT_STATUS_PLATFORM_MANAGED,
+                mPhoneInterfaceManager.getSimAutoPinManagementEnrollmentStatus(1));
+    }
+
+    void setupPhoneGlobalsToThrowWhenCheckingControlSimAutoPinManagementPermission() {
+        doThrow(SecurityException.class).when(
+                mPhoneGlobals).enforceCallingOrSelfPermission(
+                eq(Manifest.permission.CONTROL_SIM_AUTO_PIN_MANAGEMENT), anyString());
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_noPermission() {
+        setupPhoneGlobalsToThrowWhenCheckingControlSimAutoPinManagementPermission();
+
+        assertThrows(SecurityException.class, () -> {
+            mPhoneInterfaceManager.enrollSimInAutoPinManagement(1, "1234",
+                    mock(ResultReceiver.class));
+        });
+    }
+
+    @Test
+    public void unenrollSimFromAutoPinManagement_noPermission() {
+        setupPhoneGlobalsToThrowWhenCheckingControlSimAutoPinManagementPermission();
+
+        assertThrows(SecurityException.class, () -> {
+            mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, mock(ResultReceiver.class));
+        });
+    }
+
+    @Test
+    public void getAutoManagedPinForSim_noPermission() {
+        setupPhoneGlobalsToThrowWhenCheckingControlSimAutoPinManagementPermission();
+
+        assertThrows(SecurityException.class, () -> {
+            mPhoneInterfaceManager.getAutoManagedPinForSim(1, mock(ResultReceiver.class));
+        });
+    }
+
+    void setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission() {
+        doNothing().when(mPhoneGlobals).enforceCallingOrSelfPermission(
+                eq(Manifest.permission.CONTROL_SIM_AUTO_PIN_MANAGEMENT),
+                anyString());
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_failsIfInvalidSubscription() {
+        doReturn(null).when(mSubscriptionManagerService).getSubscriptionInfo(2);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.enrollSimInAutoPinManagement(2, "1234", receiver);
+        verify(receiver).send(eq(SIM_PIN_ENROLLMENT_RESULT_FAILED_INVALID_SIM), isNotNull());
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_failsIfIccLockEnabled() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPhoneInterfaceManager).isIccLockEnabled(1);
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.enrollSimInAutoPinManagement(1, "1234", receiver);
+        verify(receiver).send(eq(SIM_PIN_ENROLLMENT_RESULT_FAILED_SIM_LOCK_ALREADY_ACTIVE),
+                isNotNull());
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_failsIfCannotEnableIccLock() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(false).when(mPhoneInterfaceManager).isIccLockEnabled(1);
+        doReturn(2).when(mPhoneInterfaceManager).setIccLockEnabled(1, true, "1234");
+
+        ArgumentCaptor<Bundle> captor = ArgumentCaptor.forClass(Bundle.class);
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.enrollSimInAutoPinManagement(1, "1234", receiver);
+        verify(receiver).send(eq(SIM_PIN_ENROLLMENT_RESULT_FAILED_WRONG_PIN), captor.capture());
+        Bundle received = captor.getValue();
+        assertEquals(2, received.getInt(TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_ATTEMPTS));
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_failsIfCannotChangeIccLock() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(false).when(mPhoneInterfaceManager).isIccLockEnabled(1);
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).setIccLockEnabled(1, true,
+                "1234");
+        doReturn(2).when(mPhoneInterfaceManager).changeIccLockPassword(eq(1), eq("1234"),
+                anyString());
+
+        ArgumentCaptor<Bundle> captor = ArgumentCaptor.forClass(Bundle.class);
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.enrollSimInAutoPinManagement(1, "1234", receiver);
+        verify(receiver).send(eq(SIM_PIN_ENROLLMENT_RESULT_FAILED_WRONG_PIN), captor.capture());
+        Bundle received = captor.getValue();
+        assertEquals(2, received.getInt(TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_ATTEMPTS));
+    }
+
+    @Test
+    public void enrollSimInAutoPinManagement_succeeds() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(false).when(mPhoneInterfaceManager).isIccLockEnabled(1);
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).setIccLockEnabled(1, true,
+                "1234");
+
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).changeIccLockPassword(eq(1),
+                eq("1234"),
+                anyString());
+
+        ArgumentCaptor<Bundle> captor = ArgumentCaptor.forClass(Bundle.class);
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.enrollSimInAutoPinManagement(1, "1234", receiver);
+        verify(mPinStorage).storePlatformManagedPin(eq(0), anyString(), eq("1234"));
+        verify(receiver).send(eq(SIM_PIN_ENROLLMENT_RESULT_SUCCESSFUL), captor.capture());
+        Bundle received = captor.getValue();
+        assertEquals(4, received.getString(
+                TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_GENERATED_PIN).length());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfInvalidSubscription() {
+        doReturn(null).when(mSubscriptionManagerService).getSubscriptionInfo(2);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(2, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_SIM_NOT_PRESENT), isNotNull());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfNotPlatformManaged() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(false).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_NOT_ENROLLED), isNotNull());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfNoPin() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_PIN_UNAVAILABLE), isNotNull());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfNoOld() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("1234").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+        doReturn("").when(mPinStorage).getOldPin(eq(CARD_STRING));
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_PIN_UNAVAILABLE), isNotNull());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfFailingToChangePin() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("1234").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+        doReturn("0000").when(mPinStorage).getOldPin(eq(CARD_STRING));
+        doReturn(2).when(mPhoneInterfaceManager).changeIccLockPassword(eq(1), eq("1234"),
+                eq("0000"));
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_CANNOT_CHANGE_PIN),
+                isNotNull());
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_failsIfFailingToDisableLock() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("1234").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+        doReturn("0000").when(mPinStorage).getOldPin(eq(CARD_STRING));
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).changeIccLockPassword(eq(1),
+                eq("1234"),
+                eq("0000"));
+        doReturn(2).when(mPhoneInterfaceManager).setIccLockEnabled(1, false,
+                "0000");
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_FAILED_CANNOT_DISABLE_PIN),
+                isNotNull());
+        verify(mPinStorage).clearPlatformManagedPin(eq(0));
+    }
+
+    @Test
+    public void unenrollSimInAutoPinManagement_succeeds() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("1234").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+        doReturn("0000").when(mPinStorage).getOldPin(eq(CARD_STRING));
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).changeIccLockPassword(eq(1),
+                eq("1234"),
+                eq("0000"));
+        doReturn(CHANGE_ICC_LOCK_SUCCESS).when(mPhoneInterfaceManager).setIccLockEnabled(1, false,
+                "0000");
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.unenrollSimFromAutoPinManagement(1, receiver);
+        verify(receiver).send(eq(SIM_PIN_UNENROLLMENT_RESULT_SUCCESSFUL), isNotNull());
+        verify(mPinStorage).clearPlatformManagedPin(eq(0));
+    }
+
+    @Test
+    public void getAutoManagedPinForSim_failsIfnoSubscription() {
+        doReturn(null).when(mSubscriptionManagerService).getSubscriptionInfo(2);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.getAutoManagedPinForSim(2, receiver);
+        verify(receiver).send(eq(GET_AUTO_MANAGED_PIN_RESULT_FAILED_NOT_ENROLLED), isNotNull());
+    }
+
+    @Test
+    public void getAutoManagedPinForSim_failsIfnotPlatformManaged() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(false).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.getAutoManagedPinForSim(2, receiver);
+        verify(receiver).send(eq(GET_AUTO_MANAGED_PIN_RESULT_FAILED_NOT_ENROLLED), isNotNull());
+    }
+
+    @Test
+    public void getAutoManagedPinForSim_failsIfNotAuthenticated() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.getAutoManagedPinForSim(1, receiver);
+        verify(receiver).send(eq(GET_AUTO_MANAGED_PIN_RESULT_USER_AUTH_REQUIRED), isNotNull());
+    }
+
+    @Test
+    public void getAutoManagedPinForSim_succeeds() {
+        addSubscriptionInfo(1, CARD_STRING);
+        setupPhoneGlobalsToDoNothingWhenCheckingControlSimAutoPinManagementPermission();
+        doReturn(true).when(mPinStorage).isPinPlatformManaged(eq(CARD_STRING));
+        doReturn("5678").when(mPinStorage).getPin(eq(0), eq(CARD_STRING));
+
+        ArgumentCaptor<Bundle> captor = ArgumentCaptor.forClass(Bundle.class);
+        ResultReceiver receiver = mock(ResultReceiver.class);
+        mPhoneInterfaceManager.getAutoManagedPinForSim(1, receiver);
+        verify(receiver).send(eq(GET_AUTO_MANAGED_PIN_RESULT_SUCCESSFUL), captor.capture());
+        Bundle received = captor.getValue();
+        assertEquals("5678", received.getString(
+                TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_GENERATED_PIN));
+    }
+
+    @Test
+    public void testRequestEnableSatellite_Auto() {
+        final int subId = 1;
+
+        // Setup attributes for automatic mode
+        EnableRequestAttributes attributes = new EnableRequestAttributes.Builder(true)
+                .setConnectType(CarrierConfigManager.CARRIER_ROAMING_NTN_CONNECT_AUTOMATIC)
+                .setSatelliteEnablementRequestReason(
+                        SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_USER
+                )
+                .build();
+
+        // Mock permission check
+        doNothing().when(mPhoneGlobals).enforceCallingOrSelfPermission(
+                eq(Manifest.permission.SATELLITE_COMMUNICATION), anyString());
+
+        // Call requestEnableSatellite
+        mPhoneInterfaceManager.requestEnableSatellite(subId, attributes, mIIntegerConsumer);
+
+        // Verify mSatelliteController.requestEnableSatelliteForCarrier is called
+        verify(mSatelliteController).requestEnableSatelliteForCarrier(eq(subId),
+                eq(true),
+                eq(SatelliteManager.SATELLITE_COMMUNICATION_RESTRICTION_REASON_USER),
+                eq(mIIntegerConsumer));
+        // Verify mSatelliteController.requestSatelliteEnabled is NOT called
+        verify(mSatelliteController, never())
+                .requestSatelliteEnabled(anyBoolean(), anyBoolean(), anyBoolean(), any());
+    }
+
+    @Test
+    public void testRequestEnableSatellite_Auto_NotUser() throws Exception {
+        final int subId = 1;
+        int[] nonUserReasons = {
+                SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_UNKNOWN,
+                SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_PURCHASE,
+                SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_POWER,
+                SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_CARRIER_CONFIG_UPDATE,
+                SatelliteManager.SATELLITE_ENABLEMENT_REQUEST_REASON_ENTITLEMENT
+        };
+
+        for (int reason : nonUserReasons) {
+            // Setup attributes for automatic mode but reason not user
+            EnableRequestAttributes attributes = new EnableRequestAttributes.Builder(true)
+                    .setConnectType(CarrierConfigManager.CARRIER_ROAMING_NTN_CONNECT_AUTOMATIC)
+                    .setSatelliteEnablementRequestReason(reason)
+                    .build();
+
+            // Mock permission check
+            doNothing().when(mPhoneGlobals).enforceCallingOrSelfPermission(
+                    eq(Manifest.permission.SATELLITE_COMMUNICATION), anyString());
+
+            // Call requestEnableSatellite
+            mPhoneInterfaceManager.requestEnableSatellite(subId, attributes, mIIntegerConsumer);
+
+            // Verify mIIntegerConsumer.accept is called with SATELLITE_RESULT_REQUEST_NOT_SUPPORTED
+            verify(mIIntegerConsumer).accept(
+                    eq(SatelliteManager.SATELLITE_RESULT_REQUEST_NOT_SUPPORTED));
+
+            clearInvocations(mIIntegerConsumer);
+        }
+
+        // Verify neither requestEnableSatelliteForCarrier nor requestSatelliteEnabled is called
+        verify(mSatelliteController, never()).requestEnableSatelliteForCarrier(anyInt(),
+                anyBoolean(), anyInt(), any());
+        verify(mSatelliteController, never()).requestSatelliteEnabled(anyBoolean(),
+                anyBoolean(), anyBoolean(), any());
     }
 }

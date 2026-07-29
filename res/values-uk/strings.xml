@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Налаштування параметрів облікового запису"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Усі облікові записи для дзвінків"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Виберіть, з яких облікових записів можна телефонувати"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Сторонні додатки"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Дозвольте іншим додаткам також показувати виклики в історії. Якщо вимкнути цю опцію, виклики відображатимуться лише у відповідних додатках."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Дзвінки через Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Вбудована служба під’єднання"</string>
     <string name="voicemail" msgid="7697769412804195032">"Голосова пошта"</string>
@@ -298,7 +300,7 @@
     <string name="limited_sim_function_notification_message" msgid="5338638075496721160">"Коли працює інша SIM-карта, виклики й сервіси даних <xliff:g id="CARRIER_NAME">%1$s</xliff:g> може бути заблоковано."</string>
     <string name="sip_accounts_removed_notification_title" msgid="3528076957535736095">"Знайдено та вилучено облікові записи SIP, що не підтримуються"</string>
     <string name="sip_accounts_removed_notification_message" msgid="1916856744869791592">"Платформа Android більше не підтримує виклики SIP.\nНаявні облікові записи SIP (<xliff:g id="REMOVED_SIP_ACCOUNTS">%s</xliff:g>) вилучено. \nПеревірте налаштування для викликів за умовчанням в обліковому записі."</string>
-    <string name="sip_accounts_removed_notification_action" msgid="3772778402370555562">"Перейти в налаштування"</string>
+    <string name="sip_accounts_removed_notification_action" msgid="3772778402370555562">"Відкрити налаштування"</string>
     <string name="data_usage_title" msgid="8438592133893837464">"Використання трафіку додатками"</string>
     <string name="data_usage_template" msgid="6287906680674061783">"<xliff:g id="ID_1">%1$s</xliff:g> мобільного трафіку використано в період <xliff:g id="ID_2">%2$s</xliff:g>"</string>
     <string name="advanced_options_title" msgid="9208195294513520934">"Додатково"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Видалити номер фікс. набору"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Видалення номеру фікс. набору…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Номер фікс. набору видалено."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Фіксований номер (FDN) не оновлено, оскільки введено неправильний PIN-код."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Неправильний код PIN2. FDN не оновлено."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Номер FDN не оновлено, оскільки кількість цифр не може перевищувати <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Фіксований номер (FDN) не оновлено. PIN2-код неправильний або номер телефону відхилено."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Помилка набору фіксованого номера."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Введіть PUK2-код"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Неправильний пароль. PIN2-код заблоковано. Щоб повторити спробу, змініть PIN2-код."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Неправильний пароль. SIM-карту заблоковано. Введіть PUK2-код."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Код PIN2 заблоковано. Щоб розблокувати, введіть код PUK2."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2-код назавжди заблоковано."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"У вас залишилося стільки спроб: <xliff:g id="NUMBER">%d</xliff:g>."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Заблоковано кодом PUK2. Щоб розблокувати, зв’яжіться з оператором."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Закрити"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Увімкнути передавання даних"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Вимкнути передавання даних"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Застосувати"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Усі"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE ініціалізовано"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Відеодзвінки ініціалізовано"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Виклики через Wi-Fi ініціалізовано"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"версія:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"версія Skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"режим максимального передавання даних:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"усі plmn постачальників супутникового зв’язку:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"версія Starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

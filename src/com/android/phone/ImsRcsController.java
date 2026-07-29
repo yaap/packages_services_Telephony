@@ -18,7 +18,6 @@ package com.android.phone;
 
 import static android.content.pm.PackageManager.FEATURE_TELEPHONY_IMS;
 import static android.content.pm.PackageManager.FEATURE_TELEPHONY_IMS_SINGLE_REGISTRATION;
-import static android.telephony.TelephonyManager.ENABLE_FEATURE_MAPPING;
 
 import android.Manifest;
 import android.annotation.NonNull;
@@ -63,6 +62,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.TelephonyPermissions;
 import com.android.internal.telephony.flags.FeatureFlags;
 import com.android.internal.telephony.ims.ImsResolver;
+import com.android.internal.telephony.util.TelephonyUtils;
 import com.android.services.telephony.rcs.RcsFeatureController;
 import com.android.services.telephony.rcs.SipTransportController;
 import com.android.services.telephony.rcs.TelephonyRcsService;
@@ -106,6 +106,9 @@ public class ImsRcsController extends IImsRcsController.Stub {
         synchronized (ImsRcsController.class) {
             if (sInstance == null) {
                 sInstance = new ImsRcsController(app, featureFlags);
+                TelephonyFrameworkInitializer.getTelephonyServiceManager()
+                        .getTelephonyImsServiceRegisterer()
+                        .register(sInstance);
             } else {
                 Log.wtf(TAG, "init() called multiple times!  sInstance = " + sInstance);
             }
@@ -119,8 +122,6 @@ public class ImsRcsController extends IImsRcsController.Stub {
         mApp = app;
         mFeatureFlags = featureFlags;
         mPackageManager = mApp.getPackageManager();
-        TelephonyFrameworkInitializer
-                .getTelephonyServiceManager().getTelephonyImsServiceRegisterer().register(this);
         mImsResolver = ImsResolver.getInstance();
         mVendorApiLevel = SystemProperties.getInt(
                 "ro.vendor.api_level", Build.VERSION.DEVICE_INITIAL_SDK_INT);
@@ -687,7 +688,8 @@ public class ImsRcsController extends IImsRcsController.Stub {
             int remoteUid;
             remoteUid = mApp.getPackageManager().getPackageUidAsUser(packageName, 0 /*flags*/,
                     Binder.getCallingUserHandle().getIdentifier());
-            if (!UserHandle.isSameApp(Binder.getCallingUid(), remoteUid)) {
+            if (!PccAwareUidComparator.isSameApp(mApp.getPackageManager(), Binder.getCallingUid(),
+                    remoteUid)) {
                 throw new SecurityException("passed in packageName does not match the caller");
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -1012,23 +1014,8 @@ public class ImsRcsController extends IImsRcsController.Stub {
      */
     private void enforceTelephonyFeatureWithException(@Nullable String callingPackage,
             @NonNull String telephonyFeature, @NonNull String methodName) {
-        if (callingPackage == null || mPackageManager == null) {
-            return;
-        }
-
-        if (!CompatChanges.isChangeEnabled(ENABLE_FEATURE_MAPPING, callingPackage,
-                Binder.getCallingUserHandle())
-                || mVendorApiLevel < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            // Skip to check associated telephony feature,
-            // if compatibility change is not enabled for the current process or
-            // the SDK version of vendor partition is less than Android V.
-            return;
-        }
-
-        if (!mPackageManager.hasSystemFeature(telephonyFeature)) {
-            throw new UnsupportedOperationException(
-                    methodName + " is unsupported without " + telephonyFeature);
-        }
+        TelephonyUtils.enforceTelephonyFeatureWithException(callingPackage, mPackageManager,
+                mVendorApiLevel, telephonyFeature, methodName);
     }
 
     void setRcsService(TelephonyRcsService rcsService) {

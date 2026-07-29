@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Канфігурацыя налад уліковых запісаў"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Усе ўліковыя запісы выклікаў"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Выберыце, з якіх уліковых запісаў можна рабіць выклікі"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Староннія праграмы"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Дазволіць іншым праграмам паказваць выклікі ў гісторыі выклікаў. Калі выключыць гэту функцыю, выклікі будуць паказвацца толькі ў адпаведных праграмах."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-Fi-тэлефанія"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Убудаваная служба злучэнняў"</string>
     <string name="voicemail" msgid="7697769412804195032">"Галасавая пошта"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Выдаліць дазволены нумар"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Выдаленне дазволенага нумару..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Дазволены нумар выдалены."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Дазволены нумар не быў абноўлены, таму што вы набралі няправільны PIN-код."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Няправільны PIN2-код. Дазволены нумар не абноўлены."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Дазволены нумар не абноўлены, бо не можа складацца больш чым з <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> лічбаў."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Cпiс дазволеных нумароў не адноўлены. PIN2 ўведзены няправiльна, або нумар быў адхiлены."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Аперацыя з дазволеным нумарам не ўдалася."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Увядзіце код PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Пароль няправільны. Зараз код PIN2 заблакіраваны. Каб паўтарыць спробу, змяніце код PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Пароль няправільны. Зараз SIM-карта заблакіравана. Увядзіце код PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Код PIN2 заблакіраваны. Каб разблакіраваць, увядзіце PUK2."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"Код PUK2 заблакіраваны назаўжды."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"У вас засталося спроб: <xliff:g id="NUMBER">%d</xliff:g>."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Код PUK2 заблакіраваны. Для разблакіроўкі звярніцеся да пастаўшчыка паслуг."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Адхіліць"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Уключыць перадачу даных"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Выключыць перадачу даных"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Прымяніць"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Усе"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE уключана"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Відэавыклікі ўключаны"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wi-Fi-тэлефанія ўключана"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"версія:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"версія skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"рэжым з максімальна дазволеным аб’ёмам даных:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"усе агульнадаступныя мабільныя сеткі пастаўшчыкоў паслуг спадарожнікавай сувязі:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"версія starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"дадатковы ідэнтыфікатар/сетка сувязі агульнага карыстання/тып сэрвісу:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"дазволіць доступ:"</string>

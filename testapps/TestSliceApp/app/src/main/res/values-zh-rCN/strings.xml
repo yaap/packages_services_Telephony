@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"划分延迟时间优先级"</string>
     <string name="bw_title" msgid="3902162973688221344">"划分带宽优先级"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"优先使用统一通信"</string>
     <string name="purchase" msgid="7843181995697372128">"购买 Network Premium"</string>
     <string name="network_available" msgid="4780293262690730734">"结果：请求的网络现已可用！"</string>
     <string name="network_requested" msgid="5646123922691865991">"结果：已请求网络！"</string>

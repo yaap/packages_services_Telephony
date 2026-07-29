@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"اکاؤنٹ کی ترتیبات کنفیگر کریں"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"سبھی کالنگ اکاؤنٹس"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"منتخب کریں کہ کون سے اکاؤنٹس کالز کر سکتے ہیں"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"فریق ثالث کی ایپس"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"دیگر ایپس کو اپنی کال کی سرگزشت میں کالز دکھانے کی اجازت دیں۔ آف ہونے پر، یہ کالز صرف اپنی مخصوص ایپس میں دکھائی دیں گی۔"</string>
     <string name="wifi_calling" msgid="3650509202851355742">"‏Wi-Fi کالنگ"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"پہلے سے شامل کنکشن سروس"</string>
     <string name="voicemail" msgid="7697769412804195032">"صوتی میل"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"فکسڈ ڈائلنگ نمبر حذف کریں"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"فکسڈ ڈائلنگ نمبر حذف کر رہا ہے…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"فکسڈ ڈائلنگ نمبر حذف ہوگیا۔"</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"‏FDN اپ ڈیٹ نہیں ہوا تھا کیونکہ آپ نے ایک غلط PIN ٹائپ کر دیا۔"</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"‏غلط PIN2۔ ‫FDN اپ ڈیٹ نہیں ہوا۔"</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"‏FDN اپ ڈیٹ نہیں ہوا کیونکہ <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> نمبر ہندسوں سے زائد ہے۔"</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"‏FDN اپ ڈیٹ نہیں ہوا تھا کیونکہ PIN2 غلط تھا یا فون نمبر مسترد کر دیا گیا تھا۔"</string>
     <string name="fdn_failed" msgid="216592346853420250">"‏FDN کا عمل ناکام ہوگیا۔"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"‏PUK2 کوڈ درج کریں"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"‏پاس ورڈ غلط ہے۔ PIN2 اب مسدود ہوگئی۔ دوبارہ کوشش کرنے کیلئے، PIN 2 تبدیل کریں۔"</string>
     <string name="puk2_requested" msgid="6992374450720307514">"‏پاس ورڈ غلط ہے۔ SIM اب مقفل ہے۔ PUK2 درج کریں۔"</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"‏‫PIN2 بلاک ہے۔ اَن بلاک کرنے کے لیے PUK2 درج کریں۔"</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"‏PUK2 مستقل طور پر مسدود ہے۔"</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"آپ کے پاس <xliff:g id="NUMBER">%d</xliff:g> کوششیں بچی ہیں۔"</string>
     <string name="puk2_locked" msgid="6497760825455461057">"‏PUK2 مقفل ہے۔ غیر مقفل کرنے کے ليے سروس فراہم کنندہ سے رابطہ کریں۔"</string>
@@ -778,19 +781,19 @@
     <string name="sum_call_barring_disabled" msgid="5699448000600153096">"آف"</string>
     <string name="call_barring_baoc" msgid="7400892586336429326">"سبھی باہر جانے والی"</string>
     <string name="call_barring_baoc_enabled" msgid="3131509193386668182">"سبھی باہر جانے والی کالز کو مسدود کرنے کو غیر فعال کریں؟"</string>
-    <string name="call_barring_baoc_disabled" msgid="8534224684091141509">"سبھی باہر جانے والی کالز کو مسدود کریں؟"</string>
+    <string name="call_barring_baoc_disabled" msgid="8534224684091141509">"سبھی باہر جانے والی کالز کو بلاک کریں؟"</string>
     <string name="call_barring_baoic" msgid="8668125428666851665">"باہر جانے والے بین الاقوامی"</string>
     <string name="call_barring_baoic_enabled" msgid="1203758092657630123">"باہر جانے والی بین الاقوامی کالز کو مسدود کرنے کو غیر فعال کریں؟"</string>
-    <string name="call_barring_baoic_disabled" msgid="5656889339002997449">"باہر جانے والی بین الاقوامی کالز کو مسدود کریں؟"</string>
+    <string name="call_barring_baoic_disabled" msgid="5656889339002997449">"باہر جانے والی بین الاقوامی کالز کو بلاک کریں؟"</string>
     <string name="call_barring_baoicr" msgid="8566167764432343487">"باہر جانے والی بین الاقوامی رومنگ"</string>
     <string name="call_barring_baoicr_enabled" msgid="1615324165512798478">"باہر جانے والی بین الاقوامی رومنگ کو مسدود کرنے کو غیر فعال کریں؟"</string>
-    <string name="call_barring_baoicr_disabled" msgid="172010175248142831">"باہر جانے والی بین الاقوامی رومنگ کو مسدود کریں؟"</string>
+    <string name="call_barring_baoicr_disabled" msgid="172010175248142831">"باہر جانے والی بین الاقوامی رومنگ کو بلاک کریں؟"</string>
     <string name="call_barring_baic" msgid="7941393541678658566">"سبھی آنے والی"</string>
     <string name="call_barring_baic_enabled" msgid="4357332358020337470">"سبھی آنے والی کالز کو مسدود کرنے کو غیر فعال کریں؟"</string>
-    <string name="call_barring_baic_disabled" msgid="2355945245938240958">"سبھی آنے والی کالز کو مسدود کریں؟"</string>
+    <string name="call_barring_baic_disabled" msgid="2355945245938240958">"سبھی آنے والی کالز کو بلاک کریں؟"</string>
     <string name="call_barring_baicr" msgid="8712249337313034226">"آنے والی بین الاقوامی رومنگ"</string>
     <string name="call_barring_baicr_enabled" msgid="64774270234828175">"سبھی آنے والی بین الاقوامی رومنگ کو مسدود کرنے کو غیر فعال کریں؟"</string>
-    <string name="call_barring_baicr_disabled" msgid="3488129262744027262">"آنے والی بین الاقوامی رومنگ کو مسدود کریں؟"</string>
+    <string name="call_barring_baicr_disabled" msgid="3488129262744027262">"آنے والی بین الاقوامی رومنگ کو بلاک کریں؟"</string>
     <string name="call_barring_deactivate_all" msgid="7837931580047157328">"سبھی کو غیر فعال کریں"</string>
     <string name="call_barring_deactivate_all_description" msgid="4474119585042121604">"کال میں رکاوٹ والی سبھی ترتیبات کو غیر فعال کریں"</string>
     <string name="call_barring_deactivate_success" msgid="3545644320298275337">"کال میں رکاوٹ کو غیر فعال کر دیا گیا"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"مسترد کریں"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"ڈیٹا کنکشن فعال کریں"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"ڈیٹا کنکشن غیر فعال کریں"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"لاگو کریں"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"سبھی"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"‫UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"‫GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"‏VoLTE سے لیس"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"ویڈیو کالنگ فراہم کردہ"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"‏WiFi کالنگ فراہم کردہ"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"ورژن:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"اسکائیلو ورژن:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"زیادہ سے زیادہ اجازت شدہ ڈیٹا وضع:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"‏سیٹلائٹ فراہم کرنے والے تمام plmns:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"اسٹار لنک ورژن:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

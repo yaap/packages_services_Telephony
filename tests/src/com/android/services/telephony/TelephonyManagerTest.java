@@ -15,18 +15,22 @@
  */
 
 package com.android.services.telephony;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assume.assumeTrue;
+
+import static android.telephony.TelephonyManager.SIM_PIN_ENROLLMENT_STATUS_PLATFORM_MANAGED;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -38,6 +42,7 @@ import android.app.PropertyInvalidatedCache;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.OutcomeReceiver;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -59,6 +64,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,7 +149,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetImsPcscfAddresses() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         List<String> pcscfs = Arrays.asList(new String[] { "1.1.1.1 ", " 2.2.2.2"});
@@ -156,7 +161,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetImsPcscfAddresses_ReturnEmptyListWhenNotAvailable() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         List<String> pcscfs = new ArrayList<>();
@@ -169,7 +173,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetImsPcscfAddresses_ReturnEmptyListForInvalidSubId() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         List<String> pcscfs = new ArrayList<>();
@@ -182,7 +185,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetImsPcscfAddresses_ThrowRuntimeException() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         when(mMockIPhoneSubInfo.getImsPcscfAddresses(anyInt(), anyString()))
@@ -384,7 +386,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetSimServiceTableFromIsimAsByteArrayType() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         String simServiceTable = "34FA754E8390BD02";
@@ -400,7 +401,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetSimServiceTableFromUsimAsByteArrayType() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         String simServiceTable = "34FA754E8390BD02";
@@ -417,7 +417,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetSimServiceTable_ReturnEmptyArrayWhenNotAvailable() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         Executor executor = Executors.newSingleThreadExecutor();
@@ -432,7 +431,6 @@ public class TelephonyManagerTest {
     }
 
     @Test
-    @RequiresFlagsEnabled(Flags.FLAG_SUPPORT_ISIM_RECORD)
     public void testGetSimServiceTable_CallbackErrorIfExceptionIsThrown() throws Exception {
         assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
         Executor executor = Executors.newSingleThreadExecutor();
@@ -483,6 +481,164 @@ public class TelephonyManagerTest {
 
     }
 
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void getSimAutoPinManagementEnrollmentStatus_serviceReturnsCorrectly()
+            throws RemoteException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        when(mMockITelephony.getSimAutoPinManagementEnrollmentStatus(eq(1))).thenReturn(
+                SIM_PIN_ENROLLMENT_STATUS_PLATFORM_MANAGED);
+        assertEquals(SIM_PIN_ENROLLMENT_STATUS_PLATFORM_MANAGED,
+                manager.getSimAutoPinManagementEnrollmentStatus());
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testEnrollSimInAutoPinManagement_success()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_GENERATED_PIN, "1234");
+
+            ResultReceiver receiver = invocation.getArgument(2);
+            receiver.send(TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_SUCCESSFUL, bundle);
+            return null;
+        }).when(mMockITelephony).enrollSimInAutoPinManagement(eq(1), eq("1111"), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<String, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.enrollSimInAutoPinManagement("1111", executor, receiver);
+
+        String result = receiver.getResult();
+        assertEquals("1234", result);
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testEnrollSimInAutoPinManagement_failure()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            ResultReceiver receiver = invocation.getArgument(2);
+            receiver.send(TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_FAILED_SIM_LOCK_ALREADY_ACTIVE,
+                    new Bundle());
+            return null;
+        }).when(mMockITelephony).enrollSimInAutoPinManagement(eq(1), eq("1111"), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<String, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.enrollSimInAutoPinManagement("1111", executor, receiver);
+
+        TelephonyManager.SimAutoPinManagementException result = receiver.getError();
+        assertEquals(TelephonyManager.SIM_PIN_ENROLLMENT_RESULT_FAILED_SIM_LOCK_ALREADY_ACTIVE,
+                result.getErrorCode());
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testUnenrollSimInAutoPinManagement_success()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            ResultReceiver receiver = invocation.getArgument(1);
+            receiver.send(TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_SUCCESSFUL, new Bundle());
+            return null;
+        }).when(mMockITelephony).unenrollSimFromAutoPinManagement(eq(1), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<Void, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.unenrollSimFromAutoPinManagement(executor, receiver);
+
+        assertEquals(true, receiver.hasNullResult());
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testUnenrollSimInAutoPinManagement_failure()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            ResultReceiver receiver = invocation.getArgument(1);
+            receiver.send(TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_PIN_UNAVAILABLE,
+                    new Bundle());
+            return null;
+        }).when(mMockITelephony).unenrollSimFromAutoPinManagement(eq(1), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<Void, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.unenrollSimFromAutoPinManagement(executor, receiver);
+
+        TelephonyManager.SimAutoPinManagementException result = receiver.getError();
+        assertEquals(TelephonyManager.SIM_PIN_UNENROLLMENT_RESULT_FAILED_PIN_UNAVAILABLE,
+                result.getErrorCode());
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testGetAutoManagedPinForSim_success()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_GENERATED_PIN, "1234");
+
+            ResultReceiver receiver = invocation.getArgument(1);
+            receiver.send(TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_SUCCESSFUL, bundle);
+            return null;
+        }).when(mMockITelephony).getAutoManagedPinForSim(eq(1), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<String, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.getAutoManagedPinForSim(executor, receiver);
+
+        String result = receiver.getResult();
+        assertEquals("1234", result);
+    }
+
+    @Test
+    @RequiresFlagsEnabled(android.security.Flags.FLAG_AUTO_SIM_PIN_MANAGEMENT)
+    public void testGetAutoManagedPinForSim_failure()
+            throws RemoteException, InterruptedException {
+        assumeTrue(hasFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION, true));
+        TelephonyManager manager = mTelephonyManager.createForSubscriptionId(1);
+
+        doAnswer((Answer<Void>) invocation -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(TelephonyManager.KEY_MANAGED_SIM_PIN_ENROLLMENT_GENERATED_PIN, "");
+
+            ResultReceiver receiver = invocation.getArgument(1);
+            receiver.send(TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_FAILED_NOT_ENROLLED, bundle);
+            return null;
+        }).when(mMockITelephony).getAutoManagedPinForSim(eq(1), any());
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        TestOutcomeReceiver<String, TelephonyManager.SimAutoPinManagementException>
+                receiver = new TestOutcomeReceiver<>();
+        manager.getAutoManagedPinForSim(executor, receiver);
+
+        TelephonyManager.SimAutoPinManagementException result = receiver.getError();
+        assertEquals(TelephonyManager.GET_AUTO_MANAGED_PIN_RESULT_FAILED_NOT_ENROLLED,
+                result.getErrorCode());
+    }
+
     private static class TestOutcomeReceiver<R, E extends Throwable>
             implements OutcomeReceiver<R, E> {
         final int mTimeoutSeconds = 3;
@@ -494,6 +650,11 @@ public class TelephonyManagerTest {
             assertTrue(mLatch.await(mTimeoutSeconds, TimeUnit.SECONDS));
             assertNotNull(mResult.get());
             return mResult.get();
+        }
+
+        public boolean hasNullResult() throws InterruptedException {
+            assertTrue(mLatch.await(mTimeoutSeconds, TimeUnit.SECONDS));
+            return mResult.get() == null;
         }
 
         public E getError() throws InterruptedException {

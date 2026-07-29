@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Конфигурисање подешавања налога"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Сви налози за позивање"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Изаберите који налози могу да обављају позиве"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Апликације трећих страна"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Дозволите другим апликацијама да приказују позиве у историји позива. Ако је та опција искључена, ти позиви ће се приказивати само у одређеним апликацијама."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Позивање преко WiFi-а"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Уграђена услуга повезивања"</string>
     <string name="voicemail" msgid="7697769412804195032">"Говорна пошта"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Избриши број за фиксно бирање"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Брисање броја за фиксно бирање…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Избрисан је број за фиксно бирање."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Број за фиксно бирање није ажуриран јер сте унели нетачан PIN кôд."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Нетачан PIN2. Број за фиксно бирање није ажуриран."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Број за фиксно бирање није ажуриран јер има превише цифара (више од <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>)."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN није ажуриран. PIN2 је нетачан или је број телефона одбачен."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Радња са бројем за фиксно бирање није успела."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Унесите кôд PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Лозинка није тачна. PIN2 је сада блокиран. Да бисте покушали поново, промените PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Лозинка није тачна. SIM је сада блокиран. Унесите PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 је блокиран. Унесите PUK2 да бисте одблокирали."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 је трајно блокиран."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Имате још <xliff:g id="NUMBER">%d</xliff:g> покушаја."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 је закључан. За откључавање се обратите добављачу услуге."</string>
@@ -641,7 +644,7 @@
     <string name="ota_spc_failure" msgid="904092035241370080">"СЛУЧАЈНА SPC ГРЕШКА"</string>
     <string name="ota_call_end" msgid="8657746378290737034">"Назад"</string>
     <string name="ota_try_again" msgid="6914781945599998550">"Пробај поново"</string>
-    <string name="ota_next" msgid="2041016619313475914">"Следеће"</string>
+    <string name="ota_next" msgid="2041016619313475914">"Даље"</string>
     <string name="ecm_exit_dialog" msgid="4200691880721429078">"Дијалог за излазак из режима хитног повратног позива"</string>
     <string name="phone_entered_ecm_text" msgid="8431238297843035842">"Унет је режим за хитан повратни позив"</string>
     <string name="phone_in_ecm_notification_title" msgid="6825016389926367946">"Режим за хитан повратни позив"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Одбаци"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Омогући везу за пренос података"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Онемогући везу за пренос података"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Примени"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Све"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"Додељено за VoLTE"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Видео позиви су додељени"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Позивање преко WiFi-а је додељено"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"верзија:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo верзија:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"режим максимално дозвољених података:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"сви plmn-ови добављача сателитских услуга:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink верзија:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"дозволи_приступ:"</string>

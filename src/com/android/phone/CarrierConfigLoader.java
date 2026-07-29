@@ -19,13 +19,11 @@ package com.android.phone;
 import static android.content.pm.PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION;
 import static android.service.carrier.CarrierService.ICarrierServiceWrapper.KEY_CONFIG_BUNDLE;
 import static android.service.carrier.CarrierService.ICarrierServiceWrapper.RESULT_ERROR;
-import static android.telephony.TelephonyManager.ENABLE_FEATURE_MAPPING;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
-import android.app.compat.CompatChanges;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -36,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.UserInfo;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,20 +45,24 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PermissionEnforcer;
 import android.os.PersistableBundle;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.service.carrier.CarrierIdentifier;
 import android.service.carrier.CarrierService;
 import android.service.carrier.ICarrierService;
+import android.telecom.TelecomManager;
 import android.telephony.AnomalyReporter;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyFrameworkInitializer;
 import android.telephony.TelephonyManager;
 import android.telephony.TelephonyRegistryManager;
+import android.telephony.UiccAccessRule;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.LocalLog;
@@ -72,6 +75,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneConfigurationManager;
 import com.android.internal.telephony.PhoneFactory;
 import com.android.internal.telephony.TelephonyPermissions;
+import com.android.internal.telephony.TelephonyStatsLog;
 import com.android.internal.telephony.flags.FeatureFlags;
 import com.android.internal.telephony.subscription.SubscriptionManagerService;
 import com.android.internal.telephony.util.ArrayUtils;
@@ -109,6 +113,11 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
 
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+
+    private static final Set<String> OVERRIDE_BLOCKLIST_ON_USER_BUILD = Set.of(
+            CarrierConfigManager.KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL,
+            CarrierConfigManager.KEY_SATELLITE_DATA_SUPPORT_MODE_INT
+    );
 
     // Package name for platform carrier config app, bundled with system image.
     @NonNull private final String mPlatformCarrierConfigPackage;
@@ -228,6 +237,8 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
     // UUID to report anomaly when config changed reported with subId that map to invalid phone
     private static final String UUID_NOTIFY_CONFIG_CHANGED_WITH_INVALID_PHONE =
             "d81cef11-c2f1-4d76-955d-7f50e8590c48";
+
+    private static final int INVALID_UID = -1;
 
     // Handler to process various events.
     //
@@ -500,6 +511,7 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
                                     saveConfigToXml(getCarrierPackageForPhoneId(phoneId), "",
                                             phoneId, carrierId, config);
                                     if (config != null) {
+                                        logCarrierServiceCarrierConfigOverrides(phoneId, config);
                                         mConfigFromCarrierApp[phoneId] = config;
                                     } else {
                                         logl("Config from carrier app is null "
@@ -1363,8 +1375,10 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
     @NonNull
     public PersistableBundle getConfigForSubIdWithFeature(int subscriptionId,
             @NonNull String callingPackage, @Nullable String callingFeatureId) {
-        if (!TelephonyPermissions.checkCallingOrSelfReadPhoneState(mContext, subscriptionId,
-                callingPackage, callingFeatureId, "getCarrierConfig")) {
+        boolean hasUiAccess = mContext.checkCallingOrSelfPermission(
+                TelecomManager.PERMISSION_TELECOM_UI_ACCESS) == PackageManager.PERMISSION_GRANTED;
+        if (!hasUiAccess && !TelephonyPermissions.checkCallingOrSelfReadPhoneState(mContext,
+                subscriptionId, callingPackage, callingFeatureId, "getCarrierConfig")) {
             return new PersistableBundle();
         }
 
@@ -1458,17 +1472,47 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
         return configSubset;
     }
 
+    private void secureOverrideConfig(@Nullable PersistableBundle overrides, boolean persistent) {
+        // Do not allow shell UID to override the carrier config. This will not impact
+        // the CTS and telephony shell commands as they use different uids
+        if (TelephonyPermissions.isShell(getBinderCallingUid())) {
+            throw new SecurityException("overrideConfig cannot be invoked by shell");
+        }
+
+        final long token = Binder.clearCallingIdentity();
+        try {
+            TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
+            String modemService = tm.getModemService();
+            logd("modemService=" + modemService);
+            boolean isMockModemService =
+                    "android.telephony.mockmodem.MockModemService".equals(modemService);
+
+            // Do not allow blocklisted keys to be overridden when device is connected
+            // to a real modem.
+            if (isUserBuild() && overrides != null && !isMockModemService) {
+                for (String key : OVERRIDE_BLOCKLIST_ON_USER_BUILD) {
+                    if (overrides.containsKey(key)) {
+                        throw new SecurityException("Overriding " + key
+                                + " is not allowed on user builds.");
+                    }
+                }
+            }
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+
+        if (persistent && isUserBuild() && !isSystemApp()) {
+            throw new SecurityException("overrideConfig with persistent=true only can be "
+                    + "invoked by system app");
+        }
+    }
+
     @android.annotation.EnforcePermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @Override
     public void overrideConfig(int subscriptionId, @Nullable PersistableBundle overrides,
             boolean persistent) {
         overrideConfig_enforcePermission();
-
-        // Do not allow shell UID to override the carrier config. This will not impact
-        // the CTS and telephony shell commands as they use different uids
-        if (TelephonyPermissions.isShell(getCallingUid())) {
-            throw new SecurityException("overrideConfig cannot be invoked by shell");
-        }
+        secureOverrideConfig(overrides, persistent);
 
         int phoneId = SubscriptionManager.getPhoneId(subscriptionId);
         if (!SubscriptionManager.isValidPhoneId(phoneId)) {
@@ -1485,11 +1529,6 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
             overrideConfig(mOverrideConfigs, phoneId, overrides);
 
             if (persistent) {
-                if (isUserBuild() && !isSystemApp()) {
-                    throw new SecurityException("overrideConfig with persistent=true only can be "
-                            + "invoked by system app");
-                }
-
                 overrideConfig(mPersistentOverrideConfigs, phoneId, overrides);
 
                 if (overrides != null) {
@@ -1513,21 +1552,34 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
     }
 
     private boolean isSystemApp() {
-        try {
-            String callingPackage = mContext.getPackageManager().getNameForUid(
-                    Binder.getCallingUid());
-
-            ApplicationInfo appInfo = mContext.getPackageManager().getApplicationInfo(
-                    callingPackage, 0);
-            return (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
-                    || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
-        } catch (Exception e) {
-            loge("isSystemApp: failed to get application info: " + e);
+        int callingUid = getBinderCallingUid();
+        if (isSdkSandboxUidInternal(callingUid)) {
+            loge("isSystemApp: rejected call from SDK sandbox with uid=" + callingUid);
             return false;
         }
+
+        String[] packages = mContext.getPackageManager().getPackagesForUid(callingUid);
+        if (packages != null) {
+            for (String pkg : packages) {
+                try {
+                    ApplicationInfo appInfo =
+                            mContext.getPackageManager().getApplicationInfo(pkg, 0);
+                    if (appInfo != null
+                            && ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
+                            || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0)) {
+                        return true;
+                    }
+                } catch (Exception e) {
+                    // Log the exception for this specific package and continue to the next one
+                    loge("isSystemApp: failed to get application info for " + pkg + ": " + e);
+                }
+            }
+        }
+        return false;
     }
 
-    private boolean isUserBuild() {
+    @VisibleForTesting
+    public boolean isUserBuild() {
         return "user".equals(android.os.Build.TYPE);
     }
 
@@ -1569,7 +1621,7 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
         // from clearing the cache is passed back to the carrier app. With the files successfully
         // deleted, this can return and we will eventually bind to the carrier app.
         String callingPackageName = mContext.getPackageManager().getNameForUid(
-                Binder.getCallingUid());
+                getBinderCallingUid());
         clearCachedConfigForPackage(callingPackageName);
         mNeedNotifyCallback[phoneId] = true;
         updateConfigForPhoneId(phoneId);
@@ -1721,8 +1773,8 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
         IndentingPrintWriter indentPW = new IndentingPrintWriter(pw, "    ");
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.DUMP)
                 != PackageManager.PERMISSION_GRANTED) {
-            indentPW.println("Permission Denial: can't dump carrierconfig from from pid="
-                    + Binder.getCallingPid() + ", uid=" + Binder.getCallingUid());
+            indentPW.println("Permission Denial: can't dump carrierconfig from pid="
+                    + Binder.getCallingPid() + ", uid=" + getBinderCallingUid());
             return;
         }
         String requestingPackage = null;
@@ -1830,7 +1882,7 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
      */
     private void enforceCallerIsSystemOrRequestingPackage(@NonNull String requestingPackage)
             throws SecurityException {
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = getBinderCallingUid();
         if (TelephonyPermissions.isRootOrShell(callingUid)
                 || TelephonyPermissions.isSystemOrPhone(
                 callingUid)) {
@@ -1929,6 +1981,92 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
         indentPW.decreaseIndent();
     }
 
+    private int getPackageUidForAnyUser(String packageName) {
+        // First try main user.
+        try {
+            return mPackageManager.getPackageUid(packageName, UserHandle.USER_SYSTEM);
+        } catch (PackageManager.NameNotFoundException e) {
+            // Not found
+        }
+
+        // If not found in main user, try other users.
+        UserManager userManager = mContext.getSystemService(UserManager.class);
+        if (userManager != null) {
+            for (UserInfo user : userManager.getUsers()) {
+                int userId = user.getUserHandle().getIdentifier();
+                try {
+                    return mPackageManager.getPackageUidAsUser(packageName, userId);
+                } catch (PackageManager.NameNotFoundException e) {
+                    // Didn't find package. Continue looking at other users
+                }
+            }
+        }
+
+        return INVALID_UID;
+    }
+
+    @VisibleForTesting
+    void logCarrierServiceCarrierConfigOverrides(int phoneId,
+            @NonNull PersistableBundle config) {
+        String carrierServicePackageName = getCarrierPackageForPhoneId(phoneId);
+        if (TextUtils.isEmpty(carrierServicePackageName)) {
+            Log.wtf(LOG_TAG, "logCarrierServiceCarrierConfigOverrides called with null or empty "
+                    + "carrierServicePackageName for phoneId=" + phoneId);
+            return;
+        }
+        int carrierServiceUid = getPackageUidForAnyUser(carrierServicePackageName);
+        if (carrierServiceUid == INVALID_UID) {
+            Log.wtf(LOG_TAG, "Unable to find carrier service package: "
+                    + carrierServicePackageName);
+            return;
+        }
+
+        String[] carrierCerts = config.getStringArray(
+                CarrierConfigManager.KEY_CARRIER_CERTIFICATE_STRING_ARRAY);
+        if (ArrayUtils.isEmpty(carrierCerts)) return;
+
+        UiccAccessRule[] accessRules =
+                UiccAccessRule.decodeRulesFromCarrierConfig(carrierCerts);
+        if (ArrayUtils.isEmpty(accessRules)) return;
+
+
+        int carrierId = getSpecificCarrierIdForPhoneId(phoneId);
+
+        Set<Integer> packageUidsSet = new ArraySet<>();
+        for (UiccAccessRule rule : accessRules) {
+            String packageName = rule.getPackageName();
+            if (packageName != null) {
+                int uid = getPackageUidForAnyUser(packageName);
+                if (uid != INVALID_UID) {
+                    packageUidsSet.add(uid);
+                }
+            }
+        }
+
+        int[] packageUids = packageUidsSet.stream().mapToInt(Integer::intValue).toArray();
+
+        writeCarrierServiceConfigOverridesReported(carrierId, carrierServiceUid, packageUids);
+    }
+
+    @VisibleForTesting
+    protected void writeCarrierServiceConfigOverridesReported(int carrierId, int carrierServiceUid,
+            int[] packageUids) {
+        TelephonyStatsLog.write(TelephonyStatsLog.CARRIER_SERVICE_CONFIG_OVERRIDES_REPORTED,
+                carrierId,
+                carrierServiceUid,
+                packageUids);
+    }
+
+    @VisibleForTesting
+    protected int getBinderCallingUid() {
+        return Binder.getCallingUid();
+    }
+
+    @VisibleForTesting
+    protected boolean isSdkSandboxUidInternal(int uid) {
+        return Process.isSdkSandboxUid(uid);
+    }
+
     private boolean hasCarrierPrivileges(@NonNull String pkgName, int phoneId) {
         int subId = SubscriptionManager.getSubscriptionId(phoneId);
         if (!SubscriptionManager.isValidSubscriptionId(subId)) {
@@ -1948,7 +2086,7 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
         PackageManager pm = mContext.createContextAsUser(Binder.getCallingUserHandle(), 0)
                 .getPackageManager();
         if (pm == null) return null;
-        String[] callingPackageNames = pm.getPackagesForUid(Binder.getCallingUid());
+        String[] callingPackageNames = pm.getPackagesForUid(getBinderCallingUid());
         return (callingPackageNames == null) ? null : callingPackageNames[0];
     }
 
@@ -1959,23 +2097,8 @@ public class CarrierConfigLoader extends ICarrierConfigLoader.Stub {
      */
     private void enforceTelephonyFeatureWithException(@Nullable String callingPackage,
             @NonNull String methodName) {
-        if (callingPackage == null || mPackageManager == null) {
-            return;
-        }
-
-        if (!CompatChanges.isChangeEnabled(ENABLE_FEATURE_MAPPING, callingPackage,
-                Binder.getCallingUserHandle())
-                || mVendorApiLevel < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            // Skip to check associated telephony feature,
-            // if compatibility change is not enabled for the current process or
-            // the SDK version of vendor partition is less than Android V.
-            return;
-        }
-
-        if (!mPackageManager.hasSystemFeature(FEATURE_TELEPHONY_SUBSCRIPTION)) {
-            throw new UnsupportedOperationException(
-                    methodName + " is unsupported without " + FEATURE_TELEPHONY_SUBSCRIPTION);
-        }
+        TelephonyUtils.enforceTelephonyFeatureWithException(callingPackage, mPackageManager,
+                mVendorApiLevel, FEATURE_TELEPHONY_SUBSCRIPTION, methodName);
     }
 
     private class CarrierServiceConnection implements ServiceConnection {

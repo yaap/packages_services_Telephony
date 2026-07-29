@@ -48,6 +48,7 @@ public class SatelliteConfigViewer extends Activity {
     private TextView mSkyloVersion;
     private TextView mServiceType;
     private TextView mMaxAllowedDataMode;
+    private TextView mSatelliteProviderPlmnList;
     private TextView mAllowAccess;
     private TextView mCountryCodes;
     private TextView mSizeOfSats2;
@@ -76,6 +77,7 @@ public class SatelliteConfigViewer extends Activity {
         mStarlinkVersion = (TextView) findViewById(R.id.starlink_version);
         mServiceType = (TextView) findViewById(R.id.svc_type);
         mMaxAllowedDataMode = (TextView) findViewById(R.id.max_allowed_data_mode);
+        mSatelliteProviderPlmnList = (TextView) findViewById(R.id.satelltie_provider_plmn_list);
 
         mSkyloVersion = (TextView) findViewById(R.id.skylo_version);
         mAllowAccess = (TextView) findViewById(R.id.allow_access);
@@ -90,6 +92,7 @@ public class SatelliteConfigViewer extends Activity {
         mStarlinkVersion.setText(getSatelliteConfigVersionForStarlink());
         mServiceType.setText(getSatelliteCarrierConfigUpdateData());
         mMaxAllowedDataMode.setText(getMaxAllowedDataMode());
+        mSatelliteProviderPlmnList.setText(getSatelliteProviderPlmnList());
 
         mSkyloVersion.setText(getSatelliteConfigVersionForSkylo());
         mAllowAccess.setText(getSatelliteAllowAccess());
@@ -126,6 +129,11 @@ public class SatelliteConfigViewer extends Activity {
             default:
                 return "Not ready to show mSatelliteController.getMaxAllowedDataMode()";
         }
+    }
+
+    private String getSatelliteProviderPlmnList() {
+        logd("getSatelliteProviderPlmnList");
+        return String.join(", ", mSatelliteController.getAllPlmnSet());
     }
 
     private String getSatelliteCarrierConfigUpdateData() {

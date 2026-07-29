@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"계정 설정 조정"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"모든 통화 계정"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"전화를 걸 수 있는 계정 선택"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"서드 파티 앱"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"다른 앱에서 통화 기록에 통화를 표시하도록 허용합니다. 사용 중지하면 이러한 통화가 특정 앱에만 표시됩니다."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-Fi 통화"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"내장된 연결 서비스"</string>
     <string name="voicemail" msgid="7697769412804195032">"음성사서함"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"발신 허용 번호 삭제"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"발신 허용 번호를 삭제하는 중..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"발신 허용 번호가 삭제되었습니다."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"잘못된 PIN을 입력하여 FDN 업데이트 안됨"</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"잘못된 PIN2입니다. FDN이 업데이트되지 않았습니다."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"숫자가 <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>자리를 초과하여 FDN을 업데이트하지 못했습니다."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN이 업데이트되지 않았습니다. PIN2가 잘못되었거나 전화번호가 거부되었습니다."</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN 작업이 실패했습니다."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 코드를 입력합니다."</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"잘못된 비밀번호입니다. 이제 PIN2가 차단되었습니다. 다시 시도하려면 PIN2를 변경하세요."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"비밀번호가 잘못되어 SIM이 잠겼습니다. PUK2를 입력하세요."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2가 차단되었습니다. 차단을 해제하려면 PUK2를 입력하세요."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2가 완전히 차단되었습니다."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"<xliff:g id="NUMBER">%d</xliff:g>번의 기회가 남았습니다."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2로 잠금 설정되었습니다. 모든 통신사에서 사용할 수 있도록 하려면 서비스 제공업체에 문의하세요."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"닫기"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"데이터 연결 사용"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"데이터 연결 사용 안함"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"적용"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"전체"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR(5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE(4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS(3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM(2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE 프로비저닝됨"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"화상 통화 프로비저닝됨"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wi-Fi 통화 프로비저닝됨"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"버전:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo 버전:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"최대 허용 데이터 모드:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"모든 위성 제공업체 PLMN:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink 버전:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

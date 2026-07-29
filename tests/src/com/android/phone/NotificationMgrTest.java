@@ -51,7 +51,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mockito.Mockito;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -94,8 +93,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Unit Test for NotificationMgr
@@ -189,6 +188,19 @@ public class NotificationMgrTest extends TelephonyTestBase {
         // Spy it only to avoid sleep for SystemClock.elapsedRealtime()
         mNotificationMgr = spy(new NotificationMgr(mApp));
         mTestableLooper.processAllMessages();
+    }
+
+    @Test
+    public void testUpdateMwi_emptyVmNumber_simNotLoaded_notificationNotSent() {
+        // Given: VoiceMailNumber is empty string (not null), and SIM records are NOT loaded.
+        when(mPhone.getVoiceMailNumber()).thenReturn("");
+        when(mPhone.getIccRecordsLoaded()).thenReturn(false);
+
+        // When: updateMwi is called
+        mNotificationMgr.updateMwi(TEST_SUB_ID, /*visible=*/true, /*isFresh=*/true);
+
+        // Then: The broadcast should NOT be sent.
+        verify(mApp, never()).sendBroadcastAsUser(any(), any(UserHandle.class), any(), any());
     }
 
     @Test
@@ -740,6 +752,28 @@ public class NotificationMgrTest extends TelephonyTestBase {
         mNotificationMgr.dismissLimitedSimFunctionWarningNotification(TEST_SUB_ID);
 
         verify(mNotificationManager).cancel(any(), eq(LIMITED_SIM_FUNCTION_NOTIFICATION));
+    }
+
+    @Test
+    public void testUpdateNetworkSelection_privateNetwork_notificationNotSent() {
+        prepareResourcesForNetworkSelection();
+        when(mSubscriptionInfo.isPrivateNetwork()).thenReturn(true);
+        when(mTelephonyManager.isManualNetworkSelectionAllowed()).thenReturn(true);
+        PersistableBundle config = new PersistableBundle();
+        config.putBoolean(CarrierConfigManager.KEY_OPERATOR_SELECTION_EXPAND_BOOL, true);
+        config.putBoolean(CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL, false);
+        config.putBoolean(CarrierConfigManager.KEY_CSP_ENABLED_BOOL, false);
+        config.putBoolean(CarrierConfigManager.KEY_WORLD_PHONE_BOOL, true);
+        when(mCarrierConfigManager.getConfigForSubId(TEST_SUB_ID)).thenReturn(config);
+
+        // update to OOS as base state
+        mNotificationMgr.updateNetworkSelection(ServiceState.STATE_OUT_OF_SERVICE, TEST_SUB_ID);
+        // 10 seconds later
+        moveTimeForward(10 /* seconds */);
+        // verify the behavior on new request
+        mNotificationMgr.updateNetworkSelection(ServiceState.STATE_OUT_OF_SERVICE, TEST_SUB_ID);
+
+        verify(mNotificationManager, never()).notify(any(), anyInt(), any());
     }
 
     private ApplicationInfo buildApplicationInfo(int targetSdkVersion) {

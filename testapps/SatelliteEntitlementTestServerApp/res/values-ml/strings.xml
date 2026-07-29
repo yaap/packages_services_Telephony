@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"ഡാറ്റാ പ്ലാൻ തരം:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"സേവന തരം:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"സേവന നയം:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"PLMN ഐഡി:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"PLMN ലിസ്റ്റിലേക്ക് ചേർക്കുക"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"BARR PLMN"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"എല്ലാം മായ്‌ക്കുക"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"DataPlanType ഉൾപ്പെടുത്തുക"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"ഡാറ്റാ സേവനം"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"ശബ്ദ സേവനം"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"തടഞ്ഞിരിക്കുന്ന PLMN ഐഡി:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"മീറ്റർ ചെയ്‌തത്"</item>
+    <item msgid="847694900028477007">"മീറ്റർമാപകമല്ലാത്തത്"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"ഡാറ്റ"</item>
+    <item msgid="6815202494927703427">"ശബ്‌ദം"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"പരിധികളില്ലാത്തത്"</item>
+    <item msgid="5432811344446551182">"നിയന്ത്രിതം"</item>
+    <item msgid="2865228900925141156">"പരിധികളുള്ളത്"</item>
+  </string-array>
 </resources>

@@ -236,6 +236,7 @@ public class RcsProvisioningMonitorTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
+        when(mFeatureFlags.initRcsProvisioningMonitorAsync()).thenReturn(true);
         when(mPhone.getResources()).thenReturn(mResources);
         when(mPhone.getPackageManager()).thenReturn(mPackageManager);
         when(mPackageManager.hasSystemFeature(
@@ -864,6 +865,7 @@ public class RcsProvisioningMonitorTest {
         } catch (Exception e) {
             logd("Unable to create looper from handler.");
         }
+        processAllMessages();
         mConnectorListener.getValue().connectionReady(mFeatureManager, TEST_SUB_ID);
 
         verify(mFeatureConnector, atLeastOnce()).connect();

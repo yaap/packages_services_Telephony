@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-    Button mBW, mLatency, mCBS;
+    Button mBW, mLatency, mCBS, mUC;
     public MainFragment() {
       // Required empty public constructor
     }
@@ -61,6 +61,13 @@ public class MainFragment extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        mUC = view.findViewById(R.id.uc);
+        mUC.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new PrioritizeUnifiedCommunication());
+            }
+        });
         mBW = view.findViewById(R.id.bw);
         mBW.setOnClickListener(new OnClickListener() {
             @Override

@@ -23,4 +23,7 @@ android_app {
     owner: "google",
     privileged: true,
     certificate: "platform",
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }

@@ -52,7 +52,8 @@ public class DynamicRoutingController {
     private static final String TAG = "DynamicRoutingController";
     private static final boolean DBG = (SystemProperties.getInt("ro.debuggable", 0) == 1);
 
-    private static final DynamicRoutingController sInstance =
+    // Non-final: modified in TelephonyConnectionServiceTest.
+    private static DynamicRoutingController sInstance =
             new DynamicRoutingController();
 
     /** PhoneFactory Dependencies for testing. */

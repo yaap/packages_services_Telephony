@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Ưu tiên độ trễ"</string>
     <string name="bw_title" msgid="3902162973688221344">"Ưu tiên băng thông"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Ưu tiên Truyền thông hợp nhất"</string>
     <string name="purchase" msgid="7843181995697372128">"Mua dịch vụ đặc biệt cho mạng"</string>
     <string name="network_available" msgid="4780293262690730734">"Kết quả: Mạng bạn yêu cầu hiện đã sử dụng được!"</string>
     <string name="network_requested" msgid="5646123922691865991">"Kết quả: Mạng đã được yêu cầu!"</string>

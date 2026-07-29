@@ -75,12 +75,14 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"खाता सेटिंग कॉन्‍फ़िगर करें"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"सभी कॉलिंग खाते"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"चुनें कि कौन से खाते कॉल कर सकते हैं"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"तीसरे पक्ष के ऐप्लिकेशन"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"अन्य ऐप्लिकेशन को कॉल इतिहास में कॉल दिखाने की अनुमति दें. अनुमति न देने पर, ये कॉल सिर्फ़ उन्हीं ऐप्लिकेशन में दिखेंगे."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"वाई-फ़ाई कॉलिंग"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"अंतर्निहित कनेक्शन सेवा"</string>
     <string name="voicemail" msgid="7697769412804195032">"वॉयस मेल"</string>
     <string name="voicemail_settings_with_label" msgid="4228431668214894138">"वॉइसमेल (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="voicemail_abbreviated" msgid="7746778673131551185">"VM:"</string>
-    <string name="make_and_receive_calls" msgid="4868913166494621109">"कॉल लगाएं और कॉल उठाएं"</string>
+    <string name="make_and_receive_calls" msgid="4868913166494621109">"कॉल करें और उनका जवाब दें"</string>
     <string name="smart_forwarding_settings_menu" msgid="8850429887958938540">"स्मार्ट फ़ॉरवर्डिंग"</string>
     <string name="smart_forwarding_settings_menu_summary" msgid="5096947726032885325">"अगर एक नंबर पर कॉल न लग रही हो, तो उसे हमेशा आपके दूसरे नंबर पर भेज दें"</string>
     <string name="voicemail_notifications_preference_title" msgid="7829238858063382977">"सूचनाएं"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"फ़िक्स्ड डायलिंग नंबर हटाएं"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"फ़िक्स्ड डायलिंग नंबर हटा रहा है..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"फ़िक्स्ड डायलिंग नंबर हटाया गया."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN पे नई जानकारी नहीं है क्योंकि आपने गलत पिन लिखा है."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 गलत है. एफ़डीएन अपडेट नहीं किया गया."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"FDN अपडेट नहीं किया जा सका, क्योंकि नंबर में <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> से ज़्यादा अंक हैं."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN पे नई जानकारी नहीं है. PIN2 गलत था, या फ़ोन नंबर नामंजूर था."</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN की कार्यवाही विफल रही."</string>
@@ -496,8 +498,8 @@
     <string name="oldPinLabel" msgid="8618515202411987721">"पुराना पिन"</string>
     <string name="newPinLabel" msgid="3585899083055354732">"नया पिन"</string>
     <string name="confirmPinLabel" msgid="7783531218662473778">"नए पिन की पुष्टि करें"</string>
-    <string name="badPin" msgid="4549286285015892321">"  लिखा गया पुराना पिन सही नहीं है. फिर से प्रयास करें."</string>
-    <string name="mismatchPin" msgid="1467254768290323845">"  लिखे गए पिन का मिलान नहीं होता. फिर से प्रयास करें."</string>
+    <string name="badPin" msgid="4549286285015892321">"लिखा गया पुराना पिन सही नहीं है. फिर से प्रयास करें."</string>
+    <string name="mismatchPin" msgid="1467254768290323845">"लिखे गए पिन का मिलान नहीं होता. फिर से प्रयास करें."</string>
     <string name="invalidPin" msgid="7363723429414001979">"कोई ऐसा पिन लिखें, जिसमें 4 से 8 अंक हों."</string>
     <string name="disable_sim_pin" msgid="3112303905548613752">"सिम पिन साफ़ करें"</string>
     <string name="enable_sim_pin" msgid="445461050748318980">"सिम पिन सेट करें"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 कोड डालें"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"पासवर्ड गलत है. PIN2 अब अवरोधित है. फिर से प्रयास करने के लिए, PIN 2 को बदलें."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"पासवर्ड गलत है. सिम अब लॉक हो गई है. PUK2 डालें."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 ब्लॉक है. अनब्लॉक करने के लिए PUK2 डालें."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 स्थायी रूप से अवरोधित है."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"आपके पास <xliff:g id="NUMBER">%d</xliff:g> प्रयास शेष हैं."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"सिम कार्ड PUK2 से लॉक है. अनलॉक करने के लिए, सेवा देने वाली कंपनी से संपर्क करें."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"खारिज करें"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"डेटा कनेक्शन चालू करें"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"डेटा कनेक्शन बंद करें"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"लागू करें"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"सभी"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"एनआर (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"एलटीई (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"यूएमटीएस (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"जीएसएम (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE काम कर रहा है"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"वीडियो कॉलिंग की सुविधा काम कर रही है"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"वाई-फ़ाई कॉलिंग की सुविधा काम कर रही है"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"वर्शन:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"Skylo का वर्शन:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"ज़्यादा से ज़्यादा डेटा की अनुमति वाला मोड:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"सैटलाइट सेवा देने वाली कंपनियों के सभी पीएलएमएन:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"Starlink का वर्शन:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"सदस्यता आईडी/पीएलएमएन/सेवा का टाइप:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"ऐक्सेस करने की अनुमति दें:"</string>

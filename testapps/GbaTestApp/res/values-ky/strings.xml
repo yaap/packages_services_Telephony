@@ -8,7 +8,7 @@
     <string name="label_test" msgid="8425079572898571918">"Сыноо конфигурациясы"</string>
     <string name="button_name_running" msgid="4557363091224858010">"Аткарылууда"</string>
     <string name="button_name_exit" msgid="8025683733431538975">"Чыгуу"</string>
-    <string name="label_test_result" msgid="892984695972956196">"Сыноо натыйжасы"</string>
+    <string name="label_test_result" msgid="892984695972956196">"Сыноо жыйынтыгы"</string>
     <string name="button_name_clear" msgid="436313515327318537">"Кайра коюу"</string>
     <string name="button_name_done" msgid="6030406534322497491">"Бүттү"</string>
     <string name="title_activity_carrier_config" msgid="7807803900475957717">"CarrierConfigActivity"</string>

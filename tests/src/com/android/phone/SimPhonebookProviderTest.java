@@ -103,9 +103,25 @@ public final class SimPhonebookProviderTest {
     }
 
     private static SubscriptionInfo createSubscriptionInfo(int slotIndex, int subscriptiondId) {
-        return new SubscriptionInfo(
-                subscriptiondId, "", slotIndex, null, null, 0, 0, null, 0, null, null, null, null,
-                false, null, null);
+        SubscriptionInfo info = new SubscriptionInfo.Builder()
+                .setId(subscriptiondId)
+                .setIccId("")
+                .setSimSlotIndex(slotIndex)
+                .setDisplayName(null)
+                .setCarrierName(null)
+                .setDisplayNameSource(0)
+                .setIconTint(0)
+                .setNumber(null)
+                .setDataRoaming(0)
+                .setIcon(null)
+                .setMcc(null)
+                .setMnc(null)
+                .setCountryIso(null)
+                .setEmbedded(false)
+                .setNativeAccessRules(null)
+                .setCardString(null)
+                .build();
+        return info;
     }
 
     @Before

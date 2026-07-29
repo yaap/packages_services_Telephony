@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"தாமதத்திற்கு முன்னுரிமை வழங்கு"</string>
     <string name="bw_title" msgid="3902162973688221344">"இணைய வேகத்திற்கு முன்னுரிமை வழங்கு"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"ஒருங்கிணைந்த தகவல்தொடர்புக்கு முன்னுரிமை வழங்குதல்"</string>
     <string name="purchase" msgid="7843181995697372128">"நெட்வொர்க் பிரீமியத்தை வாங்கு"</string>
     <string name="network_available" msgid="4780293262690730734">"முடிவு: கோரப்பட்ட நெட்வொர்க் இப்போது கிடைக்கிறது!"</string>
     <string name="network_requested" msgid="5646123922691865991">"முடிவு: நெட்வொர்க் கோரப்பட்டுள்ளது!"</string>

@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Prioritza la latència"</string>
     <string name="bw_title" msgid="3902162973688221344">"Prioritza l\'amplada de banda"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Prioritza la comunicació unificada"</string>
     <string name="purchase" msgid="7843181995697372128">"Compra la xarxa prèmium"</string>
     <string name="network_available" msgid="4780293262690730734">"Resultat: la xarxa sol·licitada ja està disponible."</string>
     <string name="network_requested" msgid="5646123922691865991">"Resultat: s\'ha sol·licitat la xarxa."</string>

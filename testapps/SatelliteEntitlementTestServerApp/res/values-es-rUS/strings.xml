@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"Tipo de plan de datos:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"Tipo de servicio:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"Política de servicio:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"ID de PLMN:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"AGREGAR A LA LISTA DE PLMN"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"PROHIBIR PLMN"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"BORRAR TODO"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"Incluir DataPlanType"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"Servicio de datos"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"Servicio de voz"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"ID de PLMN prohibida:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"uso medido"</item>
+    <item msgid="847694900028477007">"uso no medido"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"datos"</item>
+    <item msgid="6815202494927703427">"voz"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"uso sin restricciones"</item>
+    <item msgid="5432811344446551182">"uso restringido"</item>
+    <item msgid="2865228900925141156">"uso con restricciones"</item>
+  </string-array>
 </resources>

@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Konfiguro cilësimet e llogarisë"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Të gjitha llogaritë e telefonatave"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Zgjidh se cilat llogari mund të kryejnë telefonata"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Aplikacionet e palëve të treta"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Lejo që aplikacionet e tjera të shfaqin telefonatat në historikun e telefonatave. Nëse çaktivizohen, këto telefonata do të shfaqen vetëm në aplikacionet e tyre specifike."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Telefonata me Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Shërbim i integruar lidhjeje"</string>
     <string name="voicemail" msgid="7697769412804195032">"Posta zanore"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Fshi numrin me telefonim të përzgjedhur"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Po fshin numrin me telefonim të përzgjedhur..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Numri me telefonim të përzgjedhur u fshi."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN-ja nuk u përditësua sepse shkrove një PIN të pasaktë."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Kodi PIN2 është i pasaktë. FDN-ja nuk është përditësuar."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Veçoria FDN nuk u përditësua sepse numri i kalon <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> shifra."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN-ja nuk u përditësua. PIN2-shi ishte i pasaktë ose numri i telefonit u refuzua."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Operacioni FDN dështoi"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Fut kodin PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Fjalëkalimi ishte i pasaktë. PIN2-shi është i bllokuar. Për të provuar sërish, ndrysho PIN2-shin."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Fjalëkalimi është i pasaktë. Karta SIM tani është e kyçur. Fut PUK2-shin."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Kodi PIN2 është bllokuar. Fut kodin PUK2 për ta zhbllokuar."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2-shi është i bllokuar përgjithmonë."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Të kanë mbetur edhe <xliff:g id="NUMBER">%d</xliff:g> përpjekje."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Kodi PUK2 i kyçur. Kontakto me ofruesin e shërbimit për ta shkyçur."</string>
@@ -628,7 +631,7 @@
     <string name="ota_hfa_activation_dialog_message" msgid="7921718445773342996">"Telefoni po aktivizon shërbimin e të dhënave celulare.\n\nKjo mund të zgjasë deri në 5 minuta."</string>
     <string name="ota_skip_activation_dialog_title" msgid="7666611236789203797">"Të kapërcehet aktivizimi?"</string>
     <string name="ota_skip_activation_dialog_message" msgid="6691722887019708713">"Nëse anashkalon aktivizimin, nuk mund të kryesh telefonata ose të lidhesh me rrjetet e të dhënave celulare (megjithatë mund të lidhesh me rrjetet Wi-Fi). Derisa të aktivizosh telefonin, do të të kërkohet ta aktivizosh çdo herë që e ndez."</string>
-    <string name="ota_skip_activation_dialog_skip_label" msgid="5908029466817825633">"Kapërce"</string>
+    <string name="ota_skip_activation_dialog_skip_label" msgid="5908029466817825633">"Anashkalo"</string>
     <string name="ota_activate" msgid="7939695753665438357">"Aktivizo"</string>
     <string name="ota_title_activate_success" msgid="1272135024761004889">"Telefoni është i aktivizuar."</string>
     <string name="ota_title_problem_with_activation" msgid="7019745985413368726">"Ka problem me aktivizimin"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Hiq"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Aktivizo lidhjen e të dhënave"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Çaktivizo lidhjen e të dhënave"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Zbato"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Të gjitha"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE e përgatitur"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Telefonata me video u parapërgatit"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Telefonata me Wifi u parapërgatit"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"versioni:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"Versioni i Skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"Modaliteti i të dhënave me lejimin maksimal:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"PLMN-të për të gjithë ofruesit satelitorë:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"Versioni i Starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

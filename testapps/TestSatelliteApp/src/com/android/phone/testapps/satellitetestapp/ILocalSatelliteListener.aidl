@@ -20,7 +20,7 @@ package com.android.phone.testapps.satellitetestapp;
 import android.telephony.satellite.stub.SatelliteDatagram;
 
 /**
- * {@hide}
+ * @hide
  */
 oneway interface ILocalSatelliteListener {
     /**

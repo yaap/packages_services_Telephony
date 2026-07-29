@@ -955,16 +955,6 @@ public class ImsConference extends TelephonyConferenceBase implements Holdable {
 
             mConferenceHostAddress = new Uri[hostAddresses.size()];
             mConferenceHostAddress = hostAddresses.toArray(mConferenceHostAddress);
-            Log.i(this, "setConferenceHost: temp log hosts are "
-                    + Arrays.stream(mConferenceHostAddress)
-                    .map(Uri::toString)
-                    .collect(Collectors.joining(", ")));
-
-            Log.i(this, "setConferenceHost: hosts are "
-                    + Arrays.stream(mConferenceHostAddress)
-                    .map(Uri::getSchemeSpecificPart)
-                    .map(ssp -> Rlog.pii(LOG_TAG, ssp))
-                    .collect(Collectors.joining(", ")));
 
             Log.i(this, "setConferenceHost: hosts are "
                     + Arrays.stream(mConferenceHostAddress)
@@ -1270,6 +1260,13 @@ public class ImsConference extends TelephonyConferenceBase implements Holdable {
             setCallDirection(entry.getCallDirection());
             mLoneParticipantIdentity = new Pair<>(entry.getUserEntity(), entry.getEndpoint());
 
+            Bundle extras = entry.getExtras();
+            if (extras != null && extras.getBoolean(TelecomManager.EXTRA_DO_NOT_LOG_CALL)) {
+                Bundle newExtras = new Bundle();
+                newExtras.putBoolean(TelecomManager.EXTRA_DO_NOT_LOG_CALL, true);
+                putExtras(newExtras);
+            }
+
             // Remove the participant from Telecom.  It'll get picked up in a future CEP update
             // again anyways.
             entry.setDisconnected(new DisconnectCause(DisconnectCause.CANCELED,
@@ -1325,7 +1322,13 @@ public class ImsConference extends TelephonyConferenceBase implements Holdable {
         connection.setConnectionProperties(applyHostPropertiesToChild(
                 connection.getConnectionProperties(), parent.getConnectionProperties()));
         connection.setStatusHints(parent.getStatusHints());
-        connection.setExtras(getChildExtrasFromHostBundle(parent.getExtras()));
+        Bundle newExtras = getChildExtrasFromHostBundle(parent.getExtras());
+        if (isParticipantHost(mConferenceHostAddress, participant.getHandle())) {
+            Log.i(this,
+                    "createCallForExistingConnection: Adding TelecomManager.EXTRA_DO_NOT_LOG_CALL");
+            newExtras.putBoolean(TelecomManager.EXTRA_DO_NOT_LOG_CALL, true);
+        }
+        connection.setExtras(newExtras);
 
         Log.i(this, "createConferenceParticipantConnection: participant=%s, connection=%s",
                 participant, connection);

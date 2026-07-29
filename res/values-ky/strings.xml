@@ -64,7 +64,7 @@
     <string name="apn_settings" msgid="1978652203074756623">"Туташуу түйүндөрү (APN)"</string>
     <string name="settings_label" msgid="9101778088412567956">"Тармак параметрлери"</string>
     <string name="phone_accounts" msgid="1216879437523774604">"Чалуу аккаунттары"</string>
-    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"Чалууларды төмөнкү менен жасоо"</string>
+    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"Чыгуучу чалуулар үчүн аккаунттар"</string>
     <string name="phone_accounts_make_sip_calls_with" msgid="4691221006731847255">"SIP чалууларын төмөнкү менен жасоо"</string>
     <string name="phone_accounts_ask_every_time" msgid="6192347582666047168">"Биринчи сурасын"</string>
     <string name="phone_accounts_default_account_label" msgid="5107598881335931101">"Тармак жок"</string>
@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Каттоо эсеп параметрлерин конфигурациялоо"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Бардык чалуу каттоо эсептери"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Чалуулар жасала турган каттоо эсептерин тандаңыз"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Үчүнчү тараптын колдонмолору"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Башка колдонмолорго чалуулар таржымалыңыздагы чалууларды көрсөтүүгө уруксат бересиз. Эгер бул параметр өчүп турса, чалуулар кайсы колдонмодон жасалса, ошолордо гана көрүнөт."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-Fi чалуу"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Кыналган туташуу кызматы"</string>
     <string name="voicemail" msgid="7697769412804195032">"Үн почтасы"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Туруктуу терүү номерин жок кылуу"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Туруктуу терүү номери жок кылынууда…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Туруктуу терүү номери өчүрүлдү."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"БНТ жаңырган жок, анткени туура эмес PIN код киргизилди."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 туура эмес. FDN (уруксат берилген номер) жаңыртылган жок."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Уруксат берилген номер жаңырган жок, себеби жазылган номердин саны <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> ашпашы керек."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"БНТ жаңырган жок. PIN2 туура эмес, же телефон номуру жараксыз."</string>
     <string name="fdn_failed" msgid="216592346853420250">"БНТ иши кыйрады."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 кодун киргизиңиз"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Сырсөз туура эмес. PIN2 азыр бөгөттөлдү. Кайра аракет кылып, PIN 2ни өзгөртүңүз."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Сырсөз туура эмес. SIM азыр кулпуланды. PUK2 киргизиңиз."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 бөгөттөлдү. Бөгөттөн чыгаруу үчүн PUK2 кодун териңиз."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 биротоло бөгөттөлдү."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Сизде <xliff:g id="NUMBER">%d</xliff:g> аракет калды."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 кулпуланды. Кулпуну ачуу үчүн оператор менен байланышыңыз."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Жабуу"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Мобилдик туташууну иштетүү"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Мобилдик туташууну өчүрүү"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Колдонуу"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Баары"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE камсыздалган"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Видео чалуу камсыздалган"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wifi аркылуу чалуу камсыздалган"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"версиясы:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo версиясы:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"максималдуу уруксат берилген маалымат режими:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"спутник байланышын камсыздоочулардын бардык plmn тармактары:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink версиясы:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

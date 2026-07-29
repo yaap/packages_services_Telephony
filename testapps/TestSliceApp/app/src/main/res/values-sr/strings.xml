@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Дајте приоритет кашњењу"</string>
     <string name="bw_title" msgid="3902162973688221344">"Дајте приоритет пропусном опсегу"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Дајте приоритет обједињеној комуникацији"</string>
     <string name="purchase" msgid="7843181995697372128">"Купите Premium мрежу"</string>
     <string name="network_available" msgid="4780293262690730734">"Резултат: Захтевана мрежа је тренутно доступна!"</string>
     <string name="network_requested" msgid="5646123922691865991">"Резултат: Мрежа је затражена!"</string>

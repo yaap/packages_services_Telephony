@@ -198,6 +198,7 @@ public class SatelliteAccessController extends Handler {
     private static final int EVENT_SATELLITE_PROVISIONED_STATE_CHANGED = 19;
     private static final int EVENT_SEND_UPDATE_SYSTEM_SELECTION_CHANNELS_RESULT = 20;
     private static final int EVENT_CARRIER_CONFIG_CHANGED = 21;
+    private static final int CMD_INIT_SATELLITE_ACCESS_CONTROLLER = 22;
 
     public static final int DEFAULT_REGIONAL_SATELLITE_CONFIG_ID = 0;
     public static final int UNKNOWN_REGIONAL_SATELLITE_CONFIG_ID = -1;
@@ -497,35 +498,18 @@ public class SatelliteAccessController extends Handler {
             @Nullable File s2CellFile) {
         super(looper);
         mContext = context;
-        mPersistentLogger = SatelliteServiceUtils.getPersistentLogger(context);
         mFeatureFlags = featureFlags;
         mLocationManager = locationManager;
         mTelecomManager = telecomManager;
         setOnDeviceAccessController(satelliteOnDeviceAccessController);
 
         mCountryDetector = TelephonyCountryDetector.getInstance(context, mFeatureFlags);
-        mCountryDetector.registerForCountryCodeChanged(this,
-                EVENT_COUNTRY_CODE_CHANGED, null);
-        initializeHandlerForSatelliteAllowedResult();
         setIsSatelliteAllowedRegionPossiblyChanged(false);
 
         mSatelliteController = SatelliteController.getInstance();
         mControllerMetricsStats = ControllerMetricsStats.getInstance();
         mAccessControllerMetricsStats = AccessControllerMetricsStats.getInstance();
-        initSharedPreferences(context);
-        checkSharedPreference();
 
-        loadOverlayConfigs(context);
-        // loadConfigUpdaterConfigs has to be called after loadOverlayConfigs
-        // since config updater config has higher priority and thus can override overlay config
-        loadConfigUpdaterConfigs();
-        mSatelliteController.registerForConfigUpdateChanged(this, CMD_UPDATE_CONFIG_DATA,
-                context);
-        mSatelliteController.registerForSatelliteSubIdChanged(this,
-                EVENT_SATELLITE_SUBSCRIPTION_CHANGED, context);
-        if (s2CellFile != null) {
-            setSatelliteS2CellFile(s2CellFile);
-        }
         mInternalSatelliteSupportedResultReceiver = new ResultReceiver(this) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
@@ -553,14 +537,11 @@ public class SatelliteAccessController extends Handler {
                     sendMessage(obtainMessage(EVENT_IS_SATELLITE_PROVISIONED_DONE, args));
                     return;
                 }
-
                 handleIsSatelliteProvisionedResult(resultCode, resultData);
             }
         };
 
         mConfigUpdaterMetricsStats = ConfigUpdaterMetricsStats.getOrCreateInstance();
-        initializeSatelliteSystemNotification(context);
-        registerDefaultSmsAppChangedBroadcastReceiver(context);
 
         mInternalSatelliteSupportedStateCallback = new IBooleanConsumer.Stub() {
             @Override
@@ -572,13 +553,9 @@ public class SatelliteAccessController extends Handler {
                     sendMessage(obtainMessage(EVENT_SATELLITE_SUPPORTED_STATE_CHANGED, args));
                     return;
                 }
-
                 handleSatelliteSupportedStateChanged(isSupported);
             }
         };
-        int result = mSatelliteController.registerForSatelliteSupportedStateChanged(
-                mInternalSatelliteSupportedStateCallback);
-        plogd("registerForSatelliteSupportedStateChanged result: " + result);
 
         mInternalSatelliteProvisionStateCallback = new ISatelliteProvisionStateCallback.Stub() {
             @Override
@@ -590,7 +567,6 @@ public class SatelliteAccessController extends Handler {
                     sendMessage(obtainMessage(EVENT_SATELLITE_PROVISIONED_STATE_CHANGED, args));
                     return;
                 }
-
                 handleSatelliteProvisionedStateChanged(isProvisioned);
             }
 
@@ -601,9 +577,6 @@ public class SatelliteAccessController extends Handler {
                         + satelliteSubscriberProvisionStatus);
             }
         };
-        result = mSatelliteController.registerForSatelliteProvisionStateChanged(
-                mInternalSatelliteProvisionStateCallback);
-        plogd("registerForSatelliteProvisionStateChanged result: " + result);
 
         mInternalUpdateSystemSelectionChannelsResultReceiver = new ResultReceiver(this) {
             @Override
@@ -618,14 +591,9 @@ public class SatelliteAccessController extends Handler {
                             EVENT_SEND_UPDATE_SYSTEM_SELECTION_CHANNELS_RESULT, args));
                     return;
                 }
-
                 sendUpdateSystemSelectionChannelsResult(resultCode, resultData);
             }
         };
-
-        // Init the SatelliteOnDeviceAccessController so that the S2 level can be cached
-        initSatelliteOnDeviceAccessController();
-        registerLocationModeChangedBroadcastReceiver(context);
 
         mCarrierConfigManager = context.getSystemService(CarrierConfigManager.class);
         mCarrierConfigChangeListener = (slotIndex, subId, carrierId, specificCarrierId) -> {
@@ -639,7 +607,6 @@ public class SatelliteAccessController extends Handler {
                 sendMessage(obtainMessage(EVENT_CARRIER_CONFIG_CHANGED, args));
                 return;
             }
-
             handleCarrierConfigChanged(context, slotIndex, subId, carrierId, specificCarrierId);
         };
 
@@ -647,6 +614,51 @@ public class SatelliteAccessController extends Handler {
             mCarrierConfigManager.registerCarrierConfigChangeListener(
                     new HandlerExecutor(new Handler(looper)), mCarrierConfigChangeListener);
         }
+
+        SomeArgs args = SomeArgs.obtain();
+        args.arg1 = s2CellFile;
+        sendMessage(obtainMessage(CMD_INIT_SATELLITE_ACCESS_CONTROLLER, args));
+    }
+
+    private void initSatelliteAccessController(@Nullable File s2CellFile) {
+        plogd("initSatelliteAccessController: start");
+        mPersistentLogger = SatelliteServiceUtils.getPersistentLogger(mContext);
+        mCountryDetector.registerForCountryCodeChanged(this, EVENT_COUNTRY_CODE_CHANGED, null);
+        initializeHandlerForSatelliteAllowedResult();
+
+        initSharedPreferences(mContext);
+        checkSharedPreference();
+
+        loadOverlayConfigs(mContext);
+        // loadConfigUpdaterConfigs has to be called after loadOverlayConfigs
+        // since config updater config has higher priority and thus can override overlay config
+        loadConfigUpdaterConfigs();
+        mSatelliteController.registerForConfigUpdateChanged(this, CMD_UPDATE_CONFIG_DATA,
+                mContext);
+        mSatelliteController.registerForSatelliteSubIdChanged(this,
+                EVENT_SATELLITE_SUBSCRIPTION_CHANGED, mContext);
+
+        if (s2CellFile != null) {
+            logd("setSatelliteS2CellFile during Initialization");
+            setSatelliteS2CellFile(s2CellFile);
+        }
+
+        initializeSatelliteSystemNotification(mContext);
+        registerDefaultSmsAppChangedBroadcastReceiver(mContext);
+
+        int result = mSatelliteController.registerForSatelliteSupportedStateChanged(
+                mInternalSatelliteSupportedStateCallback);
+        plogd("registerForSatelliteSupportedStateChanged result: " + result);
+
+        result = mSatelliteController.registerForSatelliteProvisionStateChanged(
+                mInternalSatelliteProvisionStateCallback);
+        plogd("registerForSatelliteProvisionStateChanged result: " + result);
+
+        // Init the SatelliteOnDeviceAccessController so that the S2 level can be cached
+        initSatelliteOnDeviceAccessController();
+        registerLocationModeChangedBroadcastReceiver(mContext);
+
+        plogd("initSatelliteAccessController: end");
     }
 
     private void updateCurrentSatelliteAllowedState(
@@ -831,6 +843,17 @@ public class SatelliteAccessController extends Handler {
                 try {
                     handleCarrierConfigChanged(
                             context, slotIndex, subId, carrierId, specificCarrierId);
+                } finally {
+                    args.recycle();
+                }
+                break;
+            }
+            case CMD_INIT_SATELLITE_ACCESS_CONTROLLER: {
+                plogd("CMD_INIT_SATELLITE_ACCESS_CONTROLLER");
+                SomeArgs args = (SomeArgs) msg.obj;
+                File s2CellFile = (File) args.arg1;
+                try {
+                    initSatelliteAccessController(s2CellFile);
                 } finally {
                     args.recycle();
                 }
@@ -2922,8 +2945,17 @@ public class SatelliteAccessController extends Handler {
                 Integer::intValue).toArray());
 
         List<SystemSelectionSpecifier> selectionSpecifiers = new ArrayList<>();
-        selectionSpecifiers.add(new SystemSelectionSpecifier(mccmnc, bands, earfcns,
+        if (mFeatureFlags.systemSelectionSpecifierEnhancement()) {
+            List<String> mccMncs =
+                    mSatelliteController.getManualConnectSatellitePlmnsForCarrier(subId);
+            mccmnc = mccMncs.isEmpty() ? "" : mccMncs.get(0);
+            selectionSpecifiers.add(new SystemSelectionSpecifier(mccmnc, bands, earfcns,
+                satelliteInfos.toArray(new SatelliteInfo[0]), tagIds, subInfo.getIccId(),
+                mccMncs.toArray(new String[0])));
+        } else {
+            selectionSpecifiers.add(new SystemSelectionSpecifier(mccmnc, bands, earfcns,
                 satelliteInfos.toArray(new SatelliteInfo[0]), tagIds));
+        }
         mSatelliteController.updateSystemSelectionChannels(selectionSpecifiers,
                 mInternalUpdateSystemSelectionChannelsResultReceiver);
     }
@@ -3138,7 +3170,7 @@ public class SatelliteAccessController extends Handler {
     }
 
     private static boolean isMockModemAllowed() {
-        return (DEBUG || SystemProperties.getBoolean(ALLOW_MOCK_MODEM_PROPERTY, false)
+        return (DEBUG || SystemProperties.getBoolean(ALLOW_MOCK_MODEM_PROPERTY, true)
                 || SystemProperties.getBoolean(BOOT_ALLOW_MOCK_MODEM_PROPERTY, false));
     }
 

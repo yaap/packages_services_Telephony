@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -135,7 +136,7 @@ public class ImsConferenceController {
      * One conference call can be a host conference call and another conference call formed as a
      * result of accepting incoming conference call.
      */
-    private final ArrayList<ImsConference> mImsConferences = new ArrayList<>(2);
+    private final List<ImsConference> mImsConferences = new CopyOnWriteArrayList<>();
 
     private TelecomAccountRegistry mTelecomAccountRegistry;
 
@@ -272,7 +273,8 @@ public class ImsConferenceController {
 
             // If this connection is a member of a conference hosted on another device, it is not
             // conferenceable with any other connections.
-            if (isMemberOfPeerConference(connection)) {
+            if (isMemberOfPeerConference(connection) &&
+                    !android.telecom.flags.Flags.multiPartyAnchorConf()) {
                 if (Log.VERBOSE) {
                     Log.v(this, "Skipping connection in peer conference: %s", connection);
                 }
@@ -304,7 +306,12 @@ public class ImsConferenceController {
                 Log.d(this, "recalc - %s %s", conference.getState(), conference);
             }
 
-            if (!conference.isConferenceHost()) {
+            boolean multiPartyAnchorConfSupported =
+                    android.telecom.flags.Flags.multiPartyAnchorConf() &&
+                    conference.getCarrierConfig() != null &&
+                    conference.getCarrierConfig().isMultiPartyAnchorConfSupported();
+
+            if (!conference.isConferenceHost() && !multiPartyAnchorConfSupported) {
                 if (Log.VERBOSE) {
                     Log.v(this, "skipping conference (not hosted on this device): %s", conference);
                 }
@@ -363,7 +370,7 @@ public class ImsConferenceController {
 
                 // If the conference is full, don't allow anything to be conferenced with it.
                 if (imsConference.isFullConference()) {
-                    if (com.android.server.telecom.flags.Flags.multiPartyAnchorConf()) {
+                    if (android.telecom.flags.Flags.multiPartyAnchorConf()) {
                         imsConference.setConferenceables(Collections.<Conferenceable>emptyList());
                     } else {
                         imsConference
@@ -371,7 +378,7 @@ public class ImsConferenceController {
                     }
                 }
 
-                if (com.android.server.telecom.flags.Flags.multiPartyAnchorConf() &&
+                if (android.telecom.flags.Flags.multiPartyAnchorConf() &&
                         imsConference.getCarrierConfig() != null &&
                         imsConference.getCarrierConfig().isMultiPartyAnchorConfSupported()) {
                     // Remove conferenceables from different PhoneAccountHandles.
@@ -458,13 +465,6 @@ public class ImsConferenceController {
             return;
         }
 
-        if (!mFeatureFlags.reuseOriginalConnRemoteConfBehavior()) {
-            // Mark the foreground connection as MERGE_COMPLETE before it is disconnected as part of
-            // the IMS merge conference process:
-            connection.sendTelephonyConnectionEvent(
-                    android.telecom.Connection.EVENT_MERGE_COMPLETE, null);
-        }
-
         // Make a clone of the connection which will become the Ims conference host connection.
         // This is necessary since the Connection Service does not support removing a connection
         // from Telecom.  Instead we create a new instance and remove the old one from telecom.
@@ -508,7 +508,7 @@ public class ImsConferenceController {
         conference.addTelephonyConferenceListener(mConferenceListener);
         conference.updateConferenceParticipantsAfterCreation();
 
-        if (mFeatureFlags.reuseOriginalConnRemoteConfBehavior() && conference.isRemotelyHosted()) {
+        if (conference.isRemotelyHosted()) {
             if (phoneAccountHandle != null &&
                     mTelecomAccountRegistry.isUsingSimCallManager(phoneAccountHandle)) {
                 // Fi is the only carrier that uses a SIM call manager and they do not intend to
@@ -568,7 +568,7 @@ public class ImsConferenceController {
             boolean shouldLocalDisconnectOnEmptyConference = bundle.getBoolean(
                     CarrierConfigManager.KEY_LOCAL_DISCONNECT_EMPTY_IMS_CONFERENCE_BOOL);
             boolean isMultiPartyAnchorConfSupported = false;
-            if (com.android.server.telecom.flags.Flags.multiPartyAnchorConf()){
+            if (android.telecom.flags.Flags.multiPartyAnchorConf()){
                 isMultiPartyAnchorConfSupported = bundle.getBoolean(
                         CarrierConfigManager.KEY_SUPPORT_MULTI_PARTY_ANCHOR_CONFERENCE_BOOL);
             }
@@ -580,6 +580,33 @@ public class ImsConferenceController {
                     .setIsMultiPartyAnchorConfSupported(isMultiPartyAnchorConfSupported);
         }
         return config.build();
+    }
+
+    /**
+     * Determines if there is an active conference for the given phone account handle.
+     *
+     * @param handle The phone account handle.
+     * @return {@code true} if there is an active conference, {@code false} otherwise.
+     */
+    public boolean hasActiveConference(PhoneAccountHandle handle) {
+        for (ImsConference conference : mImsConferences) {
+            boolean multiPartyAnchorConfSupported =
+                    android.telecom.flags.Flags.multiPartyAnchorConf() &&
+                    conference.getCarrierConfig() != null &&
+                    conference.getCarrierConfig().isMultiPartyAnchorConfSupported();
+
+            if (!conference.isConferenceHost() && !multiPartyAnchorConfSupported) {
+                if (Log.VERBOSE) {
+                    Log.v(this, "skipping conference (not hosted on this device): %s", conference);
+                }
+                continue;
+            }
+
+            if (Objects.equals(getPhoneAccountHandle(conference), handle)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /* Only for testing */

@@ -57,6 +57,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.ims.ImsFeatureBinderRepository;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.BinderCallsStats;
 import com.android.internal.telephony.CallManager;
 import com.android.internal.telephony.IccCardConstants;
@@ -182,7 +183,8 @@ public class PhoneGlobals extends ContextWrapper {
     private static final int ROAMING_NOTIFICATION_REASON_DATA_SETTING_CHANGED = 0;
     private static final int ROAMING_NOTIFICATION_REASON_DATA_ROAMING_SETTING_CHANGED = 1;
     private static final int ROAMING_NOTIFICATION_REASON_CARRIER_CONFIG_CHANGED = 2;
-    private static final int ROAMING_NOTIFICATION_REASON_SERVICE_STATE_CHANGED = 3;
+    @VisibleForTesting
+    static final int ROAMING_NOTIFICATION_REASON_SERVICE_STATE_CHANGED = 3;
     private static final int ROAMING_NOTIFICATION_REASON_DEFAULT_DATA_SUBS_CHANGED = 4;
     private static final int ROAMING_NOTIFICATION_REASON_DISCONNECTED_SINGLE_NETWORK = 5;
 
@@ -195,9 +197,12 @@ public class PhoneGlobals extends ContextWrapper {
                     ROAMING_NOTIFICATION_DISCONNECTED})
     public @interface RoamingNotification {}
 
-    private static final int ROAMING_NOTIFICATION_NO_NOTIFICATION = 0;
-    private static final int ROAMING_NOTIFICATION_CONNECTED       = 1;
-    private static final int ROAMING_NOTIFICATION_DISCONNECTED    = 2;
+    @VisibleForTesting
+    static final int ROAMING_NOTIFICATION_NO_NOTIFICATION = 0;
+    @VisibleForTesting
+    static final int ROAMING_NOTIFICATION_CONNECTED       = 1;
+    @VisibleForTesting
+    static final int ROAMING_NOTIFICATION_DISCONNECTED    = 2;
 
     @RoamingNotification
     private int mCurrentRoamingNotification = ROAMING_NOTIFICATION_NO_NOTIFICATION;
@@ -217,7 +222,8 @@ public class PhoneGlobals extends ContextWrapper {
 
     private KeyguardManager mKeyguardManager;
 
-    private int mDefaultDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    @VisibleForTesting
+    int mDefaultDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private final LocalLog mDataRoamingNotifLog = new LocalLog(50);
 
     // Broadcast receiver for various intent broadcasts (see onCreate())
@@ -519,7 +525,13 @@ public class PhoneGlobals extends ContextWrapper {
             DomainSelectionResolver.make(this, dssComponentName);
 
             if (mFeatureFlags.enablePhoneNumberParsingApi()) {
-                TelephonyServicesInitializer.initialize();
+                Log.v(LOG_TAG, "PhoneGlobal enablePhoneNumberParsingApi");
+                if (mFeatureFlags.getPhoneNumberTs43Api()) {
+                    Log.v(LOG_TAG, "PhoneGlobal TelephonyServicesInitializer.initialize(this)");
+                    TelephonyServicesInitializer.initialize(this);
+                } else {
+                    TelephonyServicesInitializer.initialize();
+                }
             }
 
             // Initialize the telephony framework
@@ -557,7 +569,7 @@ public class PhoneGlobals extends ContextWrapper {
                         R.string.config_ims_rcs_package);
                 ImsResolver.make(this, defaultImsMmtelPackage,
                         defaultImsRcsPackage, PhoneFactory.getPhones().length,
-                        new ImsFeatureBinderRepository(), mFeatureFlags);
+                        new ImsFeatureBinderRepository());
                 ImsResolver.getInstance().initialize();
 
                 // With the IMS phone created, load static config.xml values from the phone process
@@ -584,7 +596,7 @@ public class PhoneGlobals extends ContextWrapper {
             Intent intent = new Intent(this, TelephonyDebugService.class);
             startService(intent);
 
-            mCM = CallManager.getInstance();
+            mCM = CallManager.getInstance(this);
 
             // Create the NotificationMgr singleton, which is used to display
             // status bar icons and control other status bar behavior.
@@ -1041,7 +1053,8 @@ public class PhoneGlobals extends ContextWrapper {
      *                       internet is allowed.
      * @param serviceState Service state from phone
      */
-    private void updateDataRoamingStatus(@RoamingNotificationReason int notificationReason,
+    @VisibleForTesting
+    void updateDataRoamingStatus(@RoamingNotificationReason int notificationReason,
             List<DataDisallowedReason> disallowReasons, ServiceState serviceState) {
 
         if (VDBG) Log.v(LOG_TAG, "updateDataRoamingStatus");
@@ -1165,7 +1178,8 @@ public class PhoneGlobals extends ContextWrapper {
         mHandler.obtainMessage(event, mDefaultDataSubId, 0).sendToTarget();
     }
 
-    private @RoamingNotification int getCurrentRoamingNotification() {
+    @VisibleForTesting
+    @RoamingNotification int getCurrentRoamingNotification() {
         return mCurrentRoamingNotification;
     }
 

@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Προτεραιότητα λανθάνοντος χρόνου"</string>
     <string name="bw_title" msgid="3902162973688221344">"Προτεραιότητα εύρους ζώνης"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Προτεραιότητα στην Ενοποιημένη επικοινωνία"</string>
     <string name="purchase" msgid="7843181995697372128">"Αγορά επιπλέον χρέωσης δικτύου"</string>
     <string name="network_available" msgid="4780293262690730734">"Αποτέλεσμα: Το δίκτυο που ζητήθηκε είναι πλέον διαθέσιμο!"</string>
     <string name="network_requested" msgid="5646123922691865991">"Αποτέλεσμα: Υποβλήθηκε αίτημα για το δίκτυο!"</string>

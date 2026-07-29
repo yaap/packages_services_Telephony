@@ -97,12 +97,18 @@ public class NumberVerificationManager {
 
         if (mCurrentRange.matches(numberInE164Format)) {
             mCurrentRange = null;
+            // Cache the callback and set it to null so that if the callback has not finished
+            // running by the time we request a new verification, we don't erroneously block the
+            // new verification request. This is not an issue in production, but it can cause test
+            // flakiness.
+            INumberVerificationCallback callback = mCallback;
+            mCallback = null;
             try {
                 // Pass back the network-matched number as-is to the caller of
                 // TelephonyManager#requestNumberVerification -- do not send them the E.164 format
                 // number as that changes the format of the number from what the API consumer may
                 // be expecting.
-                mCallback.onCallReceived(number);
+                callback.onCallReceived(number);
                 return true;
             } catch (RemoteException e) {
                 Log.w(NumberVerificationManager.class.getSimpleName(),
@@ -110,15 +116,13 @@ public class NumberVerificationManager {
                 // Intercept the call even if there was a remote exception -- it's still going to be
                 // a strange call from a robot number
                 return true;
-            } finally {
-                mCallback = null;
             }
         }
         return false;
     }
 
     synchronized void requestVerification(PhoneNumberRange numberRange,
-            INumberVerificationCallback callback, long timeoutMillis) {
+            final INumberVerificationCallback callback, long timeoutMillis) {
         if (!checkNumberVerificationFeasibility(callback)) {
             return;
         }
@@ -130,14 +134,14 @@ public class NumberVerificationManager {
             synchronized (NumberVerificationManager.this) {
                 // Check whether the verification finished already -- if so, don't call anything.
                 if (mCallback != null && mCurrentRange != null) {
+                    mCurrentRange = null;
+                    mCallback = null;
                     try {
-                        mCallback.onVerificationFailed(NumberVerificationCallback.REASON_TIMED_OUT);
+                        callback.onVerificationFailed(NumberVerificationCallback.REASON_TIMED_OUT);
                     } catch (RemoteException e) {
                         Log.w(NumberVerificationManager.class.getSimpleName(),
                                 "Remote exception calling verification error callback");
                     }
-                    mCallback = null;
-                    mCurrentRange = null;
                 }
             }
         }, timeoutMillis);

@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Podelitev prednosti zakasnitvi"</string>
     <string name="bw_title" msgid="3902162973688221344">"Podelitev prednosti pasovni širini"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Prednostna obravnava poenotene komunikacije"</string>
     <string name="purchase" msgid="7843181995697372128">"Nakup omrežne naročnine"</string>
     <string name="network_available" msgid="4780293262690730734">"Rezultat: Zahtevano omrežje je zdaj na voljo."</string>
     <string name="network_requested" msgid="5646123922691865991">"Rezultat: Omrežje je bilo zahtevano."</string>

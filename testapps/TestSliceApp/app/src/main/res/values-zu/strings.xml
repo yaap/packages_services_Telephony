@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Beka kuqala Ukubambezeleka"</string>
     <string name="bw_title" msgid="3902162973688221344">"Beka kuqala Umkhawulokudonsa"</string>
     <string name="cbs_title" msgid="5234410535569935600">"I-CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Beka phambili Ukuxhumana Okuhlangene"</string>
     <string name="purchase" msgid="7843181995697372128">"Thenga Inethiwekhi ye-Premium"</string>
     <string name="network_available" msgid="4780293262690730734">"Umphumela: Inethiwekhi eceliwe isiyatholakala manje!"</string>
     <string name="network_requested" msgid="5646123922691865991">"Umphumela: Inethiwekhi iceliwe!"</string>

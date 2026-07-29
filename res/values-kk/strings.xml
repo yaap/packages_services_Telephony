@@ -64,7 +64,7 @@
     <string name="apn_settings" msgid="1978652203074756623">"APN"</string>
     <string name="settings_label" msgid="9101778088412567956">"Желі параметрлері"</string>
     <string name="phone_accounts" msgid="1216879437523774604">"Қоңырау шалу аккаунттары"</string>
-    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"Келесінің көмегімен қоңыраулар шалу"</string>
+    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"Қоңырау шалу аккаунты"</string>
     <string name="phone_accounts_make_sip_calls_with" msgid="4691221006731847255">"Келесінің көмегімен SIP қоңырауларын шалу"</string>
     <string name="phone_accounts_ask_every_time" msgid="6192347582666047168">"Алдымен сұрау"</string>
     <string name="phone_accounts_default_account_label" msgid="5107598881335931101">"Қолжетімді желі жоқ"</string>
@@ -75,12 +75,14 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Аккаунт параметрлерін конфигурациялау"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Барлық қоңырау шалу аккаунттары"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Қай аккаунттардың қоңырау шала алатынын таңдау"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Үшінші тарап қолданбалары"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Басқа қолданбаларға қоңыраулар тарихындағы жазбаларды көрсетуге рұқсат береді. Өшіріліп тұрса, бұл қоңыраулар тек тиісті қолданбаларда көрсетіледі."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-Fi қоңыраулары"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Кірістірілген байланыс қызметі"</string>
     <string name="voicemail" msgid="7697769412804195032">"Дауыстық пошта"</string>
     <string name="voicemail_settings_with_label" msgid="4228431668214894138">"Дауыстық пошта (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="voicemail_abbreviated" msgid="7746778673131551185">"ДХ:"</string>
-    <string name="make_and_receive_calls" msgid="4868913166494621109">"Қоңыраулар шалу және қабылдау"</string>
+    <string name="make_and_receive_calls" msgid="4868913166494621109">"Қоңырау шалу және қабылдау"</string>
     <string name="smart_forwarding_settings_menu" msgid="8850429887958938540">"Қоңырауды басқа нөмірге бағыттау"</string>
     <string name="smart_forwarding_settings_menu_summary" msgid="5096947726032885325">"Бір нөмір қолжетімсіз болғанда, қоңырауларды әрдайым екінші нөмірге бағыттауға болады."</string>
     <string name="voicemail_notifications_preference_title" msgid="7829238858063382977">"Хабарландырулар"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Тұрақты теру нөмірін өшіру"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Тұрақты теру нөмірін өшіруде…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Тұрақты теру нөмірі жойылды."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"ТТН жаңартылмады, себебі қате PIN код терілді."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 коды қате. Рұқсат нөмірлер жаңартылмады."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Рұқсат нөмірлер жаңартылмады, себебі нөмір <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> саннан аспауы тиіс."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"ТТН жаңартылмады. PIN2 қате болды немесе телефон нөмірі қабылданбады."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Тұрақты теру нөмірлерінің жұмысы орындалмады."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 кодын енгізіңіз"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Құпия сөз дұрыс емес. PIN2 енді бөгелді. Әрекетті қайталау үшін PIN 2 кодын өзгертіңіз."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Құпия сөз дұрыс емес. SIM қазір бекітілген. PUK2 кодын енгізіңіз."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 блокталған. Блоктан шығару үшін PUK2 кодын енгізіңіз."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 уақытша блокталған."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"<xliff:g id="NUMBER">%d</xliff:g> әрекет қалды."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 құлыптаулы. Құлпын ашу үшін қызмет көрсетушіге хабарласыңыз."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Жабу"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Деректер байланысын қосу"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Деректер байланысын өшіру"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Қолдану"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Барлығы"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE қарастырылған"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Бейнеқоңырау шалу қарастырылған"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wi-Fi арқылы қоңырау шалу қарастырылған"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"нұсқасы:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo нұсқасы:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"максималды рұқсат етілген деректер режимі:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"барлық plmn жерсеріктік провайдері:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink нұсқасы:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

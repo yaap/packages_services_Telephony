@@ -254,6 +254,56 @@ public class ImsConferenceTest extends TelephonyTestBase {
                 eq(imsConference));
     }
 
+    @Test
+    @SmallTest
+    public void testSinglePartyEmulationWithDoNotLogExtra() {
+        when(mMockTelecomAccountRegistry.isUsingSimCallManager(any(PhoneAccountHandle.class)))
+                .thenReturn(false);
+
+        ImsConference imsConference = new ImsConference(mMockTelecomAccountRegistry,
+                mMockTelephonyConnectionServiceProxy, mConferenceHost,
+                null /* phoneAccountHandle */, () -> true /* featureFlagProxy */,
+                new ImsConference.CarrierConfiguration.Builder().build());
+
+        ConferenceParticipant participant1 = new ConferenceParticipant(
+                Uri.parse("tel:6505551212"),
+                "A",
+                Uri.parse("sip:6505551212@testims.com"),
+                Connection.STATE_ACTIVE,
+                Call.Details.DIRECTION_OUTGOING);
+        ConferenceParticipant participant2 = new ConferenceParticipant(
+                Uri.parse("tel:6505551213"),
+                "A",
+                Uri.parse("sip:6505551213@testims.com"),
+                Connection.STATE_ACTIVE,
+                Call.Details.DIRECTION_INCOMING);
+
+        imsConference.handleConferenceParticipantsUpdate(mConferenceHost,
+                Arrays.asList(participant1, participant2));
+        assertEquals(2, imsConference.getNumberOfParticipants());
+
+        // Since testing isParticipantHost() mock requires a complex telephony manager/phone mock
+        // setup, we can simulate the result of createCallForExistingConnection which puts the
+        // EXTRA_DO_NOT_LOG_CALL on the host's ConferenceParticipantConnection.
+        for (Connection conn : imsConference.getConnections()) {
+            if (participant1.getHandle().equals(conn.getAddress())) {
+                Bundle b = new Bundle();
+                b.putBoolean(TelecomManager.EXTRA_DO_NOT_LOG_CALL, true);
+                conn.putExtras(b);
+            }
+        }
+
+        // Now remove participant2, leaving only participant1 (the host).
+        imsConference.handleConferenceParticipantsUpdate(mConferenceHost,
+                Arrays.asList(participant1));
+        assertEquals(0, imsConference.getNumberOfParticipants());
+
+        // Ensure the EXTRA_DO_NOT_LOG_CALL was copied to the ImsConference.
+        Bundle extras = imsConference.getExtras();
+        assertNotNull(extras);
+        assertTrue(extras.getBoolean(TelecomManager.EXTRA_DO_NOT_LOG_CALL, false));
+    }
+
     /**
      * Tests CEPs with disconnected participants present with disconnected state.
      */

@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Konfigurácia nastavení účtu"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Všetky telefónne účty"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Výber účtov, pomocou ktorých bude možné telefonovať"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Aplikácie tretích strán"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Povoľte ostatným aplikáciám zobrazovať hovory v histórii hovorov. Ak je táto možnosť vypnutá, tieto hovory sa budú zobrazovať iba v príslušných aplikáciách."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Volanie cez Wi‑Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Vstavaná služba pripojenia"</string>
     <string name="voicemail" msgid="7697769412804195032">"Hlasová schránka"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Odstrániť povolené číslo"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Odstraňuje sa povolené číslo…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Povolené číslo bolo odstránené."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Povolené čísla neboli aktualizované. Zadali ste nesprávny kód PIN."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Nesprávny kód PIN2. Režim povolených čísel nebol aktualizovaný."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Režim povolených čísel nebol aktualizovaný, pretože číslo obsahuje viac než maximálny počet povolených číslic (<xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>)."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Povolené čísla neboli aktualizované. Kód PIN2 je nesprávny alebo bolo telefónne číslo odmietnuté."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Operácia s povolenými číslami zlyhala."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Zadajte kód PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Heslo je nesprávne. Kód PIN2 bol zablokovaný. Ak to chcete skúsiť znova, zmeňte kód PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Heslo je nesprávne. SIM karta bola uzamknutá. Zadajte kód PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Kód PIN2 je zablokovaný. Odblokujete ho zadaním kódu PUK2."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"Kód PUK2 je natrvalo blokovaný."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Zostávajú vám pokusy (počet: <xliff:g id="NUMBER">%d</xliff:g>)"</string>
     <string name="puk2_locked" msgid="6497760825455461057">"SIM karta je blokovaná kódom PUK2. Ak ju chcete odblokovať, kontaktujte poskytovateľa služieb."</string>
@@ -604,7 +607,7 @@
     <string name="failedToImportSingleContactMsg" msgid="228095510489830266">"Kontakt sa nepodarilo importovať"</string>
     <string name="hac_mode_title" msgid="4127986689621125468">"Načúvadlá"</string>
     <string name="hac_mode_summary" msgid="7774989500136009881">"Zapnúť kompatibilitu s načúvadlom"</string>
-    <string name="rtt_mode_title" msgid="3075948111362818043">"Posielanie okamžitého textu (RTT) počas hovorov"</string>
+    <string name="rtt_mode_title" msgid="3075948111362818043">"Hovor s okamžitým textom"</string>
     <string name="rtt_mode_summary" msgid="8631541375609989562">"Povoliť posielanie správ počas hlasového hovoru"</string>
     <string name="rtt_mode_more_information" msgid="587500128658756318">"Okamžitý text pomáha volajúcim, ktorí nepočujú, majú problémy so sluchom, rečovú poruchu alebo potrebujú viac ako samotný hlas.&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;Ďalšie informácie&lt;/a&gt;\n       &lt;br&gt;&lt;br&gt; – Okamžitý text poslaný počas hovoru sa uloží ako prepis správ\n       &lt;br&gt; – Okamžitý text nie je k dispozícii počas videohovorov"</string>
     <string name="no_rtt_when_roaming" msgid="5268008247378355389">"Poznámka: Okamžitý text nie je počas roamingu k dispozícii."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Zavrieť"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Povoliť dátové pripojenie"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Zakázať dátové pripojenie"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Použiť"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Všetky"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"Poskytované VoLTE"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Poskytované videohovory"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Poskytované volanie cez Wi‑Fi"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"verzia:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"verzia služby Skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"režim maximálneho povoleného objemu dát:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"všetci poskytovatelia satelitného pripojenia plmns:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"verzia služby Starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"povoliť prístup:"</string>

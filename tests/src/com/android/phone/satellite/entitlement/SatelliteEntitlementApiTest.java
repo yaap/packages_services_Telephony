@@ -38,9 +38,12 @@ import android.telephony.TelephonyManager;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.android.internal.telephony.satellite.SatelliteConfig;
+import com.android.internal.telephony.satellite.SatelliteController;
 import com.android.libraries.entitlement.ServiceEntitlement;
 import com.android.libraries.entitlement.ServiceEntitlementRequest;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +67,10 @@ public class SatelliteEntitlementApiTest {
     CarrierConfigManager mCarrierConfigManager;
     @Mock
     TelephonyManager mTelephonyManager;
+    @Mock
+    SatelliteConfig mMockSatelliteConfig;
+    @Mock
+    SatelliteController mMockSatelliteController;
     private PersistableBundle mCarrierConfigBundle;
     private SatelliteEntitlementApi mSatelliteEntitlementAPI;
 
@@ -83,6 +90,11 @@ public class SatelliteEntitlementApiTest {
         doReturn(mTelephonyManager).when(mContext).getSystemService(Context.TELEPHONY_SERVICE);
         doReturn(mTelephonyManager).when(mTelephonyManager).createForSubscriptionId(anyInt());
 
+        doReturn(mMockSatelliteConfig).when(mMockSatelliteController).getSatelliteConfig();
+        Field instanceField = SatelliteController.class.getDeclaredField("sInstance");
+        instanceField.setAccessible(true);
+        instanceField.set(null, mMockSatelliteController);
+
         mSatelliteEntitlementAPI = new SatelliteEntitlementApi(mContext, mCarrierConfigBundle,
                 SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
 
@@ -97,6 +109,13 @@ public class SatelliteEntitlementApiTest {
                 "mServiceEntitlement");
         fieldServiceEntitlement.setAccessible(true);
         fieldServiceEntitlement.set(mSatelliteEntitlementAPI, mServiceEntitlement);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Field instanceField = SatelliteController.class.getDeclaredField("sInstance");
+        instanceField.setAccessible(true);
+        instanceField.set(null, null);
     }
 
     @Test
@@ -152,6 +171,8 @@ public class SatelliteEntitlementApiTest {
         ServiceEntitlementRequest.Builder requestBuilder = ServiceEntitlementRequest.builder();
         requestBuilder.setAcceptContentType(ServiceEntitlementRequest.ACCEPT_CONTENT_TYPE_JSON);
         requestBuilder.setAppName(TEST_APP_NAME);
+        requestBuilder.setEntitlementVersion(SatelliteEntitlementApi.ENTITLEMENT_VERSION);
+        requestBuilder.setConfigurationVersion(SatelliteEntitlementApi.CONFIGURATION_VERSION);
         ServiceEntitlementRequest expectedRequest = requestBuilder.build();
 
         mSatelliteEntitlementAPI.checkEntitlementStatus();

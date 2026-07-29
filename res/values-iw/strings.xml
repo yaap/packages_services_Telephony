@@ -64,9 +64,9 @@
     <string name="apn_settings" msgid="1978652203074756623">"שמות של נקודות גישה"</string>
     <string name="settings_label" msgid="9101778088412567956">"הגדרות רשת"</string>
     <string name="phone_accounts" msgid="1216879437523774604">"חשבונות להתקשרות"</string>
-    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"ביצוע שיחות באמצעות"</string>
+    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"מאיזה חשבון לבצע שיחות?"</string>
     <string name="phone_accounts_make_sip_calls_with" msgid="4691221006731847255">"‏ביצוע שיחות SIP באמצעות"</string>
-    <string name="phone_accounts_ask_every_time" msgid="6192347582666047168">"יש לשאול לפני ביצוע"</string>
+    <string name="phone_accounts_ask_every_time" msgid="6192347582666047168">"לשאול לפני השיחה"</string>
     <string name="phone_accounts_default_account_label" msgid="5107598881335931101">"אין רשתות זמינות"</string>
     <string name="phone_accounts_settings_header" msgid="6296501692964706536">"הגדרות"</string>
     <string name="phone_accounts_choose_accounts" msgid="4748805293314824974">"בחירת חשבונות"</string>
@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"קביעת הגדרות החשבון"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"כל החשבונות לביצוע שיחות"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"בחירת החשבונות שיכולים להתקשר"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"אפליקציות של צד שלישי"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"אפליקציות אחרות יוכלו לראות את השיחות בהיסטוריה שלך. כשההגדרה הזו מושבתת, השיחות יופיעו רק באפליקציות הספציפיות שלהן."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"‏שיחות ב-Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"שירות חיבור מובנה"</string>
     <string name="voicemail" msgid="7697769412804195032">"דואר קולי"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"מחיקת מספר חיוג קבוע"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"מחיקת מספר חיוג קבוע מתבצעת..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"מספר חיוג קבוע נמחק."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"‏רשימת ה-FDN לא עודכנה כי קוד האימות שהקלדת שגוי."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"‏רשימת ה-FDN לא עודכנה כי קוד האימות השני שגוי."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"‏מספר ה-FDN לא עודכן כי הוא מכיל יותר מ-<xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> ספרות."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"רשימת מספרי החיוג הקבועים לא עודכנה. קוד הגישה היה שגוי או שמספר הטלפון נדחה."</string>
     <string name="fdn_failed" msgid="216592346853420250">"‏פעולת FDN נכשלה."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"‏הזנת קוד PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"‏סיסמה שגויה. קוד אימות 2 חסום כעת. כדי לנסות שוב, יש לשנות את PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"‏סיסמה שגויה. ה-SIM נעול כעת. יש להזין PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"‏קוד האימות השני (PIN2) חסום. כדי לבטל את החסימה, צריך למלא את קוד ה-PUK2."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"‏PUK2 נחסם לצמיתות."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"נותרו לך עוד <xliff:g id="NUMBER">%d</xliff:g> ניסיונות."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"‏נעילת PUK2. כדי לבטל את הנעילה, צריך לפנות לספק השירות."</string>
@@ -606,8 +609,7 @@
     <string name="hac_mode_summary" msgid="7774989500136009881">"הפעלת תאימות למכשיר שמיעה"</string>
     <string name="rtt_mode_title" msgid="3075948111362818043">"‏שיחת RTT (טקסט בזמן אמת)"</string>
     <string name="rtt_mode_summary" msgid="8631541375609989562">"אפשר לשלוח הודעות טקסט בזמן שיחה"</string>
-    <!-- syntax error in translation for rtt_mode_more_information (587500128658756318) org.xmlpull.v1.XmlPullParserException: expected: /br read: string (position:END_TAG </string>@1:430 in     <string name="rtt_mode_more_information" msgid="587500128658756318">"‏RTT (טקסט בזמן אמת) היא תכונת נגישות שעוזרת לחרשים, לקויי שמיעה, לקויי דיבור או אנשים שלא יכולים להסתפק רק בשיחות קוליות.&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;למידע נוסף&lt;/a&gt;\n &lt;br&gt;&lt;br&gt; - שיחות RTT מתומללות ונשמרות כהודעות\n <br> - אי אפשר להשתמש ב-RTT לשיחות וידאו"</string>
-)  -->
+    <string name="rtt_mode_more_information" msgid="587500128658756318">"‏RTT (טקסט בזמן אמת) היא תכונת נגישות שעוזרת לחרשים, לקויי שמיעה, לקויי דיבור או אנשים שלא יכולים להסתפק רק בשיחות קוליות.&lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;למידע נוסף&lt;/a&gt;\n &lt;br&gt;&lt;br&gt; - שיחות RTT מתומללות ונשמרות כהודעות\n &lt;br&gt; - אי אפשר להשתמש ב-RTT לשיחות וידאו"</string>
     <string name="no_rtt_when_roaming" msgid="5268008247378355389">"‏הערה: אי אפשר להשתמש ב-RTT בזמן נדידה"</string>
   <string-array name="tty_mode_entries">
     <item msgid="3238070884803849303">"‏TTY כבוי"</item>
@@ -703,7 +705,7 @@
     <string name="change_pin_enter_new_pin_header" msgid="4739465616733486118">"הגדרת קוד גישה חדש"</string>
     <string name="change_pin_enter_new_pin_hint" msgid="2326038476516364210">"האורך של קוד הגישה חייב להיות <xliff:g id="MAX">%2$d</xliff:g>-<xliff:g id="MIN">%1$d</xliff:g> ספרות."</string>
     <string name="change_pin_confirm_pin_header" msgid="2606303906320705726">"אישור קוד הגישה"</string>
-    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"קודי הגישה לא תואמים"</string>
+    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"קודי האימות לא זהים"</string>
     <string name="change_pin_succeeded" msgid="2504705600693014403">"קוד הגישה לדואר הקולי עודכן"</string>
     <string name="change_pin_system_error" msgid="7772788809875146873">"לא ניתן להגדיר את קוד הגישה"</string>
     <string name="mobile_data_status_roaming_turned_off_subtext" msgid="6840673347416227054">"חבילת הגלישה בנדידה הושבתה"</string>
@@ -837,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"סגירה"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"הפעלת חיבור נתונים"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"השבת חיבור נתונים"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"אישור"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"הכול"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"‏‎NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"‏‎LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"‏‎UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"‏‎GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"‏ניהול התצורה של VoLTE"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"ניהול תצורה של שיחות וידאו"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"‏ניהול תצורה של שיחות Wifi"</string>
@@ -975,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"גרסה:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"‏גרסת Skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"מצב של הגבלת השימוש בחבילת הגלישה:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"‏כל ה-PLMN של ספקי הלוויין:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"‏גרסת Starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"מתן גישה:"</string>

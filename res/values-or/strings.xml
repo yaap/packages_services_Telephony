@@ -64,7 +64,7 @@
     <string name="apn_settings" msgid="1978652203074756623">"ଆକ୍ସେସ୍ ପଏଣ୍ଟ ନାମ"</string>
     <string name="settings_label" msgid="9101778088412567956">"ନେଟ୍‍ୱର୍କ ସେଟିଙ୍ଗ"</string>
     <string name="phone_accounts" msgid="1216879437523774604">"କଲ୍ କରିବା ଆକାଉଣ୍ଟ"</string>
-    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"ଏହା ସହିତ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="phone_accounts_make_calls_with" msgid="16747814788918145">"ଏହା ସହିତ କଲ କରନ୍ତୁ"</string>
     <string name="phone_accounts_make_sip_calls_with" msgid="4691221006731847255">"ଏହା ସହିତ SIP କଲ୍ କରନ୍ତୁ"</string>
     <string name="phone_accounts_ask_every_time" msgid="6192347582666047168">"ପ୍ରଥମେ ପଚାରନ୍ତୁ"</string>
     <string name="phone_accounts_default_account_label" msgid="5107598881335931101">"କୈଣସି ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ"</string>
@@ -75,12 +75,14 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"ଆକାଉଣ୍ଟ ସେଟିଙ୍ଗକୁ କନଫିଗର୍ କରନ୍ତୁ"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"ସମସ୍ତ କଲିଙ୍ଗ ଆକାଉଣ୍ଟ"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"କଲ୍ କରିପାରୁଥିବା ଆକାଉଣ୍ଟକୁ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"ତୃତୀୟ-ପକ୍ଷ ଆପ୍ସ"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"ଆପଣଙ୍କ କଲ ଇତିହାସରେ କଲଗୁଡ଼ିକ ଦେଖାଇବାକୁ ଅନ୍ୟ ଆପ୍ସକୁ ଅନୁମତି ଦିଅନ୍ତୁ। ଯଦି ବନ୍ଦ ଥାଏ, ତେବେ ଏହି କଲଗୁଡ଼ିକ କେବଳ ସେଗୁଡ଼ିକର ନିର୍ଦ୍ଦିଷ୍ଟ ଆପ୍ସରେ ଦେଖାଯିବ।"</string>
     <string name="wifi_calling" msgid="3650509202851355742">"ୱାଇ-ଫାଇ କଲିଂ"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"ବିଲ୍ଟ-ଇନ୍ ସଂଯୋଗ ସେବା"</string>
     <string name="voicemail" msgid="7697769412804195032">"ଭଏସମେଲ୍"</string>
     <string name="voicemail_settings_with_label" msgid="4228431668214894138">"ଭଏସମେଲ୍ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
     <string name="voicemail_abbreviated" msgid="7746778673131551185">"VM:"</string>
-    <string name="make_and_receive_calls" msgid="4868913166494621109">"କଲ୍ କରନ୍ତୁ ଏବଂ ପ୍ରାପ୍ତ କରନ୍ତୁ"</string>
+    <string name="make_and_receive_calls" msgid="4868913166494621109">"କଲ କରନ୍ତୁ ଏବଂ ପାଆନ୍ତୁ"</string>
     <string name="smart_forwarding_settings_menu" msgid="8850429887958938540">"ସ୍ମାର୍ଟ ଫରୱାର୍ଡିଂ"</string>
     <string name="smart_forwarding_settings_menu_summary" msgid="5096947726032885325">"ଯେତେବେଳେ ଏକ ନମ୍ବର୍ ଅପହଞ୍ଚ ଦୂରରେ ରହିଥାଏ, ସେତେବେଳେ ସର୍ବଦା ଆପଣଙ୍କର ଅନ୍ୟ ନମ୍ବର୍‍କୁ କଲ୍‍‍ଗୁଡ଼ିକ ଫର୍‍ୱର୍ଡ ହେବ"</string>
     <string name="voicemail_notifications_preference_title" msgid="7829238858063382977">"ବିଜ୍ଞପ୍ତି"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଡିଲିଟ୍ କରନ୍ତୁ"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌ ଡିଲିଟ୍ ହେଉଛି…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଡିଲିଟ୍ କରାଗଲା।"</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN ଅପଡେଟ୍ ହେଲା ନାହିଁ କାରଣ ଆପଣ ଗୋଟିଏ ଭୁଲ୍ PIN ଟାଇପ୍ କରିଥିଲେ।"</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"ଭୁଲ PIN2। FDN ଅପଡେଟ ହୋଇନାହିଁ।"</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"ନମ୍ବରରେ <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>ଟିରୁ ଅଧିକ ଅଙ୍କ ଥିବା ଯୋଗୁଁ FDN ଅପ୍‌ଡେଟ୍ କରାଯାଇନଥିଲା।"</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN ଅପଡେଟ୍ ହୋ‌ଇନଥିଲା। PIN2 ଭୁଲ୍ ଥିଲା କିମ୍ବା ଫୋନ୍ ନମ୍ବର୍‌କୁ ଗ୍ରହଣ କରାଗଲା ନାହିଁ।"</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN ଅପରେଶନ୍ ବିଫଳ ହେଲା।"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 ହୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"ଭୁଲ୍ ପାସ୍‌ୱର୍ଡ। ବର୍ତ୍ତମାନ PIN2କୁ ଅବରୋଧ କରାଯାଇଛି। ପୁଣି ଚେଷ୍ଟା କରିବା ପାଇଁ PIN 2କୁ ବଦଳାନ୍ତୁ।"</string>
     <string name="puk2_requested" msgid="6992374450720307514">"ଭୁଲ୍ ପାସ୍‌ୱର୍ଡ। ବର୍ତ୍ତମାନ SIM ଲକ୍ ହୋ‌ଇଗଲା। PUK2କୁ ପ୍ରବେଶ କରନ୍ତୁ।"</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2କୁ ବ୍ଲକ କରାଯାଇଛି। ଅନବ୍ଲକ କରିବାକୁ PUK2 ଲେଖନ୍ତୁ।"</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2କୁ ସ୍ଥାୟୀରୂପେ ଅବରୋଧ କରାଯାଇଛି।"</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"ଆପଣଙ୍କର <xliff:g id="NUMBER">%d</xliff:g>ଟି ସୁଯୋଗ ବଳକା ଅଛି।"</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 ଲକ କରାଯାଇଛି। ଅନଲକ କରିବାକୁ ସେବା ପ୍ରଦାନକାରୀ ସହ କଣ୍ଟାକ୍ଟ କରନ୍ତୁ।"</string>
@@ -657,7 +660,7 @@
     <string name="phone_in_ecm_call_notification_text_without_data_restriction_hint" msgid="3747860785153531225">"ଫୋନଟି ଜରୁରୀକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡରେ ଅଛି"</string>
     <string name="phone_in_ecm_notification_complete_time_without_data_restriction_hint" msgid="3690292264812050858">"<xliff:g id="COMPLETETIME">%s</xliff:g> ପର୍ଯ୍ୟନ୍ତ"</string>
     <string name="alert_dialog_exit_ecm_without_data_restriction_hint" msgid="7549850847524907932">"{count,plural, =1{ଫୋନଟି ଏକ ମିନିଟ ପାଇଁ ଜରୁରୀକାଳୀନ କଲବ୍ୟାକ ମୋଡରେ ରହିବ। \nଆପଣ ବର୍ତ୍ତମାନ ବାହାରି ଯିବାକୁ ଚାହାଁନ୍ତି?}other{ଫୋନଟି %s ମିନିଟ ପାଇଁ ଜରୁରୀକାଳୀନ କଲବ୍ୟାକ ମୋଡରେ ରହିବ।\nଆପଣ ବର୍ତ୍ତମାନ ବାହାରି ଯିବାକୁ ଚାହାଁନ୍ତି?}}"</string>
-    <string name="voicemail_provider" msgid="4158806657253745294">"ସେବା"</string>
+    <string name="voicemail_provider" msgid="4158806657253745294">"ସର୍ଭିସ"</string>
     <string name="voicemail_settings" msgid="4451045613238972776">"ସେଟଅପ୍ କରନ୍ତୁ"</string>
     <string name="voicemail_number_not_set" msgid="8831561283386938155">"&lt;ସେଟ୍ ହୋ‌ଇନାହିଁ&gt;"</string>
     <string name="other_settings" msgid="8895088007393598447">"ଅନ୍ୟାନ୍ୟ କଲ୍‌ ସେଟିଙ୍ଗ"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"ଖାରଜ କରନ୍ତୁ"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"ଡାଟା ସଂଯୋଗ ସକ୍ରିୟ କରନ୍ତୁ"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"ଡାଟା ସଂଯୋଗ ଅକ୍ଷମ ହୋଇଛି"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"ଲାଗୁ କରନ୍ତୁ"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"ସମସ୍ତ"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE ପ୍ରାବଧାନ କରାଯାଇଛି"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"ଭିଡିଓ କଲିଂ ପ୍ରାବଧାନ କରାଯାଇଛି"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wifi କଲିଂ ପ୍ରାବଧାନ କରାଯାଇଛି"</string>
@@ -883,7 +892,7 @@
     <string name="radio_info_ims_feature_status_available" msgid="6493200914756969292">"ଉପଲବ୍ଧ ଅଛି"</string>
     <string name="radio_info_ims_feature_status_unavailable" msgid="8930391136839759778">"ଉପଲବ୍ଧ ନାହିଁ"</string>
     <string name="radio_info_ims_reg_status" msgid="25582845222446390">"IMS ରେଜିଷ୍ଟ୍ରସନ୍: <xliff:g id="STATUS">%1$s</xliff:g>\nଭଏସ୍ ଓଭର୍ LTE: <xliff:g id="AVAILABILITY_0">%2$s</xliff:g>\nଭଏସ୍ ଓଭର୍ ୱାଇ-ଫାଇ: <xliff:g id="AVAILABILITY_1">%3$s</xliff:g>\nଭିଡିଓ କଲିଙ୍ଗ: <xliff:g id="AVAILABILITY_2">%4$s</xliff:g>\nUT ଇଣ୍ଟର୍‌ଫେସ୍: <xliff:g id="AVAILABILITY_3">%5$s</xliff:g>"</string>
-    <string name="radioInfo_service_in" msgid="45753418231446400">"ସେବାରେ ଅଛି"</string>
+    <string name="radioInfo_service_in" msgid="45753418231446400">"ସର୍ଭିସରେ ଅଛି"</string>
     <string name="radioInfo_service_out" msgid="287972405416142312">"ଏବେ କାମ କରୁନାହିଁ"</string>
     <string name="radioInfo_service_emergency" msgid="4763879891415016848">"କେବଳ ଜରୁରୀକାଳୀନ କଲ"</string>
     <string name="radioInfo_service_off" msgid="3456583511226783064">"ରେଡିଓ ବନ୍ଦ କରନ୍ତୁ"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"ଭର୍ସନ:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo ଭର୍ସନ:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"ସର୍ବାଧିକ ଅନୁମୋଦିତ ଡାଟା ମୋଡ:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"ସମସ୍ତ ସେଟେଲାଇଟ ପ୍ରଦାନକାରୀଙ୍କ plmns:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink ଭର୍ସନ:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

@@ -42,6 +42,7 @@ import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_OVER_IMS_SUPPORTED_3GPP_NETWORK_TYPES_INT_ARRAY;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_IMS_REGISTRATION_BOOL;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_VOLTE_ENABLED_BOOL;
+import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_SCAN_TIMER_SEC_INT;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_EMERGENCY_VOWIFI_REQUIRES_CONDITION_INT;
 import static android.telephony.CarrierConfigManager.ImsEmergency.KEY_IMS_REASONINFO_CODE_TO_RETRY_EMERGENCY_INT_ARRAY;
@@ -103,6 +104,9 @@ import android.text.TextUtils;
 import android.util.LocalLog;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.flags.Flags;
+import com.android.internal.telephony.subscription.SubscriptionInfoInternal;
+import com.android.internal.telephony.subscription.SubscriptionManagerService;
 import com.android.phone.R;
 
 import java.util.ArrayList;
@@ -233,6 +237,7 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
     private int mCallSetupTimerOnCurrentRat;
     private boolean mRequiresImsRegistration;
     private boolean mRequiresVoLteEnabled;
+    private boolean mRequiresVoNrEnabled;
     private boolean mLtePreferredAfterNrFailure;
     private boolean mScanLimitedOnlyAfterVolteFailure;
     private List<Integer> mRetryReasonCodes;
@@ -706,6 +711,7 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
                 KEY_EMERGENCY_CALL_SETUP_TIMER_ON_CURRENT_NETWORK_SEC_INT,
                 KEY_EMERGENCY_REQUIRES_IMS_REGISTRATION_BOOL,
                 KEY_EMERGENCY_REQUIRES_VOLTE_ENABLED_BOOL,
+                KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL,
                 KEY_EMERGENCY_LTE_PREFERRED_AFTER_NR_FAILED_BOOL,
                 KEY_SCAN_LIMITED_SERVICE_AFTER_VOLTE_FAILURE_BOOL,
                 KEY_IMS_REASONINFO_CODE_TO_RETRY_EMERGENCY_INT_ARRAY,
@@ -738,6 +744,7 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
                 KEY_EMERGENCY_CALL_SETUP_TIMER_ON_CURRENT_NETWORK_SEC_INT) * 1000;
         mRequiresImsRegistration = b.getBoolean(KEY_EMERGENCY_REQUIRES_IMS_REGISTRATION_BOOL);
         mRequiresVoLteEnabled = b.getBoolean(KEY_EMERGENCY_REQUIRES_VOLTE_ENABLED_BOOL);
+        mRequiresVoNrEnabled = b.getBoolean(KEY_EMERGENCY_REQUIRES_VONR_ENABLED_BOOL);
         mLtePreferredAfterNrFailure = b.getBoolean(
                 KEY_EMERGENCY_LTE_PREFERRED_AFTER_NR_FAILED_BOOL);
         mScanLimitedOnlyAfterVolteFailure = b.getBoolean(
@@ -784,6 +791,7 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
                 + ", callSetupTimer=" + mCallSetupTimerOnCurrentRat
                 + ", requiresImsReg=" + mRequiresImsRegistration
                 + ", requiresVoLteEnabled=" + mRequiresVoLteEnabled
+                + ", requiresVoNrEnabled=" + mRequiresVoNrEnabled
                 + ", ltePreferredAfterNr=" + mLtePreferredAfterNrFailure
                 + ", scanLimitedOnly=" + mScanLimitedOnlyAfterVolteFailure
                 + ", retryReasonCodes=" + mRetryReasonCodes
@@ -1451,6 +1459,24 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
         return true;
     }
 
+    private boolean isNrAdvancedCallingEnabled() {
+        try {
+            int subId = getSubId();
+            if (SubscriptionManager.isValidSubscriptionId(subId)) {
+                SubscriptionInfoInternal subInfo = SubscriptionManagerService.getInstance()
+                        .getSubscriptionInfoInternal(subId);
+                if (subInfo != null) {
+                    boolean result = subInfo.isNrAdvancedCallingEnabled();
+                    logi("isNrAdvancedCallingEnabled " + result);
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+            logi("isNrAdvancedCallingEnabled e=" + e);
+        }
+        return true;
+    }
+
     private boolean isWifiCallingActivated() {
         try {
             ImsManager imsMngr = mContext.getSystemService(ImsManager.class);
@@ -1493,6 +1519,12 @@ public class EmergencyCallDomainSelector extends DomainSelectorBase
         List<Integer> ratList = new ArrayList<Integer>();
         for (int i = 0; i < rats.length; i++) {
             ratList.add(rats[i]);
+        }
+
+        if (Flags.emergencyOverNrRequiresVonrEnabled() && ratList.contains(NGRAN)
+                && mRequiresVoNrEnabled && !isNrAdvancedCallingEnabled()) {
+            // Remove NGRAN if VoNR setting is disabled.
+            ratList.remove(Integer.valueOf(NGRAN));
         }
 
         // Prefer LTE if UE is located in non-NR coverage.

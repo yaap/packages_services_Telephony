@@ -82,6 +82,7 @@ public class RcsProvisioningMonitor {
     private static final int EVENT_CARRIER_CONFIG_OVERRIDE = 7;
     private static final int EVENT_RESET = 8;
     private static final int EVENT_FEATURE_ENABLED_OVERRIDE = 9;
+    private static final int EVENT_INITIALIZE = 10;
 
     // indicate that the carrier single registration capable is initial value as
     // carrier config is not ready yet.
@@ -210,10 +211,19 @@ public class RcsProvisioningMonitor {
                 case EVENT_RESET:
                     reset();
                     break;
+                case EVENT_INITIALIZE:
+                    onInitialize();
+                    break;
                 default:
                     loge("Unhandled event " + msg.what);
             }
         }
+    }
+
+    private void onInitialize() {
+        mDmaPackageName = getDmaPackageName();
+        logv("DMA is " + mDmaPackageName);
+        init();
     }
 
     private final class RcsProvisioningInfo {
@@ -495,12 +505,14 @@ public class RcsProvisioningMonitor {
         mSubscriptionManager = mPhone.getSystemService(SubscriptionManager.class);
         mTelephonyRegistryManager = mPhone.getSystemService(TelephonyRegistryManager.class);
         mRoleManager = roleManager;
-        mDmaPackageName = getDmaPackageName();
-        logv("DMA is " + mDmaPackageName);
         mDmaChangedListener = new DmaChangedListener();
         mFeatureFactory = factory;
         mRcsStats = rcsStats;
-        init();
+        if (mFeatureFlags.initRcsProvisioningMonitorAsync()) {
+            mHandler.sendEmptyMessage(EVENT_INITIALIZE);
+        } else {
+            onInitialize();
+        }
     }
 
     /**

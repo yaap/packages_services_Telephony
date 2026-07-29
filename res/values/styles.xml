@@ -188,6 +188,18 @@
         <item name="android:textColorPrimary">@color/settings_text_color_primary</item>
         <!-- Setting description. -->
         <item name="android:textColorSecondary">@color/settings_text_color_secondary</item>
+        <item name="android:switchStyle">@style/TelephonySwitch</item>
+        <item name="switchStyle">@style/TelephonySwitch</item>
+    </style>
+
+    <style name="TelephonySwitch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/switch_thumb_on_telephony</item>
+	<item name="android:thumbTint">@color/switch_thumb_telephony</item>
+	<item name="android:track">@drawable/switch_track_on_telephony</item>
+        <item name="android:trackTint">@color/switch_track_telephony</item>
+        <item name="android:textOn">@null</item>
+        <item name="android:textOff">@null</item>
+        <item name="android:showText">false</item>
     </style>
 
     <style name="DialerSettingsLight" parent="SettingsLight">

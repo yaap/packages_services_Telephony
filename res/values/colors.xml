@@ -71,4 +71,10 @@
     <color name="emergency_call_icon_color">#3c4043</color>
     <color name="emergency_dialpad_fab_tint_color">@null</color>
     <color name="white_70_percent">#b3ffffff</color>
+
+    <!-- High-contrast colors for toggle switches to meet 3.0:1 requirements -->
+    <color name="switch_track_on">#5195EA</color>
+    <color name="switch_thumb_on">#000000</color>
+    <color name="switch_track_off">#5F5F64</color>
+    <color name="switch_thumb_off">#000000</color>
 </resources>

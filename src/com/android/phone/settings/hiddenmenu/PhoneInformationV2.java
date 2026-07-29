@@ -16,10 +16,17 @@
 package com.android.phone.settings.hiddenmenu;
 
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +38,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.PhoneFactory;
 import com.android.phone.R;
 
 import java.util.ArrayList;
@@ -48,10 +57,15 @@ public class PhoneInformationV2 extends AppCompatActivity
     private LinearLayout itemOneContainer, itemTwoContainer, itemThreeContainer, itemFourContainer;
     private List<LinearLayout> navItemContainers = new ArrayList<>();
     private int currentlySelectedItem = -1;
+    private BroadcastReceiver mCarrierConfigReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (PhoneInformationUtil.isRadioInfoAccessRestricted(this)) {
+            finish();
+            return;
+        }
         setContentView(R.layout.phone_information_v2);
         mViewModel = new ViewModelProvider(this).get(PhoneInfoSharedViewModel.class);
         phoneId = DEFAULT_PHONE_ID;
@@ -74,6 +88,23 @@ public class PhoneInformationV2 extends AppCompatActivity
         int defaultTab = R.id.nav_item_one_container;
         int lastSelectedTab = prefs.getInt(KEY_LAST_SELECTED_TAB, defaultTab);
         selectNavItem(lastSelectedTab, false);
+
+        if (PhoneInformationUtil.isUserBuild()) {
+            mCarrierConfigReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED
+                            .equals(intent.getAction())) {
+                        if (PhoneInformationUtil.isRadioInfoAccessRestricted(context)) {
+                            finish();
+                        }
+                    }
+                }
+            };
+            IntentFilter filter =
+                    new IntentFilter(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
+            registerReceiver(mCarrierConfigReceiver, filter, Context.RECEIVER_EXPORTED);
+        }
     }
 
     @Override
@@ -83,9 +114,37 @@ public class PhoneInformationV2 extends AppCompatActivity
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mViewModel != null) {
+            CarrierConfigManager carrierConfigManager =
+                    getSystemService(CarrierConfigManager.class);
+            TelephonyManager telephonyManager =
+                    getSystemService(TelephonyManager.class);
+
+            for (int i = 0; i < telephonyManager.getActiveModemCount(); i++) {
+                Phone phone = PhoneFactory.getPhone(i);
+                if (phone == null) {
+                    continue;
+                }
+
+                int subId = SubscriptionManager.getSubscriptionId(i);
+
+                Log.d(TAG, "onDestroy: subId for phone (" + i + "): " + subId);
+                if (!SubscriptionManager.isValidSubscriptionId(subId)) {
+                    continue;
+                }
+                // Revert satellite carrier config overrides by restoring the original bundle
+                carrierConfigManager.overrideConfig(subId, null, false);
+
+                if (Boolean.TRUE.equals(mViewModel.getSatelliteDataEnabled(i).getValue())) {
+                    PhoneInformationUtil.restoreMaxAllowedDataMode();
+                }
+            }
             mViewModel.resetToDefaults();
+        }
+        super.onDestroy();
+        if (mCarrierConfigReceiver != null) {
+            unregisterReceiver(mCarrierConfigReceiver);
+            mCarrierConfigReceiver = null;
         }
     }
 

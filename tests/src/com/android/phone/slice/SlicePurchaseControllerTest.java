@@ -68,6 +68,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.data.DataSettingsManager;
 import com.android.internal.telephony.flags.FeatureFlags;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -173,6 +174,16 @@ public class SlicePurchaseControllerTest extends TelephonyTestBase {
                 .getPremiumNetworkEntitlementApi();
         doReturn(mEntitlementResponse).when(mPremiumNetworkEntitlementApi)
                 .checkEntitlementStatus(anyInt());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        if (mHandler != null) {
+            mHandler.getLooper().quit();
+            mHandler = null;
+        }
+        // Restore static mocks and release resources
+        super.tearDown();
     }
 
     @Test

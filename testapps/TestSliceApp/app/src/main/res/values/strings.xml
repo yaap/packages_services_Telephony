@@ -8,6 +8,7 @@
   <string name="latency_title">Prioritize Latency</string>
   <string name="bw_title">Prioritize Bandwidth</string>
   <string name="cbs_title">CBS</string>
+  <string name="uc_title">Prioritize Unified Communication</string>
   <string name="purchase">Purchase Network Premium</string>
   <string name="network_available">Result: The requested network is available now!</string>
   <string name="network_requested">Result: The network has been requested!</string>

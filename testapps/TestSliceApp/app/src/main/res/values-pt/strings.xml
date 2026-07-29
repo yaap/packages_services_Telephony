@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"Priorizar a latência"</string>
     <string name="bw_title" msgid="3902162973688221344">"Priorizar a largura de banda"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"Priorizar a comunicação unificada"</string>
     <string name="purchase" msgid="7843181995697372128">"Comprar Rede Premium"</string>
     <string name="network_available" msgid="4780293262690730734">"Resultado: a rede solicitada já está disponível."</string>
     <string name="network_requested" msgid="5646123922691865991">"Resultado: a rede foi solicitada."</string>

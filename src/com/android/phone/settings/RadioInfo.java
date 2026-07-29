@@ -32,10 +32,13 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import android.annotation.NonNull;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -109,6 +112,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.euicc.EuiccConnector;
+import com.android.internal.telephony.flags.Flags;
 import com.android.internal.telephony.satellite.SatelliteConfig;
 import com.android.internal.telephony.satellite.SatelliteConfigParser;
 import com.android.internal.telephony.satellite.SatelliteController;
@@ -139,85 +143,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class RadioInfo extends AppCompatActivity {
     private static final String TAG = "RadioInfo";
-
     private static final boolean IS_USER_BUILD = "user".equals(Build.TYPE);
-
-    private static final Integer[] BAND_VALUES =
-            new Integer[] {
-                -1,
-                AccessNetworkConstants.EutranBand.BAND_1,
-                AccessNetworkConstants.EutranBand.BAND_2,
-                AccessNetworkConstants.EutranBand.BAND_3,
-                AccessNetworkConstants.EutranBand.BAND_4,
-                AccessNetworkConstants.EutranBand.BAND_5,
-                AccessNetworkConstants.EutranBand.BAND_6,
-                AccessNetworkConstants.EutranBand.BAND_7,
-                AccessNetworkConstants.EutranBand.BAND_8,
-                AccessNetworkConstants.EutranBand.BAND_9,
-                AccessNetworkConstants.EutranBand.BAND_10,
-                AccessNetworkConstants.EutranBand.BAND_11,
-                AccessNetworkConstants.EutranBand.BAND_12,
-                AccessNetworkConstants.EutranBand.BAND_13,
-                AccessNetworkConstants.EutranBand.BAND_14,
-                AccessNetworkConstants.EutranBand.BAND_17,
-                AccessNetworkConstants.EutranBand.BAND_18,
-                AccessNetworkConstants.EutranBand.BAND_19,
-                AccessNetworkConstants.EutranBand.BAND_20,
-                AccessNetworkConstants.EutranBand.BAND_21,
-                AccessNetworkConstants.EutranBand.BAND_22,
-                AccessNetworkConstants.EutranBand.BAND_23,
-                AccessNetworkConstants.EutranBand.BAND_24,
-                AccessNetworkConstants.EutranBand.BAND_25,
-                AccessNetworkConstants.EutranBand.BAND_26,
-                AccessNetworkConstants.EutranBand.BAND_27,
-                AccessNetworkConstants.EutranBand.BAND_28,
-                AccessNetworkConstants.EutranBand.BAND_30,
-                AccessNetworkConstants.EutranBand.BAND_31,
-                AccessNetworkConstants.EutranBand.BAND_33,
-                AccessNetworkConstants.EutranBand.BAND_34,
-                AccessNetworkConstants.EutranBand.BAND_35,
-                AccessNetworkConstants.EutranBand.BAND_36,
-                AccessNetworkConstants.EutranBand.BAND_37,
-                AccessNetworkConstants.EutranBand.BAND_38,
-                AccessNetworkConstants.EutranBand.BAND_39,
-                AccessNetworkConstants.EutranBand.BAND_40,
-                AccessNetworkConstants.EutranBand.BAND_41,
-                AccessNetworkConstants.EutranBand.BAND_42,
-                AccessNetworkConstants.EutranBand.BAND_43,
-                AccessNetworkConstants.EutranBand.BAND_44,
-                AccessNetworkConstants.EutranBand.BAND_45,
-                AccessNetworkConstants.EutranBand.BAND_46,
-                AccessNetworkConstants.EutranBand.BAND_47,
-                AccessNetworkConstants.EutranBand.BAND_48,
-                AccessNetworkConstants.EutranBand.BAND_49,
-                AccessNetworkConstants.EutranBand.BAND_50,
-                AccessNetworkConstants.EutranBand.BAND_51,
-                AccessNetworkConstants.EutranBand.BAND_52,
-                AccessNetworkConstants.EutranBand.BAND_53,
-                AccessNetworkConstants.EutranBand.BAND_65,
-                AccessNetworkConstants.EutranBand.BAND_66,
-                AccessNetworkConstants.EutranBand.BAND_68,
-                AccessNetworkConstants.EutranBand.BAND_70,
-                AccessNetworkConstants.EutranBand.BAND_71,
-                AccessNetworkConstants.EutranBand.BAND_72,
-                AccessNetworkConstants.EutranBand.BAND_73,
-                AccessNetworkConstants.EutranBand.BAND_74,
-                AccessNetworkConstants.EutranBand.BAND_85,
-                AccessNetworkConstants.EutranBand.BAND_87,
-                AccessNetworkConstants.EutranBand.BAND_88
-            };
-
-    private static final String[] BAND_LABELS = {
-        "SELECT", "BAND_1", "BAND_2", "BAND_3", "BAND_4", "BAND_5", "BAND_6", "BAND_7", "BAND_8",
-        "BAND_9", "BAND_10", "BAND_11", "BAND_12", "BAND_13", "BAND_14", "BAND_17", "BAND_18",
-        "BAND_19", "BAND_20", "BAND_21", "BAND_22", "BAND_23", "BAND_24", "BAND_25", "BAND_26",
-        "BAND_27", "BAND_28", "BAND_30", "BAND_31", "BAND_33", "BAND_34", "BAND_35", "BAND_36",
-        "BAND_37", "BAND_38", "BAND_39", "BAND_40", "BAND_41", "BAND_42", "BAND_43", "BAND_44",
-        "BAND_45", "BAND_46", "BAND_47", "BAND_48", "BAND_49", "BAND_50", "BAND_51", "BAND_52",
-        "BAND_53", "BAND_65", "BAND_66", "BAND_68", "BAND_70", "BAND_71", "BAND_72", "BAND_73",
-        "BAND_74", "BAND_85", "BAND_87", "BAND_88"
-    };
-
     private static String[] sPhoneIndexLabels = new String[0];
 
     private static final int sCellInfoListRateDisabled = Integer.MAX_VALUE;
@@ -373,7 +299,7 @@ public class RadioInfo extends AppCompatActivity {
     private int[] mSelectedSignalStrengthIndex = new int[2];
     private int[] mSelectedMockDataNetworkTypeIndex = new int[2];
     private int[] mSelectedManualOverrideBandIndex = new int[2];
-
+    private final List<ContentValues> mOriginalApnSettings = new ArrayList<>();
     private String mEuiccInfoResult = "";
 
     private int mPreferredNetworkTypeResult;
@@ -512,11 +438,11 @@ public class RadioInfo extends AppCompatActivity {
     }
 
     private void updatePreferredNetworkType(int type) {
-        if (type >= PhoneInformationUtil.PREFERRED_NETWORK_LABELS.length || type < 0) {
-            log("Network type: unknown type value=" + type);
-            type = PhoneInformationUtil.PREFERRED_NETWORK_LABELS.length - 1; // set to Unknown
+        int index = PhoneInformationUtil.PREFERRED_NETWORK_MODES_RF.indexOf(type);
+        if (index == -1) {
+            index = PhoneInformationUtil.PREFERRED_NETWORK_LABELS_RF.length - 1;
         }
-        mPreferredNetworkTypeResult = type;
+        mPreferredNetworkTypeResult = index;
 
         mPreferredNetworkType.setSelection(mPreferredNetworkTypeResult, true);
     }
@@ -577,6 +503,10 @@ public class RadioInfo extends AppCompatActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        if (PhoneInformationUtil.isRadioInfoAccessRestricted(this)) {
+            finish();
+            return;
+        }
         mContext = this;
         SettingsConstants.setupEdgeToEdge(this);
         int currentNightMode = getResources().getConfiguration().uiMode
@@ -598,6 +528,24 @@ public class RadioInfo extends AppCompatActivity {
         }
 
         setContentView(R.layout.radio_info);
+
+        if (PhoneInformationUtil.isUserBuild()) {
+            mCarrierConfigReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED
+                            .equals(intent.getAction())) {
+                        if (PhoneInformationUtil.isRadioInfoAccessRestricted(context)) {
+                            finish();
+                        }
+                    }
+                }
+            };
+            IntentFilter filter =
+                    new IntentFilter(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
+            registerReceiver(mCarrierConfigReceiver, filter, Context.RECEIVER_EXPORTED);
+        }
+
         Resources r = getResources();
         mActionEsos =
                 r.getString(
@@ -700,7 +648,7 @@ public class RadioInfo extends AppCompatActivity {
                 new ArrayAdapter<String>(
                         this,
                         android.R.layout.simple_spinner_item,
-                        PhoneInformationUtil.PREFERRED_NETWORK_LABELS);
+                        PhoneInformationUtil.PREFERRED_NETWORK_LABELS_RF);
         mPreferredNetworkTypeAdapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         mPreferredNetworkType.setAdapter(mPreferredNetworkTypeAdapter);
@@ -825,7 +773,7 @@ public class RadioInfo extends AppCompatActivity {
 
         if (!(!Build.isDebuggable() || !mSystemUser)) {
             ArrayAdapter<String> mManualOverrideBandAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_item, BAND_LABELS);
+                    android.R.layout.simple_spinner_item, PhoneInformationUtil.BAND_LABELS);
             mManualOverrideBandAdapter
                     .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mManualOverrideBand.setAdapter(mManualOverrideBandAdapter);
@@ -916,7 +864,7 @@ public class RadioInfo extends AppCompatActivity {
 
         mCellInfoRefreshRateIndex = 0; // disabled
         mPreferredNetworkTypeResult =
-                PhoneInformationUtil.PREFERRED_NETWORK_LABELS.length - 1; // Unknown
+                PhoneInformationUtil.PREFERRED_NETWORK_LABELS_RF.length - 1; // Unknown
 
         new Thread(() -> {
             int networkType = (int) mTelephonyManager.getPreferredNetworkTypeBitmask();
@@ -1073,7 +1021,7 @@ public class RadioInfo extends AppCompatActivity {
         mPreferredNetworkTypeResult =
                 b.getInt(
                         "mPreferredNetworkTypeResult",
-                        PhoneInformationUtil.PREFERRED_NETWORK_LABELS.length - 1);
+                        PhoneInformationUtil.PREFERRED_NETWORK_LABELS_RF.length - 1);
 
         mPhoneId = b.getInt("mSelectedPhoneIndex", 0);
         mSubId = SubscriptionManager.getSubscriptionId(mPhoneId);
@@ -1142,6 +1090,10 @@ public class RadioInfo extends AppCompatActivity {
         if (mQueuedWork != null) {
             mQueuedWork.shutdown();
         }
+        if (mCarrierConfigReceiver != null) {
+            unregisterReceiver(mCarrierConfigReceiver);
+            mCarrierConfigReceiver = null;
+        }
     }
 
     private void clearOverride() {
@@ -1149,20 +1101,20 @@ public class RadioInfo extends AppCompatActivity {
             if (mSystemUser) {
                 mPhone = PhoneFactory.getPhone(phoneId);
             }
-            if (mSimulateOos[mPhoneId]) {
+            if (mSimulateOos[phoneId]) {
                 mSimulateOosOnChangeListener.onCheckedChanged(mSimulateOutOfServiceSwitch, false);
             }
-            if (mCarrierSatelliteOriginalBundle[mPhoneId] != null) {
+            if (mCarrierSatelliteOriginalBundle[phoneId] != null) {
                 mMockSatelliteListener.onCheckedChanged(mMockSatellite, false);
             }
-            if (mSatelliteDataOriginalBundle[mPhoneId] != null) {
+            if (mSatelliteDataOriginalBundle[phoneId] != null) {
                 mMockSatelliteDataSwitchListener.onCheckedChanged(mMockSatelliteDataSwitch, false);
-                mSatelliteDataOriginalBundle[mPhoneId] = null;
+                mSatelliteDataOriginalBundle[phoneId] = null;
             }
-            if (mSelectedSignalStrengthIndex[mPhoneId] > 0) {
+            if (mSelectedSignalStrengthIndex[phoneId] > 0) {
                 mOnMockSignalStrengthSelectedListener.onItemSelected(null, null, 0 /*pos*/, 0);
             }
-            if (mSelectedMockDataNetworkTypeIndex[mPhoneId] > 0) {
+            if (mSelectedMockDataNetworkTypeIndex[phoneId] > 0) {
                 mOnMockDataNetworkTypeSelectedListener.onItemSelected(null, null, 0 /*pos*/, 0);
             }
         }
@@ -1466,8 +1418,12 @@ public class RadioInfo extends AppCompatActivity {
                         + ", UICC:"
                         + subMgr.getPhoneNumber(subId, SubscriptionManager.PHONE_NUMBER_SOURCE_UICC)
                         + ", IMS:"
-                        + subMgr.getPhoneNumber(subId, SubscriptionManager.PHONE_NUMBER_SOURCE_IMS)
-                        + " }";
+                        + subMgr.getPhoneNumber(subId, SubscriptionManager.PHONE_NUMBER_SOURCE_IMS);
+        if (Flags.getPhoneNumberTs43Api()) {
+            s += ", TS43:" + subMgr.getPhoneNumber(
+                    subId, SubscriptionManager.PHONE_NUMBER_SOURCE_TS43);
+        }
+        s += " }";
         mLine1Number.setText(s);
     }
 
@@ -1955,14 +1911,6 @@ public class RadioInfo extends AppCompatActivity {
         mForceCampSatelliteSelectionRadioGroup.check(checkId);
     }
 
-    private static final int SATELLITE_CHANNEL_STARLINK_US = 8665;
-    private static final int[] STARLINK_CHANNELS = {SATELLITE_CHANNEL_STARLINK_US};
-    private static final int[] AST_CHANNELS = {};
-    private static final int[] STARLINK_BAND = {AccessNetworkConstants.EutranBand.BAND_25};
-    private static final int[] AST_BAND = {
-        AccessNetworkConstants.EutranBand.BAND_5, AccessNetworkConstants.EutranBand.BAND_14
-    };
-
     private void forceSatelliteChannel(
             int[] satelliteBands, int satelliteBandRadioButton, int[] satelliteChannels) {
 
@@ -1978,16 +1926,9 @@ public class RadioInfo extends AppCompatActivity {
                                 .setSatelliteIgnorePlmnListFromStorage(true);
                         // Override carrier config
                         PersistableBundle originalBundle =
-                                PhoneInformationUtil.getCarrierConfig(mContext)
-                                        .getConfigForSubId(
-                                                subId,
-                                                KEY_SATELLITE_ATTACH_SUPPORTED_BOOL,
-                                                KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL,
-                                                CarrierConfigManager
-                                                        .KEY_EMERGENCY_MESSAGING_SUPPORTED_BOOL);
-                        PersistableBundle overrideBundle = new PersistableBundle();
+                                PhoneInformationUtil.getSatelliteConfigsForSubId(mContext, subId);
+                        PersistableBundle overrideBundle = new PersistableBundle(originalBundle);
                         overrideBundle.putBoolean(KEY_SATELLITE_ATTACH_SUPPORTED_BOOL, true);
-                        overrideBundle.putBoolean(KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL, true);
                         overrideBundle.putBoolean(
                                 CarrierConfigManager.KEY_EMERGENCY_MESSAGING_SUPPORTED_BOOL, true);
 
@@ -2164,7 +2105,7 @@ public class RadioInfo extends AppCompatActivity {
                 int[] satelliteChannels = channel.getChannels();
 
                 boolean starlinkCheck = Arrays.stream(satelliteChannels).anyMatch(c -> {
-                    for (int starlinkChannel : STARLINK_CHANNELS) {
+                    for (int starlinkChannel : PhoneInformationUtil.STARLINK_CHANNELS) {
                         if (c == starlinkChannel) {
                             return true;
                         }
@@ -2172,9 +2113,9 @@ public class RadioInfo extends AppCompatActivity {
                     return false;
                 });
 
-                boolean astCheck = Arrays.stream(satelliteBands).anyMatch(c -> {
-                    for (int astBand : AST_BAND) {
-                        if (c == astBand) {
+                boolean astCheck = Arrays.stream(satelliteChannels).anyMatch(c -> {
+                    for (int astChannel : PhoneInformationUtil.AST_CHANNELS) {
+                        if (c == astChannel) {
                             return true;
                         }
                     }
@@ -2191,8 +2132,8 @@ public class RadioInfo extends AppCompatActivity {
                     mSelectedManualOverrideBandIndex[phoneId] = 0;
                     if (satelliteBands.length > 0) {
                         int band = satelliteBands[0];
-                        for (int i = 0; i < BAND_VALUES.length; i++) {
-                            if (band == BAND_VALUES[i]) {
+                        for (int i = 0; i < PhoneInformationUtil.BAND_VALUES.length; i++) {
+                            if (band == PhoneInformationUtil.BAND_VALUES[i]) {
                                 mSelectedManualOverrideBandIndex[phoneId] = i;
                             }
                         }
@@ -2375,6 +2316,12 @@ public class RadioInfo extends AppCompatActivity {
                                 KEY_CARRIER_SUPPORTED_SATELLITE_SERVICES_PER_PROVIDER_BUNDLE);
                         mCarrierSatelliteOriginalBundle[phoneId] = originalBundle;
 
+                        // APN modification
+                        mOriginalApnSettings.clear();
+                        mOriginalApnSettings.addAll(
+                                PhoneInformationUtil.updateApnInfrastructureBitmaskForSatellite(
+                                        mContext, subId, TAG));
+
                         PersistableBundle overrideBundle = new PersistableBundle();
                         overrideBundle.putBoolean(KEY_SATELLITE_ATTACH_SUPPORTED_BOOL, true);
                         // NOTE: In case of TMO setting KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL
@@ -2385,17 +2332,28 @@ public class RadioInfo extends AppCompatActivity {
                                 KEY_CARRIER_SUPPORTED_SATELLITE_SERVICES_PER_PROVIDER_BUNDLE,
                                 PhoneInformationUtil.getSatelliteServicesBundleForOperatorPlmn(
                                         mTelephonyManager, mPhoneId, mSubId, originalBundle));
+                        // Do not store current plmn as satellite plmn in allPlmnList during testing
+                        SatelliteController.getInstance()
+                                .setSatelliteIgnorePlmnListFromStorage(true);
                         log("mMockSatelliteListener: old " + originalBundle);
                         log("mMockSatelliteListener: new " + overrideBundle);
                         PhoneInformationUtil.getCarrierConfig(mContext)
                                 .overrideConfig(subId, overrideBundle, false);
                     } else {
                         try {
+                            // APN restoration
+                            PhoneInformationUtil.restoreOriginalApns(mContext,
+                                    mOriginalApnSettings, TAG);
+                            mOriginalApnSettings.clear();
+
                             PhoneInformationUtil.getCarrierConfig(mContext).overrideConfig(subId,
                                     mCarrierSatelliteOriginalBundle[phoneId], false);
                             mCarrierSatelliteOriginalBundle[phoneId] = null;
                             log("mMockSatelliteListener: Successfully cleared mock for phone "
                                     + phoneId);
+                            // Reset to original configuration
+                            SatelliteController.getInstance()
+                                    .setSatelliteIgnorePlmnListFromStorage(false);
                         } catch (Exception e) {
                             loge("mMockSatelliteListener: Can't clear mock because invalid sub Id "
                                     + subId
@@ -2575,17 +2533,17 @@ public class RadioInfo extends AppCompatActivity {
                 public void onClick(View v) {
                     int satelliteBandRadioButton =
                             mForceCampSatelliteSelectionRadioGroup.getCheckedRadioButtonId();
-                    int[] satelliteBands = STARLINK_BAND;
-                    int[] satelliteChannels = STARLINK_CHANNELS;
+                    int[] satelliteBands = PhoneInformationUtil.STARLINK_BAND;
+                    int[] satelliteChannels = PhoneInformationUtil.STARLINK_CHANNELS;
                     switch (satelliteBandRadioButton) {
                         case (R.id.starlink_band) -> {
-                            satelliteBands = STARLINK_BAND;
-                            satelliteChannels = STARLINK_CHANNELS;
+                            satelliteBands = PhoneInformationUtil.STARLINK_BAND;
+                            satelliteChannels = PhoneInformationUtil.STARLINK_CHANNELS;
                             log("Connect start with starlink");
                         }
                         case (R.id.ast_band) -> {
-                            satelliteBands = AST_BAND;
-                            satelliteChannels = AST_CHANNELS;
+                            satelliteBands = PhoneInformationUtil.AST_BAND;
+                            satelliteChannels = PhoneInformationUtil.AST_CHANNELS;
                             log("Connect start with ast");
                         }
                         case (R.id.manual_override_band) -> {
@@ -2593,7 +2551,7 @@ public class RadioInfo extends AppCompatActivity {
                             if (index == 0) {
                                 return;
                             }
-                            satelliteBands = new int[] {BAND_VALUES[index]};
+                            satelliteBands = new int[] {PhoneInformationUtil.BAND_VALUES[index]};
                             String channelText = mSatelliteChannels.getText().toString();
                             try {
                                 int channel = Integer.parseInt(channelText);
@@ -2659,13 +2617,14 @@ public class RadioInfo extends AppCompatActivity {
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView parent, View v, int pos, long id) {
                     if (mPreferredNetworkTypeResult != pos && pos >= 0
-                            && pos <= PhoneInformationUtil.PREFERRED_NETWORK_LABELS.length - 2) {
+                            && pos <= PhoneInformationUtil.PREFERRED_NETWORK_LABELS_RF.length - 2) {
                         mPreferredNetworkTypeResult = pos;
                         new Thread(() -> {
+                            int networkType =
+                                    PhoneInformationUtil.PREFERRED_NETWORK_MODES_RF.get(pos);
                             mTelephonyManager.setAllowedNetworkTypesForReason(
                                     TelephonyManager.ALLOWED_NETWORK_TYPES_REASON_USER,
-                                    RadioAccessFamily.getRafFromNetworkType(
-                                            mPreferredNetworkTypeResult));
+                                    RadioAccessFamily.getRafFromNetworkType(networkType));
                         }).start();
                     }
                 }
@@ -2891,4 +2850,6 @@ public class RadioInfo extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private BroadcastReceiver mCarrierConfigReceiver;
 }

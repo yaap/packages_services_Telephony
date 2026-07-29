@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"डेटा प्लान का टाइप:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"सेवा का टाइप:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"सेवा की नीति:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"पीएलएमएन आईडी:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"पीएलएमएन की सूची में जोड़ें"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"ब्लॉक किया गया पीएलएमएन"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"सभी हटाएं"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"डेटा प्लान का टाइप शामिल करें"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"डेटा सेवा"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"वॉइस सेवा"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"ब्लॉक किया गया पीएलएमएन आईडी:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"सीमित डेटा वाला"</item>
+    <item msgid="847694900028477007">"डेटा इस्तेमाल की कोई सीमा नहीं है"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"डेटा"</item>
+    <item msgid="6815202494927703427">"आवाज़"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"डेटा के इस्तेमाल पर कोई पाबंदी नहीं है"</item>
+    <item msgid="5432811344446551182">"डेटा के इस्तेमाल पर पाबंदी है"</item>
+    <item msgid="2865228900925141156">"सीमित"</item>
+  </string-array>
 </resources>

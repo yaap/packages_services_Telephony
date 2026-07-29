@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"ប្រភេទ​គម្រោង​ទិន្នន័យ៖"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"ប្រភេទ​សេវាកម្ម៖"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"គោលការណ៍​សេវាកម្ម៖"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"លេខកូដ​សម្គាល់ PLMN៖"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"បញ្ចូល​ទៅបញ្ជី PLMN"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"PLMN ដែលបាន​ទប់ស្កាត់"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"សម្អាត​ទាំងអស់"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"រួមបញ្ចូល DataPlanType"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"សេវាកម្ម​ទិន្នន័យ"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"សេវាកម្ម​សំឡេង"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"លេខកូដ​សម្គាល់ PLMN ដែលបាន​ទប់ស្កាត់៖"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"ផ្អែកតាមទិន្នន័យដែលប្រើ"</item>
+    <item msgid="847694900028477007">"មិនផ្អែកតាមទិន្នន័យដែលប្រើ"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"ទិន្នន័យ"</item>
+    <item msgid="6815202494927703427">"សំឡេង"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"មិនមាន​ការដាក់កម្រិត"</item>
+    <item msgid="5432811344446551182">"បាន​ដាក់​កំហិត"</item>
+    <item msgid="2865228900925141156">"បានដាក់​កម្រិត"</item>
+  </string-array>
 </resources>

@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Stel rekeninginstellings op"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Alle oproeprekeninge"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Kies watter rekeninge oproepe kan maak"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Derdepartyapps"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Laat ander apps toe om oproepe in jou oproepgeskiedenis te wys. As dit afgeskakel is, sal hierdie oproepe net in hul spesifieke apps verskyn."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-fi-oproepe"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Ingeboude verbindingsdiens"</string>
     <string name="voicemail" msgid="7697769412804195032">"Stemboodskap"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Vee belbeperking-nommer uit"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Verwyder belbeperking-nommer…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Belbeperking-nommer uitgevee."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN is nie opgedateer nie omdat jy \'n verkeerde PIN ingevoer het."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Verkeerde PIN2. FDN is nie opgedateer nie."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"FDN is nie opgedateer nie, omdat die getal <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>syfers oorskry."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN is nie bygewerk nie. Die PIN2 was verkeerd of die foonnommer is verwerp."</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN-bewerking het misluk."</string>
@@ -497,7 +499,7 @@
     <string name="newPinLabel" msgid="3585899083055354732">"Nuwe PIN"</string>
     <string name="confirmPinLabel" msgid="7783531218662473778">"Bevestig nuwe PIN"</string>
     <string name="badPin" msgid="4549286285015892321">"Die ou PIN wat jy ingevoer het, is verkeerd. Probeer weer."</string>
-    <string name="mismatchPin" msgid="1467254768290323845">"Die PIN\'s wat jy ingevoer het, stem nie ooreen nie. Probeer weer."</string>
+    <string name="mismatchPin" msgid="1467254768290323845">"Die PIN’e wat jy ingevoer het, stem nie ooreen nie. Probeer weer."</string>
     <string name="invalidPin" msgid="7363723429414001979">"Sleutel \'n PIN wat 4 to 8 nommers lank is, in."</string>
     <string name="disable_sim_pin" msgid="3112303905548613752">"Vee SIM-PIN uit"</string>
     <string name="enable_sim_pin" msgid="445461050748318980">"Stel SIM-PIN"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Voer PUK2-kode in"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Wagwoord is verkeerd. PIN2 is nou geblokkeer. Verander PIN 2 om weer te probeer."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Wagwoord is verkeerd. SIM is nou geblokkeer. Voer PUK2 in."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 is geblokkeer. Voer PUK2 in om te deblokkeer."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 is permanent geblokkeer."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Jy het <xliff:g id="NUMBER">%d</xliff:g> oorblywende pogings."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 is gesluit. Kontak diensverskaffer om te ontsluit."</string>
@@ -702,7 +705,7 @@
     <string name="change_pin_enter_new_pin_header" msgid="4739465616733486118">"Stel \'n nuwe PIN op"</string>
     <string name="change_pin_enter_new_pin_hint" msgid="2326038476516364210">"PIN moet <xliff:g id="MIN">%1$d</xliff:g>-<xliff:g id="MAX">%2$d</xliff:g> syfers wees."</string>
     <string name="change_pin_confirm_pin_header" msgid="2606303906320705726">"Bevestig jou PIN"</string>
-    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"PIN\'s stem nie ooreen nie"</string>
+    <string name="change_pin_confirm_pins_dont_match" msgid="305164501222587215">"PIN’e stem nie ooreen nie"</string>
     <string name="change_pin_succeeded" msgid="2504705600693014403">"Stemboodskap-PIN is opgedateer"</string>
     <string name="change_pin_system_error" msgid="7772788809875146873">"Kan nie PIN stel nie"</string>
     <string name="mobile_data_status_roaming_turned_off_subtext" msgid="6840673347416227054">"Dataswerwing is afgeskakel"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Weier"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Aktiveer dataverbinding"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Deaktiveer dataverbinding"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Pas toe"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Alles"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE-voorbereid"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Video-oproepe is opgestel"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wi-Fi-oproepe is opgestel"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"weergawe:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo-weergawe:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"maks. toegelate data-modus:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"alle satellietverskaffers se plmn’e:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink-weergawe:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/dienstipe:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"gee_toegang:"</string>

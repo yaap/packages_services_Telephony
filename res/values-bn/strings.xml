@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"অ্যাকাউন্ট সেটিংস কনফিগার করুন"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"সমস্ত কলিং অ্যাকাউন্ট"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"কোন অ্যাকাউন্টগুলি কল করতে পারবে তা বেছে নিন"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"থার্ড-পার্টি অ্যাপ"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"আপনার কলের ইতিহাসে অন্যান্য অ্যাপকে কল দেখানোর অনুমতি দিন। বন্ধ করা থাকলে, এইসব কল শুধুমাত্র নির্দিষ্ট অ্যাপে দেখা যাবে।"</string>
     <string name="wifi_calling" msgid="3650509202851355742">"ওয়াই-ফাই কলিং"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"অন্তর্ভুক্ত সংযোগ পরিষেবা"</string>
     <string name="voicemail" msgid="7697769412804195032">"ভয়েসমেল"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"ডায়াল করার জন্য স্থির নম্বর মুছুন"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"ডায়াল করার জন্য স্থির নম্বর মোছা হচ্ছে..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"স্থায়ী ডায়ালের নম্বর মুছে ফেলা হয়েছে৷"</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"আপনি একটি ভুল পিন টাইপ করায় FDN আপডেট করা হয়নি৷"</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"পিন২ সঠিক নয়। FDN আপডেট করা হয়নি।"</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"FDN <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g>টি সংখ্যার সীমা ছাড়িয়ে যাওয়ায় তাকে আপডেট করা যায়নি।"</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN আপডেট করা হয়নি৷ PIN2 ভুল ছিল, বা ফোন নম্বর বাতিল করা হয়েছে৷"</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN অপারেশন ব্যর্থ হয়েছে৷"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 কোড লিখুন"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"পাসওয়ার্ডটি ভুল৷ পিন2 এখন অবরুদ্ধ৷ আবার চেষ্টা করতে, পিন 2 পরিবর্তন করুন৷"</string>
     <string name="puk2_requested" msgid="6992374450720307514">"পাসওয়ার্ডটি ভুল৷ সিম এখন অবরুদ্ধ৷ PUK2 লিখুন৷"</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 ব্লক করা হয়েছে। আনব্লক করতে PUK2 লিখুন।"</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 স্থায়ীভাবে অবরুদ্ধ করা হয়েছে৷"</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"আপনার কাছে <xliff:g id="NUMBER">%d</xliff:g>টি প্রচেষ্টা অবশিষ্ট রয়েছে৷"</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 লক করা আছে। আনলক করতে পরিষেবা প্রদানকারীর সাথে যোগাযোগ করুন।"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"খারিজ করুন"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"ডেটা কানেকশন সক্রিয় আছে"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"ডেটা কানেকশন নিষ্ক্রিয় করুন"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"প্রয়োগ করুন"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"সব"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE প্রস্তুত"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"ভিডিও কলিংয়ের ব্যবস্থা আছে"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"ওয়াই ফাই কলিংয়ের ব্যবস্থা আছে"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"ভার্সন:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo ভার্সন:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"সর্বাধিক অনুমোদিত ডেটা মোড:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"সব স্যাটেলাইট পরিষেবা প্রদানকারীর পাবলিক ল্যান্ড মোবাইল নেটওয়ার্ক:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink ভার্সন:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

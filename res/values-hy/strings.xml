@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Կազմաձևել հաշվի կարգավորումները"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Բոլոր հաշիվները զանգերի համար"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Ընտրեք՝ որ հաշիվները կարող են զանգեր կատարել"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Կողմնակի հավելվածներ"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Թույլատրել այլ հավելվածներին ցույց տալ զանգերը ձեր զանգերի պատմության մեջ։ Եթե անջատեք այս գործառույթը, այդ զանգերը կհայտնվեն միայն համապատասխան հավելվածներում։"</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Զանգեր Wi-Fi-ի միջոցով"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Ներկառուցված կապի ծառայություն"</string>
     <string name="voicemail" msgid="7697769412804195032">"Ձայնային փոստ"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Ջնջել ամրակայված հեռախոսահամարը"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Ջնջվում է ամրակայված հեռախոսահամարը ..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Թույլատրված հեռախոսահամարը ջնջված է:"</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN-ը չի թարմացվել, քանի որ դուք մուտքագրել եք սխալ PIN:"</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Սխալ PIN2 կոդ։ FDN-ը չի թարմացվել։"</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"FDN-ը չթարմացվեց, քանի որ համարը գերազանցում է <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> նիշը:"</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN-ը չի թարմացվել: PIN2-ը սխալ է կամ հեռախոսահամարը մերժված է:"</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN գործողությունը ձախողվեց:"</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Մուտքագրեք PUK2 կոդը"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Գաղտնաբառը սխալ է: PIN2 կոդն այժմ արգելափակվել է: Կրկին փորձելու համար փոխեք PIN 2 կոդը:"</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Գաղտնաբառը սխալ է: SIM քարտն այժմ կողպված է: Մուտքագրեք PUK2 կոդը:"</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 կոդն արգելափակված է։ արգելաբացելու համար մուտքագրեք PUK2 կոդը։"</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2-ն ընդմիշտ արգելափակված է:"</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Ձեզ մնացել է <xliff:g id="NUMBER">%d</xliff:g> փորձ:"</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Կողպված է PUK2-ով։ Ապակողպելու համար կապվեք ձեր օպերատորի հետ։"</string>
@@ -641,7 +644,7 @@
     <string name="ota_spc_failure" msgid="904092035241370080">"SPC գերազանցման ձախողումներ"</string>
     <string name="ota_call_end" msgid="8657746378290737034">"Հետ"</string>
     <string name="ota_try_again" msgid="6914781945599998550">"Կրկին փորձեք"</string>
-    <string name="ota_next" msgid="2041016619313475914">"Հաջորդը"</string>
+    <string name="ota_next" msgid="2041016619313475914">"Հաջորդ"</string>
     <string name="ecm_exit_dialog" msgid="4200691880721429078">"EcmExitDialog"</string>
     <string name="phone_entered_ecm_text" msgid="8431238297843035842">"Գտնվում է արտակարգ իրավիճակների հետզանգի ռեժիմում"</string>
     <string name="phone_in_ecm_notification_title" msgid="6825016389926367946">"Արտակարգ իրավիճակների հետզանգի ռեժիմ"</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Փակել"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Միացնել տվյալների կապը"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Անջատել տվյալների կապը"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Կիրառել"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Բոլորը"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE-ի տրամադրում"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Տեսազանգերի նախապատրաստում"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wifi զանգերի նախապատրաստում"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"տարբերակ՝"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"Skylo-ի տարբերակը՝"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"Առավելագույն թույլատրելի տվյալների ռեժիմը՝"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"արբանյակային կապի օպերատորների բոլոր plmns ցանցերը՝"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"Starlink-ի տարբերակը՝"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access․"</string>

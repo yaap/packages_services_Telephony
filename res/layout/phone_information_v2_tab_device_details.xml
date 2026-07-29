@@ -126,6 +126,18 @@
         <TextView android:id="@+id/imsi" style="@style/info_value" />
       </LinearLayout>
 
+      <!-- GID1 -->
+      <LinearLayout style="@style/RadioInfo_entry_layout">
+        <TextView android:text="@string/radio_info_gid1_label" style="@style/info_label" />
+        <TextView android:id="@+id/gid1" style="@style/info_value" />
+      </LinearLayout>
+
+      <!-- Carrier ID -->
+      <LinearLayout style="@style/RadioInfo_entry_layout">
+        <TextView android:text="@string/radio_info_carrier_id_label" style="@style/info_label" />
+        <TextView android:id="@+id/carrier_id" style="@style/info_value" />
+      </LinearLayout>
+
       <!-- Set removable eSIM as default eUICC. -->
       <Switch android:id="@+id/removable_esim_switch"
           android:textSize="14sp"

@@ -116,7 +116,6 @@ public class PrioritizeLatency extends Fragment {
         });
 
         mNetworkRequestRelease = view.findViewById(R.id.requestReleaseButton);
-        mNetworkRequestRelease.setEnabled(false);
         mNetworkRequestRelease.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,9 +205,6 @@ public class PrioritizeLatency extends Fragment {
                         updateResultTextView(purchaseResultText);
                         Log.d(LOG_TAG, purchaseResultText);
 
-                        if (isPremiumCapacityAvailableForUse(result.intValue())) {
-                            updateNetworkRequestReleaseButton(true);
-                        }
                     } catch (InterruptedException e) {
                         Log.e(LOG_TAG, "InterruptedException at onPurchaseButtonClick: " + e);
                         updateResultTextView(R.string.purchase_exception);

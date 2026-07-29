@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"लेटन्सी ला प्राधान्य द्या"</string>
     <string name="bw_title" msgid="3902162973688221344">"बँडविड्थ ला प्राधान्य द्या"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"युनिफाइड कम्युनिकेशला प्राधान्य द्या"</string>
     <string name="purchase" msgid="7843181995697372128">"नेटवर्क प्रीमियमची खरेदी"</string>
     <string name="network_available" msgid="4780293262690730734">"परिणाम: विनंती केलेले नेटवर्क आता उपलब्ध आहे!"</string>
     <string name="network_requested" msgid="5646123922691865991">"परिणाम: नटवर्कची विनंती केली आहे!"</string>

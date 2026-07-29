@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"ตั้งเป็นเวลาในการตอบสนองสำคัญ"</string>
     <string name="bw_title" msgid="3902162973688221344">"ตั้งเป็นแบนด์วิดท์สำคัญ"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"ให้ความสำคัญกับการสื่อสารแบบรวม"</string>
     <string name="purchase" msgid="7843181995697372128">"ซื้อเครือข่ายระดับพรีเมียม"</string>
     <string name="network_available" msgid="4780293262690730734">"ผลลัพธ์: เครือข่ายที่ต้องการพร้อมใช้งานแล้ว"</string>
     <string name="network_requested" msgid="5646123922691865991">"ผลลัพธ์: ขอใช้งานเครือข่ายแล้ว"</string>

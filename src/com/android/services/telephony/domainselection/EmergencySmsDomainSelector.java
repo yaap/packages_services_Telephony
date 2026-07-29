@@ -16,6 +16,9 @@
 
 package com.android.services.telephony.domainselection;
 
+import static android.telephony.CarrierConfigManager.Ims.NETWORK_TYPE_HOME;
+import static android.telephony.CarrierConfigManager.Ims.NETWORK_TYPE_ROAMING;
+
 import android.annotation.NonNull;
 import android.content.Context;
 import android.os.CancellationSignal;
@@ -35,8 +38,12 @@ import android.telephony.TelephonyManager;
 import android.telephony.VopsSupportInfo;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.flags.Flags;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implements an emergency SMS domain selector for sending an emergency SMS.
@@ -50,6 +57,12 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
      * This value is always updated whenever the domain selection is requested.
      */
     private Boolean mEmergencySmsOverImsSupportedByConfig;
+    /**
+     * Stores the configuration value of
+     * {@link CarrierConfigManager.ImsSms#KEY_EMERGENCY_SMS_OVER_EMERGENCY_PDN_INT_ARRAY}.
+     * This value is always updated whenever the domain selection is requested.
+     */
+    private List<Integer> mEmergencyPdnRequiredRegistrationStatusByConfig;
     private ServiceState mServiceState;
     private boolean mServiceStateReceived;
     private BarringInfo mBarringInfo;
@@ -97,6 +110,7 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
         mBarringInfoReceived = false;
         mBarringInfo = null;
         mEmergencySmsOverImsSupportedByConfig = null;
+        mEmergencyPdnRequiredRegistrationStatusByConfig = null;
 
         mEmergencyNetworkScanInProgress = false;
         if (mEmergencyNetworkScanSignal != null) {
@@ -134,12 +148,10 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
     protected boolean isSmsOverImsAvailable() {
         if (super.isSmsOverImsAvailable()) {
             /**
-             * Even though IMS is successfully registered, the cellular domain should be
-             * available for the emergency SMS according to the carrier's requirement
-             * when {@link CarrierConfigManager#KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL} is set
-             * to true.
+             * Even if IMS is registered, if an emergency PDN is required for the current network
+             * type, the cellular network must be available for emergency services.
              */
-            if (isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService()) {
+            if (isEmergencyPdnRequiredByRegistrationStatus()) {
                 /**
                  * Emergency SMS should be supported via emergency PDN.
                  * If this condition is false, then need to fallback to CS network
@@ -175,20 +187,19 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
         logi("selectDomain: " + mImsStateTracker.imsStateToString());
 
         if (isSmsOverImsAvailable()) {
-            boolean isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService =
-                    isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService();
+            boolean isEmergencyPdnRequiredByRegistrationStatus =
+                    isEmergencyPdnRequiredByRegistrationStatus();
 
             if (mImsStateTracker.isImsRegisteredOverWlan()) {
                 /**
-                 * When {@link CarrierConfigManager#KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL}
-                 * is set to true, the emergency SMS supports on the LTE/NR network using the
-                 * emergency PDN. As of now, since the emergency SMS doesn't use the emergency PDN
-                 * over WLAN, the domain selector reports the domain as WLAN only if
-                 * {@code isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService} is set to false
-                 * and IMS is registered over WLAN.
-                 * Otherwise, the domain selector reports the domain as WWAN.
+                 * Determines whether to send the emergency SMS over the current WLAN registration
+                 * or switch to WWAN.
+                 *
+                 * If an emergency PDN is required for the current network type (e.g., home,
+                 * roaming, or limited service), this will select WWAN. Otherwise, it will use
+                 * the existing WLAN connection.
                  */
-                if (!isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService) {
+                if (!isEmergencyPdnRequiredByRegistrationStatus) {
                     notifyWlanSelected(false);
                     return;
                 }
@@ -200,12 +211,12 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
              * The request of emergency network scan triggers the modem to request the emergency
              * service fallback because NR network doesn't support the emergency service.
              */
-            if (isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService
+            if (isEmergencyPdnRequiredByRegistrationStatus
                     && isNrEmergencyServiceFallbackRequired()) {
                 requestEmergencyNetworkScan(List.of(AccessNetworkType.EUTRAN));
             } else {
                 notifyWwanSelected(NetworkRegistrationInfo.DOMAIN_PS,
-                        isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService);
+                        isEmergencyPdnRequiredByRegistrationStatus);
             }
         } else {
             notifyWwanSelected(NetworkRegistrationInfo.DOMAIN_CS, false);
@@ -274,16 +285,16 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
      * configuration and the current network states.
      */
     private boolean isImsEmergencySmsAvailable() {
-        boolean isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService =
-                isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService();
+        boolean isEmergencyPdnRequiredByRegistrationStatus =
+                isEmergencyPdnRequiredByRegistrationStatus();
         boolean networkAvailable = isNetworkAvailableForImsEmergencySms();
 
         logi("isImsEmergencySmsAvailable: "
-                + "emergencySmsOverIms=" + isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService
+                + "emergencyPdnRequired=" + isEmergencyPdnRequiredByRegistrationStatus
                 + ", mmTelFeatureAvailable=" + mImsStateTracker.isMmTelFeatureAvailable()
                 + ", networkAvailable=" + networkAvailable);
 
-        return isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService
+        return isEmergencyPdnRequiredByRegistrationStatus
                 && mImsStateTracker.isMmTelFeatureAvailable()
                 && networkAvailable;
     }
@@ -313,6 +324,63 @@ public class EmergencySmsDomainSelector extends SmsDomainSelector implements
         }
 
         return mEmergencySmsOverImsSupportedByConfig;
+    }
+
+    /**
+     * Checks if an emergency PDN is required for sending an emergency SMS based on the current
+     * network registration state (home or roaming).
+     *
+     * @return {@code true} if an emergency PDN is required for the current network registration
+     *         state, {@code false} otherwise.
+     */
+    private boolean isEmergencyPdnRequiredByRegistrationStatus() {
+        if (!Flags.enableEmergencySmsRoamingPdnSelection()) {
+            return isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService();
+        }
+
+        final List<Integer> registrationStatus = getEmergencyPdnRequiredRegistrationStatus();
+        if (registrationStatus.isEmpty()) {
+            return isEmergencySmsOverImsSupportedIfNetworkLimitedOrInService();
+        }
+
+        final NetworkRegistrationInfo regInfo = mServiceState.getNetworkRegistrationInfo(
+                NetworkRegistrationInfo.DOMAIN_PS,
+                AccessNetworkConstants.TRANSPORT_TYPE_WWAN);
+        int currentRegistrationStatus = NETWORK_TYPE_HOME;
+        if (regInfo != null && regInfo.isNetworkRoaming()) {
+            currentRegistrationStatus = NETWORK_TYPE_ROAMING;
+        }
+
+        return registrationStatus.contains(currentRegistrationStatus);
+    }
+
+    /**
+     * Gets the network registration state for sending emergency SMS over an emergency PDN from the
+     * carrier configuration.
+     *
+     * @return An array of network registration state where an emergency PDN is required.
+     *         The elements can be {@link CarrierConfigManager.Ims#NETWORK_TYPE_HOME}
+     *         and/or {@link CarrierConfigManager.Ims#NETWORK_TYPE_ROAMING}. Returns an empty list
+     *         if not configured.
+     */
+    private @NonNull List<Integer> getEmergencyPdnRequiredRegistrationStatus() {
+        if (mEmergencyPdnRequiredRegistrationStatusByConfig == null) {
+            CarrierConfigManager ccm = mContext.getSystemService(CarrierConfigManager.class);
+            if (ccm == null) return Collections.emptyList();
+
+            PersistableBundle b = ccm.getConfigForSubId(getSubId());
+            if (b == null) return Collections.emptyList();
+
+            int[] networkTypes = b.getIntArray(
+                    CarrierConfigManager.ImsSms.KEY_EMERGENCY_SMS_OVER_EMERGENCY_PDN_INT_ARRAY);
+            mEmergencyPdnRequiredRegistrationStatusByConfig = Collections.emptyList();
+            if (networkTypes != null) {
+                mEmergencyPdnRequiredRegistrationStatusByConfig = Arrays.stream(networkTypes)
+                        .boxed().collect(Collectors.toList());
+            }
+        }
+
+        return mEmergencyPdnRequiredRegistrationStatusByConfig;
     }
 
     /**

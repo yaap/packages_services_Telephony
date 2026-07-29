@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Konfigurasi tetapan akaun"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Semua akaun panggilan"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Pilih akaun yang boleh membuat panggilan"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Aplikasi pihak ketiga"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Benarkan apl lain memaparkan panggilan dalam sejarah panggilan anda. Jika dimatikan, panggilan ini hanya akan dipaparkan dalam apl khusus panggilan tersebut."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Panggilan Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Perkhidmatan sambungan terbina dalam"</string>
     <string name="voicemail" msgid="7697769412804195032">"Mel suara"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Padam nombor dailan tetap"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Memadamkan nombor dailan tetap..."</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Nombor dailan tetap dipadamkan."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"FDN tidak dikemaskini kerana anda telah menaip PIN yang salah."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 tidak sah. FDN tidak dikemaskinikan."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"FDN tidak dikemas kini kerana nombornya melebihi <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> digit."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN tidak dikemaskini. PIN2 salah atau nombor telefon telah ditolak."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Operasi FDN gagal."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Masukkan kod PUK2"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Kata laluan tidak betul. PIN2 kini Disekat. Untuk mencuba lagi, tukar PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Kata laluan tidak betul. SIM kini dikunci. Masukkan PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 disekat. Masukkan PUK2 untuk menyahsekat."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 disekat secara kekal."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Anda mempunyai <xliff:g id="NUMBER">%d</xliff:g> percubaan lagi."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 dikunci. Hubungi penyedia perkhidmatan untuk membuka kunci."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Ketepikan"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Dayakan Sambungan Data"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Lumpuhkan Sambungan Data"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Gunakan"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Semua"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE Diperuntukkan"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Panggilan Video Diperuntukkan"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Panggilan Wi-Fi Diperuntukkan"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"versi:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"versi skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"mod data maksimum yang dibenarkan:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"semua plmn penyedia satelit:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"versi starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"지연 시간 우선순위 지정"</string>
     <string name="bw_title" msgid="3902162973688221344">"대역폭의 우선순위 지정"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"통합 커뮤니케이션 우선순위 지정"</string>
     <string name="purchase" msgid="7843181995697372128">"Network Premium 구매"</string>
     <string name="network_available" msgid="4780293262690730734">"결과: 요청된 네트워크를 지금 사용할 수 있습니다."</string>
     <string name="network_requested" msgid="5646123922691865991">"결과: 네트워크가 요청되었습니다."</string>

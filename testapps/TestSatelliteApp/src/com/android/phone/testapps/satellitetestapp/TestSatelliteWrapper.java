@@ -26,7 +26,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.satellite.wrapper.CarrierRoamingNtnModeListenerWrapper2;
 import android.telephony.satellite.wrapper.NtnSignalStrengthCallbackWrapper;
 import android.telephony.satellite.wrapper.NtnSignalStrengthWrapper;
-import android.telephony.satellite.wrapper.SatelliteAccessConfigurationWrapper;
+import android.telephony.satellite.wrapper.SatelliteAccessConfigurationWrapper2;
 import android.telephony.satellite.wrapper.SatelliteCapabilitiesCallbackWrapper;
 import android.telephony.satellite.wrapper.SatelliteCommunicationAllowedStateCallbackWrapper;
 import android.telephony.satellite.wrapper.SatelliteManagerWrapper;
@@ -711,14 +711,21 @@ public class TestSatelliteWrapper extends Activity {
     private void requestSatelliteAccessConfigurationForCurrentLocation(View view) {
         addLogMessage("requestSatelliteAccessConfigurationForCurrentLocation");
         logd("requestSatelliteAccessConfigurationForCurrentLocation");
-        OutcomeReceiver<SatelliteAccessConfigurationWrapper,
+        OutcomeReceiver<SatelliteAccessConfigurationWrapper2,
                 SatelliteManagerWrapper.SatelliteExceptionWrapper> receiver =
                 new OutcomeReceiver<>() {
                     @Override
-                    public void onResult(SatelliteAccessConfigurationWrapper result) {
+                    public void onResult(SatelliteAccessConfigurationWrapper2 result) {
                         if (result != null) {
+                            logd("getgetSatelliteInfos()=" + result.getSatelliteInfos());
+                            logd("getTagIds()=" + result.getTagIds());
+                            logd("getCarrierIds()=" + result.getCarrierIds());
                             addLogMessage("requestSatelliteAccessConfigurationForCurrentLocation: "
-                                    + result.getSatelliteInfos());
+                                    + "getgetSatelliteInfos()=" + result.getSatelliteInfos());
+                            addLogMessage("requestSatelliteAccessConfigurationForCurrentLocation: "
+                                    + "getTagIds()=" + result.getTagIds());
+                            addLogMessage("requestSatelliteAccessConfigurationForCurrentLocation: "
+                                    + "getCarrierIds()=" + result.getCarrierIds());
                         } else {
                             addLogMessage("requestSatelliteAccessConfigurationForCurrentLocation: "
                                     + "null");
@@ -740,7 +747,7 @@ public class TestSatelliteWrapper extends Activity {
 
         try {
             mSatelliteManagerWrapper
-                    .requestSatelliteAccessConfigurationForCurrentLocation(mExecutor, receiver);
+                    .requestSatelliteAccessConfigurationForCurrentLocation2(mExecutor, receiver);
         } catch (SecurityException ex) {
             String errorMessage = "requestSatelliteAccessConfigurationForCurrentLocation: "
                     + ex.getMessage();

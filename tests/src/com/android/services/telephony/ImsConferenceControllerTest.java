@@ -161,7 +161,6 @@ public class ImsConferenceControllerTest extends TelephonyTestBase {
     @Test
     @SmallTest
     public void testMergeMultiPartyCalls() {
-        doReturn(true).when(mFeatureFlags).reuseOriginalConnRemoteConfBehavior();
         mTestTelephonyConnectionA.setIsImsConnection(true);
         mTestTelephonyConnectionB.setIsImsConnection(true);
         when(mTestTelephonyConnectionA.mImsPhoneConnection.isMultiparty()).thenReturn(true);
@@ -176,33 +175,5 @@ public class ImsConferenceControllerTest extends TelephonyTestBase {
         verify(mMockTelephonyConnectionServiceProxy, times(2))
                 .addConferenceFromConnection(
                         any(ImsConference.class), any(TelephonyConnection.class));
-    }
-
-    /**
-     * Behavior: add telephony connection B and A to conference controller,
-     *           set status for merged connections
-     * Assumption: after performing the behaviors, the status of Connection A is STATE_ACTIVE;
-     *             the status of Connection B is STATE_HOLDING;
-     *             getPhoneType() in the original connection of the telephony connection
-     *             is PhoneConstants.PHONE_TYPE_IMS
-     * Expected: addConference for ImsConference is called twice
-     */
-    @Test
-    @SmallTest
-    public void testMergeMultiPartyCallsLegacy() {
-        doReturn(false).when(mFeatureFlags).reuseOriginalConnRemoteConfBehavior();
-        mTestTelephonyConnectionA.setIsImsConnection(true);
-        mTestTelephonyConnectionB.setIsImsConnection(true);
-        when(mTestTelephonyConnectionA.mImsPhoneConnection.isMultiparty()).thenReturn(true);
-        when(mTestTelephonyConnectionB.mImsPhoneConnection.isMultiparty()).thenReturn(true);
-
-        mControllerTest.add(mTestTelephonyConnectionB);
-        mControllerTest.add(mTestTelephonyConnectionA);
-
-        mTestTelephonyConnectionA.setActive();
-        mTestTelephonyConnectionB.setTelephonyConnectionOnHold();
-
-        verify(mMockTelephonyConnectionServiceProxy, times(2))
-                .addConference(any(ImsConference.class));
     }
 }

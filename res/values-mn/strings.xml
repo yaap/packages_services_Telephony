@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"Акаунтын тохиргоог хийх"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Дуудлагын эрхтэй бүх бүртгэл"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Дуудлага хийх боломжтой бүртгэлээ сонгоно уу"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Гуравдагч талын аппууд"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Бусад аппад таны дуудлагын түүхээс дуудлага харуулахыг зөвшөөрнө үү. Хэрэв унтраасан бол эдгээр дуудлага зөвхөн тодорхой аппуудад л харагдана."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Wi-Fi дуудлага"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Суурилагдсан холболтын үйлчилгээ"</string>
     <string name="voicemail" msgid="7697769412804195032">"Дуут шуудан"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Тогтвортой залгах дугаарыг устгах"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Тогтвортой залгах дугаарыг устгаж байна…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Тогтвортой залгах дугаарыг устгав."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Та буруу ПИН оруулсан учир FDN шинэчлэгдсэнгүй."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"ПИН2 буруу байна. Залгахаар тохируулсан дугаарыг шинэчлээгүй."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Дугаар <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> цифрээс хэтэрсэн тул FDN-г шинэчлээгүй."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN шинэчлэгдсэнгүй. PIN2 буруу байсан, эсхүл утасны дугаар зөвшөөрөгдсөнгүй."</string>
     <string name="fdn_failed" msgid="216592346853420250">"ФДН ажиллуулах амжилтгүй."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 кодыг оруулна уу"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Нууц үг буруу байна. PIN2 одоо түгжигдсэн. Дахин оролдохыг хүсвэл PIN2-г солино уу."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Нууц үг буруу байна. SIM карт одоо түгжигдсэн. PUK2 кодыг оруулна уу."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2-г блоклосон. Блокоос гаргахын тулд PUK2-г оруулна уу."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"ПҮК2 бүрмөсөн түгжигдсэн."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Танд <xliff:g id="NUMBER">%d</xliff:g> оролдлого үлдлээ."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2-г түгжсэн. Түгжээг тайлахын тулд үйлчилгээ үзүүлэгчтэй холбогдоно уу."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"Үл хэрэгсэх"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"Дата холболтыг идэвхжүүлэх"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"Дата холболтыг идэвхгүй болгох"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Ашиглах"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Бүгд"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE хэлбэрт оруулсан"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Видео дуудлагыг бэлтгэсэн"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Wifi дуудлагыг бэлтгэсэн"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"хувилбар:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo-н хувилбар:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"зөвшөөрөгдсөн хамгийн их датаны горим:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"хиймэл дагуулын бүх үйлчилгээ үзүүлэгч plmns:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink-н хувилбар:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"Data Plan Type:"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"Service Type:"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"Service Policy:"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"PLMN ID:"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"ADD TO PLMN LIST"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"BARR PLMN"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"CLEAR ALL"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"Include DataPlanType"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"Data Service"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"Voice Service"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"Barred PLMN ID:"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"metered"</item>
+    <item msgid="847694900028477007">"unmetered"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"data"</item>
+    <item msgid="6815202494927703427">"voice"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"unconstrained"</item>
+    <item msgid="5432811344446551182">"restricted"</item>
+    <item msgid="2865228900925141156">"constrained"</item>
+  </string-array>
 </resources>

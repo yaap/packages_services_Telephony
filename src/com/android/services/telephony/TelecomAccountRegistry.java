@@ -172,17 +172,14 @@ public class TelecomAccountRegistry {
             mIsEmergency = isEmergency;
             mIsTestAccount = isTest;
             mIsAdhocConfCapable = mPhone.isImsRegistered();
-            if (Flags.simultaneousCallingIndications()) {
-                mSCT = SimultaneousCallingTracker.getInstance();
-                mSimultaneousCallSupportedSubIds =
-                        mSCT.getSubIdsSupportingSimultaneousCalling(mPhone.getSubId());
-            }
+            mSCT = SimultaneousCallingTracker.getInstance();
+            mSimultaneousCallSupportedSubIds =
+                    mSCT.getSubIdsSupportingSimultaneousCalling(mPhone.getSubId());
             mAccount = registerPstnPhoneAccount(isEmergency, isTest);
             Log.i(this, "Registered phoneAccount: %s with handle: %s",
                     mAccount, mAccount.getAccountHandle());
             mIncomingCallNotifier = new PstnIncomingCallNotifier((Phone) mPhone);
-            mPhoneCapabilitiesNotifier = new PstnPhoneCapabilitiesNotifier((Phone) mPhone,
-                    this);
+            mPhoneCapabilitiesNotifier = new PstnPhoneCapabilitiesNotifier((Phone) mPhone, this);
 
             if (mIsTestAccount || isEmergency) {
                 // For test and emergency entries, there is no sub ID that can be assigned, so do
@@ -230,20 +227,18 @@ public class TelecomAccountRegistry {
             };
             registerImsRegistrationCallback();
 
-            if (Flags.simultaneousCallingIndications()) {
-                //Register SimultaneousCallingTracker listener:
-                mSimultaneousCallingTrackerListener = new SimultaneousCallingTracker.Listener() {
-                    @Override
-                    public void onSimultaneousCallingSupportChanged(Map<Integer,
-                            Set<Integer>> simultaneousCallSubSupportMap) {
-                        updateSimultaneousCallSubSupportMap(simultaneousCallSubSupportMap);
-                    }
-                };
-                SimultaneousCallingTracker.getInstance()
-                        .addListener(mSimultaneousCallingTrackerListener);
-                Log.d(LOG_TAG, "Finished registering mSimultaneousCallingTrackerListener for "
-                        + "phoneId = " + mPhone.getPhoneId() + "; subId = " + mPhone.getSubId());
-            }
+            //Register SimultaneousCallingTracker listener:
+            mSimultaneousCallingTrackerListener = new SimultaneousCallingTracker.Listener() {
+                @Override
+                public void onSimultaneousCallingSupportChanged(Map<Integer,
+                        Set<Integer>> simultaneousCallSubSupportMap) {
+                    updateSimultaneousCallSubSupportMap(simultaneousCallSubSupportMap);
+                }
+            };
+            SimultaneousCallingTracker.getInstance()
+                    .addListener(mSimultaneousCallingTrackerListener);
+            Log.d(LOG_TAG, "Finished registering mSimultaneousCallingTrackerListener for "
+                    + "phoneId = " + mPhone.getPhoneId() + "; subId = " + mPhone.getSubId());
         }
 
         void teardown() {
@@ -258,10 +253,8 @@ public class TelecomAccountRegistry {
                     mMmTelManager.unregisterImsRegistrationCallback(mImsRegistrationCallback);
                 }
             }
-            if (Flags.simultaneousCallingIndications()) {
-                SimultaneousCallingTracker.getInstance()
-                        .removeListener(mSimultaneousCallingTrackerListener);
-            }
+            SimultaneousCallingTracker.getInstance()
+                    .removeListener(mSimultaneousCallingTrackerListener);
         }
 
         private void registerMmTelCapabilityCallback() {
@@ -452,6 +445,10 @@ public class TelecomAccountRegistry {
                 mIsRttCapable = false;
             }
 
+            if (isCarrierRttDowngradeToAudioSupported()) {
+                capabilities |= PhoneAccount.CAPABILITY_CHANGE_RTT_CALL_TO_AUDIO_CALL;
+            }
+
             if (mIsCallComposerCapable) {
                 capabilities |= PhoneAccount.CAPABILITY_CALL_COMPOSER;
             }
@@ -490,8 +487,18 @@ public class TelecomAccountRegistry {
                 extras.putAll(getPhoneAccountExtras());
             }
 
+            if (Flags.supportLowBatteryAlert()) {
+                extras.putAll(getExtrasForLowBatteryAlert());
+            }
+
             if (mIsAdhocConfCapable && isCarrierAdhocConferenceCallSupported()) {
-                capabilities |= PhoneAccount.CAPABILITY_ADHOC_CONFERENCE_CALLING;
+                // If there is an active conference call, disable adhoc conference capability.
+                if (mTelephonyConnectionService != null
+                        && mTelephonyConnectionService.isConferenceActive(phoneAccountHandle)) {
+                    capabilities &= ~PhoneAccount.CAPABILITY_ADHOC_CONFERENCE_CALLING;
+                } else {
+                    capabilities |= PhoneAccount.CAPABILITY_ADHOC_CONFERENCE_CALLING;
+                }
             } else {
                 capabilities &= ~PhoneAccount.CAPABILITY_ADHOC_CONFERENCE_CALLING;
             }
@@ -587,14 +594,12 @@ public class TelecomAccountRegistry {
                     .setExtras(extras)
                     .setGroupId(groupId);
 
-            if (Flags.simultaneousCallingIndications()) {
-                Set <PhoneAccountHandle> simultaneousCallingHandles =
-                        mSimultaneousCallSupportedSubIds.stream()
-                                .map(subscriptionId -> PhoneUtils.makePstnPhoneAccountHandleWithId(
-                                        String.valueOf(subscriptionId), userToRegister))
-                                .collect(Collectors.toSet());
-                accountBuilder.setSimultaneousCallingRestriction(simultaneousCallingHandles);
-            }
+            Set <PhoneAccountHandle> simultaneousCallingHandles =
+                    mSimultaneousCallSupportedSubIds.stream()
+                            .map(subscriptionId -> PhoneUtils.makePstnPhoneAccountHandleWithId(
+                                    String.valueOf(subscriptionId), userToRegister))
+                            .collect(Collectors.toSet());
+            accountBuilder.setSimultaneousCallingRestriction(simultaneousCallingHandles);
 
 
             return accountBuilder.build();
@@ -868,6 +873,16 @@ public class TelecomAccountRegistry {
         }
 
         /**
+         * Determines from carrier config whether changing an RTT call to audio-only is supported.
+         */
+        private boolean isCarrierRttDowngradeToAudioSupported() {
+            PersistableBundle b =
+                    PhoneGlobals.getInstance().getCarrierConfigForSubId(mPhone.getSubId());
+            if (b == null) return false;
+            return b.getBoolean(CarrierConfigManager.KEY_RTT_DOWNGRADE_SUPPORTED_BOOL);
+        }
+
+        /**
          * Where a device supports instant lettering and call subjects, retrieves the necessary
          * PhoneAccount extras for those features.
          *
@@ -887,6 +902,35 @@ public class TelecomAccountRegistry {
                     instantLetteringMaxLength);
             phoneAccountExtras.putString(PhoneAccount.EXTRA_CALL_SUBJECT_CHARACTER_ENCODING,
                     instantLetteringEncoding);
+            return phoneAccountExtras;
+        }
+
+        /**
+         * When low battery alert feature is enabled,then set the necessary PhoneAccount
+         * extras for those features.
+         *
+         * @return The {@link PhoneAccount} extras associated with the current subscription.
+         */
+        private Bundle getExtrasForLowBatteryAlert() {
+            PersistableBundle b =
+                    PhoneGlobals.getInstance().getCarrierConfigForSubId(mPhone.getSubId());
+            if (b == null) return new Bundle();
+            int batteryAlertInterval = b.getInt(
+                    CarrierConfigManager.KEY_LOW_BATTERY_ALERT_INTERVAL_INT,
+                    PhoneAccount.LOW_BATTERY_ALERT_DISABLED);
+            int batteryLevelThreshold = b.getInt(
+                    CarrierConfigManager.KEY_LOW_BATTERY_ALERT_THRESHOLD_INT,
+                    PhoneAccount.LOW_BATTERY_ALERT_DISABLED);
+            if (batteryAlertInterval == PhoneAccount.LOW_BATTERY_ALERT_DISABLED
+                    || batteryLevelThreshold == PhoneAccount.LOW_BATTERY_ALERT_DISABLED) {
+                return new Bundle();
+            }
+
+            Bundle phoneAccountExtras = new Bundle();
+            phoneAccountExtras.putInt(PhoneAccount.EXTRA_LOW_BATTERY_ALERT_INTERVAL_SECONDS,
+                    batteryAlertInterval);
+            phoneAccountExtras.putInt(PhoneAccount.EXTRA_LOW_BATTERY_ALERT_LEVEL_THRESHOLD,
+                    batteryLevelThreshold);
             return phoneAccountExtras;
         }
 
@@ -928,7 +972,6 @@ public class TelecomAccountRegistry {
 
         public void updateSimultaneousCallSubSupportMap(Map<Integer,
                 Set<Integer>> simultaneousCallSubSupportMap) {
-            if (!Flags.simultaneousCallingIndications()) { return; }
             //Check if the simultaneous call support subIds for this account have changed:
             Set<Integer> updatedSimultaneousCallSupportSubIds = new HashSet<>(3);
             updatedSimultaneousCallSupportSubIds.addAll(
@@ -1216,8 +1259,15 @@ public class TelecomAccountRegistry {
 
             // Any time the SubscriptionInfo changes rerun the setup
             Log.i(this, "TelecomAccountRegistry: onSubscriptionsChanged - update accounts");
-            tearDownAccounts();
-            setupAccounts();
+            if (Flags.rebuildTelecomAccountsAsync()) {
+                mHandler.post(() -> {
+                    tearDownAccounts();
+                    setupAccounts();
+                });
+            } else {
+                tearDownAccounts();
+                setupAccounts();
+            }
         }
 
         @Override
@@ -1229,8 +1279,15 @@ public class TelecomAccountRegistry {
             // Even though registering the listener failed, we will still try to setup the phone
             // accounts now; the phone instances should already be present and ready, so even if
             // telephony registry is poking along we can still try to setup the phone account.
-            tearDownAccounts();
-            setupAccounts();
+            if (Flags.rebuildTelecomAccountsAsync()) {
+                mHandler.post(() -> {
+                    tearDownAccounts();
+                    setupAccounts();
+                });
+            } else {
+                tearDownAccounts();
+                setupAccounts();
+            }
 
             if (mSubscriptionListenerState == LISTENER_STATE_UNREGISTERED) {
                 // Initial registration attempt failed; start exponential backoff.
@@ -1246,33 +1303,72 @@ public class TelecomAccountRegistry {
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (Intent.ACTION_USER_SWITCHED.equals(intent.getAction())) {
-                Log.i(this, "TelecomAccountRegistry: User changed, re-registering phone accounts.");
+            // Perform the operations via a handler so that we don't perform expensive operations
+            // on the main thread while holding up the broadcast. Instead post it on the handler
+            // instantiated on the main looper and using goAsync, allow this to be processed
+            // with an extended timeout (60s for bg broadcast) as a short term fix.
+            // Todo: b/455592276 to investigate a long term solution to move these ops onto a
+            // separate thread instead of the main thread. Doing so has caused several issues
+            // so we need to investigate the current dependencies in order to make a safe
+            // transition.
+            final PendingResult result = goAsync();
+            mHandler.post(() -> {
+                try {
+                    if (Intent.ACTION_USER_SWITCHED.equals(intent.getAction())) {
+                        Log.i(this, "TelecomAccountRegistry: User changed, re-registering phone "
+                                + "accounts.");
 
-                UserHandle currentUser = intent.getParcelableExtra(Intent.EXTRA_USER);
-                mDoesUserSupportVideoCalling = currentUser == null ? true : currentUser.isSystem();
+                        UserHandle currentUser = intent.getParcelableExtra(Intent.EXTRA_USER);
+                        mDoesUserSupportVideoCalling = currentUser == null
+                                ? true : currentUser.isSystem();
 
-                // Any time the user changes, re-register the accounts.
-                tearDownAccounts();
-                setupAccounts();
-            } else if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED.equals(
-                    intent.getAction())) {
-                Log.i(this, "TelecomAccountRegistry: Carrier-config changed, "
-                        + "checking for phone account updates.");
-                int subId = intent.getIntExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX,
-                        SubscriptionManager.INVALID_SUBSCRIPTION_ID);
-                handleCarrierConfigChange(subId);
-            }
+                        // Any time the user changes, re-register the accounts.
+                        tearDownAccounts();
+                        setupAccounts();
+                    } else if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED.equals(
+                            intent.getAction())) {
+                        Log.i(this, "TelecomAccountRegistry: Carrier-config changed, "
+                                + "checking for phone account updates.");
+                        int subId = intent.getIntExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX,
+                                SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+                        handleCarrierConfigChange(subId);
+                    }
+                } finally {
+                    // Ensure that we finish the pending result to notify that we're done processing
+                    // the broadcast.
+                    if (result != null) {
+                        result.finish();
+                    }
+                }
+            });
         }
     };
 
     private BroadcastReceiver mLocaleChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i(this, "TelecomAccountRegistry: Locale change; re-registering "
-                    + "phone accounts.");
-            tearDownAccounts();
-            setupAccounts();
+            // Perform the operations via a handler so that we don't perform expensive operations
+            // on the main thread and potentially cause an ANR.
+            // Todo: b/455592276 to investigate a long term solution to move these ops onto a
+            // separate thread instead of the main thread. Doing so has caused several issues
+            // so we need to investigate the current dependencies in order to make a safe
+            // transition. Currently, we'll only extend the timer by 2x but that doesn't
+            // necessarily prevent future ANRs and can hold up other broadcasts in the process.
+            final PendingResult result = goAsync();
+            mHandler.post(() -> {
+                try {
+                    Log.i(this, "TelecomAccountRegistry: Locale change; re-registering "
+                            + "phone accounts.");
+                    tearDownAccounts();
+                    setupAccounts();
+                } finally {
+                    // Ensure that we finish the pending result to notify that we're done processing
+                    // the broadcast.
+                    if (result != null) {
+                        result.finish();
+                    }
+                }
+            });
         }
     };
 
@@ -1684,11 +1780,17 @@ public class TelecomAccountRegistry {
      * Waits for Telecom to come up first and then sets up.
      */
     public void setupOnBoot() {
-        if (Flags.delayPhoneAccountRegistration() && !isTelecomReady()) {
+        if (!isTelecomReady()) {
             Log.i(this, "setupOnBoot: delaying start for Telecom...");
             mTelecomReadyBackoff.start();
         } else {
-            setupOnBootInternal();
+            if (Flags.initializeTelecomAccountRegistryAsync()) {
+                Log.i(this, "setupOnBoot: Posting to handler...");
+                mHandler.post(() -> setupOnBootInternal());
+            } else {
+                setupOnBootInternal();
+            }
+
         }
     }
 
@@ -1832,34 +1934,8 @@ public class TelecomAccountRegistry {
                     for (Phone phone : phones) {
                         int subscriptionId = phone.getSubId();
                         Log.i(this, "setupAccounts: Phone with subscription id %d", subscriptionId);
-                        // setupAccounts can be called multiple times during service changes.
-                        // Don't add an account if subscription is not ready.
-                        if (!SubscriptionManager.isValidSubscriptionId(subscriptionId)) {
-                            Log.d(this, "setupAccounts: skipping invalid subid %d", subscriptionId);
-                            continue;
-                        }
-                        // Don't add account if it's opportunistic subscription, which is considered
-                        // data only for now.
-                        SubscriptionInfo info = SubscriptionManager.from(mContext)
-                                .getActiveSubscriptionInfo(subscriptionId);
-                        if (info == null || info.isOpportunistic()) {
-                            Log.d(this, "setupAccounts: skipping unknown or opportunistic subid %d",
-                                    subscriptionId);
-                            continue;
-                        }
 
-                        // Skip the sim for bootstrap
-                        if (info.getProfileClass() == SubscriptionManager
-                                .PROFILE_CLASS_PROVISIONING) {
-                            Log.d(this, "setupAccounts: skipping bootstrap sub id "
-                                    + subscriptionId);
-                            continue;
-                        }
-
-                        // Skip the sim for satellite as it does not support call for now
-                        if (info.isOnlyNonTerrestrialNetwork()) {
-                            Log.d(this, "setupAccounts: skipping satellite sub id "
-                                    + subscriptionId);
+                        if (shouldSkipAccountEntry(subscriptionId)) {
                             continue;
                         }
 
@@ -1920,6 +1996,49 @@ public class TelecomAccountRegistry {
         cleanupPhoneAccounts();
     }
 
+    private boolean shouldSkipAccountEntry(int subscriptionId) {
+        // setupAccounts can be called multiple times during service changes.
+        // Don't add an account if subscription is not ready.
+        if (!SubscriptionManager.isValidSubscriptionId(subscriptionId)) {
+            Log.d(this, "setupAccounts: skipping invalid subid %d", subscriptionId);
+            return true;
+        }
+
+        // Don't add account if it's opportunistic subscription, which is considered
+        // data only for now.
+        SubscriptionInfo info = mSubscriptionManager.getActiveSubscriptionInfo(subscriptionId);
+        if (info == null || info.isOpportunistic()) {
+            Log.d(this, "setupAccounts: skipping unknown or opportunistic subid %d",
+                    subscriptionId);
+            return true;
+        }
+
+        // Private networks are considered data only for now. Skip them for telecom
+        // accounts.
+        if (info.isPrivateNetwork()) {
+            Log.d(this, "setupAccounts: skipping private network subid %d",
+                    subscriptionId);
+            return true;
+        }
+
+        // Skip the sim for bootstrap
+        if (info.getProfileClass() == SubscriptionManager
+                .PROFILE_CLASS_PROVISIONING) {
+            Log.d(this, "setupAccounts: skipping bootstrap sub id "
+                    + subscriptionId);
+            return true;
+        }
+
+        // Skip the sim for satellite as it does not support call for now
+        if (info.isOnlyNonTerrestrialNetwork()) {
+            Log.d(this, "setupAccounts: skipping satellite sub id "
+                    + subscriptionId);
+            return true;
+        }
+
+        return false;
+    }
+
     private void tearDownAccounts() {
         synchronized (mAccountsLock) {
             for (AccountEntry entry : mAccounts) {
@@ -1953,5 +2072,9 @@ public class TelecomAccountRegistry {
                 }
             }
         }
+    }
+
+    public Handler getHandler() {
+        return mHandler;
     }
 }

@@ -36,4 +36,28 @@
     <item>503</item>
     <item>503_NO_RETRY_AFTER</item>
   </string-array>
+  <string name="data_plan_type_label">Data Plan Type:</string>
+  <string name="service_type_label">Service Type:</string>
+  <string name="service_policy_label">Service Policy:</string>
+  <string name="plmn_id_label">PLMN ID:</string>
+  <string name="add_plmn_button">ADD TO PLMN LIST</string>
+  <string name="bar_plmn_button">BARR PLMN</string>
+  <string name="clear_all_button">CLEAR ALL</string>
+  <string name="data_plan_type_checkbox">Include DataPlanType</string>
+  <string name="data_service_checkbox">Data Service</string>
+  <string name="voice_service_checkbox">Voice Service</string>
+  <string name="barred_plmn_id_label">Barred PLMN ID:</string>
+  <string-array name="data_plan_type_array">
+    <item>metered</item>
+    <item>unmetered</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item>data</item>
+    <item>voice</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item>unconstrained</item>
+    <item>restricted</item>
+    <item>constrained</item>
+  </string-array>
 </resources>

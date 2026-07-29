@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.4.0-alpha08" type="baseline" client="" dependencies="true" name="" variant="all" version="8.4.0-alpha08">
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 37.1 (current min is 36): `android.telecom.Conference#setConferenceables`"
+        errorLine1="                        imsConference.setConferenceables(Collections.&lt;Conferenceable&gt;emptyList());"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="packages/services/Telephony/src/com/android/services/telephony/ImsConferenceController.java"
+            line="367"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 37.1 (current min is 36): `android.telecom.Conference#setConferenceables`"
+        errorLine1="                    imsConference.setConferenceables(conferenceables);"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="packages/services/Telephony/src/com/android/services/telephony/ImsConferenceController.java"
+            line="382"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 36.1 (current min is 36): `android.telecom.ConnectionService#addConferenceFromConnection`"
+        errorLine1="        addConferenceFromConnection(conference, connection);"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java"
+            line="4633"
+            column="9"/>
+    </issue>
+
+</issues>

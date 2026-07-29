@@ -86,6 +86,9 @@ android_app {
     },
 
     generate_product_characteristics_rro: true,
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
 
 // Allow other applications to use public constants from SlicePurchaseController

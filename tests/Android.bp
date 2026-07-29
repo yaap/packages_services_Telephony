@@ -22,15 +22,29 @@ package {
 android_test {
     name: "TeleServiceTests",
 
-    srcs: ["src/**/*.java"],
+    srcs: [
+        "src/**/*.java",
+        ":framework-telecom-internal-sources",
+        ":framework-telecom-aidl-internal-sources",
+        ":framework-telecom-aidl-export-sources",
+    ],
+
+    aidl: {
+        include_dirs: [
+            "frameworks/base/core/java",
+            "frameworks/base/telephony/java",
+            "frameworks/native/aidl/gui",
+            "frameworks/libs/modules-utils/java",
+        ],
+    },
 
     libs: [
+        "framework-telecom.impl",
         "android.test.mock.stubs.system",
         "android.test.runner.stubs.system",
         "telephony-common",
         "android.test.base.stubs.system",
         "ims-common",
-        "android.test.mock.stubs.system",
     ],
     platform_apis: true,
     certificate: "platform",
@@ -38,6 +52,11 @@ android_test {
     instrumentation_for: "TeleService",
 
     static_libs: [
+        "modules-utils-handlerexecutor",
+        "modules-utils-build",
+        "modules-utils-infra",
+        "telecom_flags_core_java_lib",
+        "telephony_flags_core_java_lib",
         "frameworks-base-testutils",
         "androidx.test.core",
         "androidx.test.espresso.core",

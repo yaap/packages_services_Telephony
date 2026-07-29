@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"I-configure ang mga setting ng account"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"Lahat ng account sa pagtawag"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"Piliin kung aling mga account ang maaaring tumawag"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"Mga third party na app"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"Payagan ang ibang app na magpakita ng mga tawag sa iyong history ng tawag. Kung naka-off, lalabas lang ang mga tawag na ito sa mga partikular na app ng mga ito."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"Pagtawag gamit ang Wi-Fi"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"Built-in na serbisyo ng koneksyon"</string>
     <string name="voicemail" msgid="7697769412804195032">"Voicemail"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"Tanggalin ang fixed dialing number"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"Tinatanggal ang fixed dialing number…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"Tinanggal ang fixed dialing number."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"Hindi na-update ang FDN dahil maling PIN ang iyong na-type."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"Mali ang PIN2. Hindi na-update ang FDN."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"Hindi na-update ang FDN dahil ang bilang ay lampas sa <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> (na) digit."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"Hindi na-update ang FDN. Hindi wasto ang PIN2, o tinanggihan ang numero ng telepono."</string>
     <string name="fdn_failed" msgid="216592346853420250">"Nagbigo ang operasyon ng FDN."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"Ilagay ang PUK2 code"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"Mali ang password. Naka-block na ngayon ang PIN2. Upang subukan ulit, baguhin ang PIN 2."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"Mali ang password. Naka-lock na ngayon ang SIM. Ilagay ang PUK2."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"Naka-block ang PIN2. Ilagay ang PUK2 para mag-unblock."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"Permanenteng na-block ang PUK2."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"Mayroon ka na lang <xliff:g id="NUMBER">%d</xliff:g> (na) natitirang pagsubok."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"Na-lock ang PUK2. Makipag-ugnayan sa service provider para i-unlock."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"I-dismiss"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"I-enable ang Koneksyon sa Data"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"I-disable ang Koneksyon sa Data"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"Ilapat"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"Lahat"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE Provisioned"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"Naka-provision ang Pag-video Call"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"Naka-provision ang Pagtawag gamit ang Wifi"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"bersyon:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"bersyon ng skylo:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"max allowed data mode:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"lahat ng plmn ng mga satellite provider:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"bersyon ng starlink:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

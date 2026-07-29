@@ -18,7 +18,6 @@ package com.android.phone;
 
 import android.annotation.NonNull;
 import android.annotation.WorkerThread;
-import android.app.ActivityManager;
 import android.os.DropBoxManager;
 import android.os.SystemClock;
 import android.os.TransactionTooLargeException;
@@ -26,21 +25,16 @@ import android.telephony.AnomalyReporter;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.android.internal.telephony.flags.Flags;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * A class to help collect dumpsys/logcat and persist it to the
@@ -64,54 +58,35 @@ public class DiagnosticDataCollector {
     // Instantiate a max dropbox buffer size to avoid hitting the 1MB kernel limit for
     // binder transactions.
     private static final int MAX_DROPBOX_BUFFER_SIZE = 128 * 1024; // 128KB
-    static final String DROPBOX_TAG = "ecall_diagnostic_data";
-    static final String DROPBOX_TAG_FOR_OEM = "ecall_diagnostic_data_oem";
     private final Runtime mJavaRuntime;
     private final Executor mAsyncTaskExecutor;
     private final DropBoxManager mDropBoxManager;
-    private final SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS",
+    private final SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.mmm",
             Locale.US);
     private final boolean mIsLowRamDevice;
-    private final List<String> mLogcatPidNames;
-    private final ActivityManager mActivityManager;
-    private final String[] mLogcatTags;
-
     public static final UUID DROPBOX_TRANSACTION_TOO_LARGE_EXCEPTION =
             UUID.fromString("ab27e97a-ef7b-11ed-a05b-0242ac120003");
     public static final String DROPBOX_TRANSACTION_TOO_LARGE_MSG =
             "DiagnosticDataCollector: transaction too large";
-    public DiagnosticDataCollector(Runtime javaRuntime,
-        Executor asyncTaskExecutor, DropBoxManager dropBoxManager,
-        boolean isLowRamDevice, ActivityManager activityManager,
-        String[] logcatPidNames, String[] logcatTags) {
+    public DiagnosticDataCollector(Runtime javaRuntime, Executor asyncTaskExecutor,
+            DropBoxManager dropBoxManager, boolean isLowRamDevice) {
         mJavaRuntime = javaRuntime;
         mAsyncTaskExecutor = asyncTaskExecutor;
         mDropBoxManager = dropBoxManager;
         mIsLowRamDevice = isLowRamDevice;
-        mActivityManager = activityManager;
-
-        mLogcatPidNames = Arrays.asList(logcatPidNames);
-        mLogcatTags = logcatTags;
     }
 
     public void persistEmergencyDianosticData(@NonNull DataCollectorConfig.Adapter dc,
             @NonNull TelephonyManager.EmergencyCallDiagnosticData ecdData, @NonNull String tag) {
 
         if (ecdData.isTelephonyDumpsysCollectionEnabled()) {
-            persistTelephonyState(dc, DROPBOX_TAG);
+            persistTelephonyState(dc, tag);
         }
         if (ecdData.isTelecomDumpsysCollectionEnabled()) {
-            persistTelecomState(dc, DROPBOX_TAG);
+            persistTelecomState(dc, tag);
         }
         if (ecdData.isLogcatCollectionEnabled()) {
-            persistLogcat(dc, DROPBOX_TAG, ecdData.getLogcatCollectionStartTimeMillis());
-
-           if (Flags.enableOemLogSourcesCollection()) {
-                persistLogcatByPidForOemLogSources(dc, DROPBOX_TAG_FOR_OEM,
-                    ecdData.getLogcatCollectionStartTimeMillis());
-                persistLogcatByTagForOemLogSources(dc, DROPBOX_TAG_FOR_OEM,
-                    ecdData.getLogcatCollectionStartTimeMillis());
-           }
+            persistLogcat(dc, tag, ecdData.getLogcatCollectionStartTimeMillis());
         }
     }
 
@@ -127,61 +102,9 @@ public class DiagnosticDataCollector {
             maxLines = dc.getMaxLogcatLines();
         }
         DiagnosticRunnable dr = new DiagnosticRunnable(
-                new String[]{LOGCAT_BINARY, "-t", startTime, "-b",
-                    LOGCAT_BUFFERS},
-                dc.getLogcatReadTimeoutMillis(),
-                dc.getLogcatProcTimeoutMillis(),
-                tag, dc.getMaxLogcatLinesForLowMemDevice());
-        mAsyncTaskExecutor.execute(dr);
-    }
-
-    @SuppressWarnings("JavaUtilDate") //just used for DateFormatter.format (required by dumpsys)
-    private void persistLogcatByPidForOemLogSources(
-            DataCollectorConfig.Adapter dc, String tag, long logcatStartTime) {
-        String startTime = mDateFormat.format(new Date(
-            logcatStartTime - LOG_TIME_OFFSET_MILLIS));
-        Log.d(TAG, "Persisting OEM Log Sources in Logcat By PID");
-        int maxLines;
-        if (mIsLowRamDevice) {
-            maxLines = dc.getMaxLogcatLinesPerProcessForLowMemDevice();
-        } else {
-            maxLines = dc.getMaxLogcatLinesPerProcess();
-        }
-
-        // Needs to be run right before each time the logcat command is
-        // executed.
-        List<Integer> pids = getPidOfProcesses();
-
-        for (int pid : pids) {
-            DiagnosticRunnable dr = new DiagnosticRunnable(
-                    new String[]{LOGCAT_BINARY, "-t", startTime, "-b", "all",
-                        "--pid", String.valueOf(pid)},
-                    dc.getLogcatReadTimeoutMillis(),
-                    dc.getLogcatProcTimeoutMillis(),
-                    tag, maxLines);
-            mAsyncTaskExecutor.execute(dr);
-        }
-    }
-
-    @SuppressWarnings("JavaUtilDate") //just used for DateFormatter.format (required by logcat)
-    private void persistLogcatByTagForOemLogSources(DataCollectorConfig.Adapter dc,
-        String dropboxTag, long logcatStartTime) {
-        String startTime = mDateFormat.format(new Date(logcatStartTime - LOG_TIME_OFFSET_MILLIS));
-        Log.d(TAG, "Persisting OEM Log Sources in Logcat by tag");
-        int maxLines;
-        if (mIsLowRamDevice) {
-            maxLines = dc.getMaxLogcatLinesPerProcessForLowMemDevice();
-        } else {
-            maxLines = dc.getMaxLogcatLinesPerProcess();
-        }
-        // Adding ":D" to get debug logs for each logcat tag
-        String logcatCommandTags = Arrays.stream(mLogcatTags).map(x -> x+":D").collect(
-            Collectors.joining(" "));
-        DiagnosticRunnable dr = new DiagnosticRunnable(
-                new String[]{LOGCAT_BINARY, "-t", startTime, "-b", "all",
-                    logcatCommandTags},
+                new String[]{LOGCAT_BINARY, "-t", startTime, "-b", LOGCAT_BUFFERS},
                 dc.getLogcatReadTimeoutMillis(), dc.getLogcatProcTimeoutMillis(),
-                dropboxTag, maxLines);
+                tag, dc.getMaxLogcatLinesForLowMemDevice());
         mAsyncTaskExecutor.execute(dr);
     }
 
@@ -200,17 +123,6 @@ public class DiagnosticDataCollector {
                 dc.getDumpsysProcTimeoutMillis(),
                 tag, dc.getMaxLogcatLines());
         mAsyncTaskExecutor.execute(dr);
-    }
-
-    private List<Integer> getPidOfProcesses() {
-        ArrayList<Integer> pids = new ArrayList<>();
-        for (ActivityManager.RunningAppProcessInfo process :
-            mActivityManager.getRunningAppProcesses()) {
-            if (mLogcatPidNames.contains(process.processName)) {
-                pids.add(process.pid);
-            }
-        }
-        return pids;
     }
 
     private class DiagnosticRunnable implements Runnable {
@@ -247,7 +159,6 @@ public class DiagnosticDataCollector {
             StringBuilder output = new StringBuilder();
             long startProcTime = SystemClock.elapsedRealtime();
             int outputSizeFromErrorStream = 0;
-            String cmdString = Arrays.toString(cmd);
             try {
                 process = mJavaRuntime.exec(cmd);
                 readStreamLinesWithTimeout(
@@ -257,9 +168,8 @@ public class DiagnosticDataCollector {
                 readStreamLinesWithTimeout(
                         new BufferedReader(new InputStreamReader(process.getErrorStream())), output,
                         streamTimeout, maxLogcatLines);
-                Log.d(TAG, "[" + cmdString + "] " + "streams read in " +
-                        (SystemClock.elapsedRealtime()- startProcTime) +
-                        " milliseconds");
+                Log.d(TAG, "[" + cmd[0] + "]" + "streams read in " + (SystemClock.elapsedRealtime()
+                        - startProcTime) + " milliseconds");
                 process.waitFor(procTimeout, TimeUnit.MILLISECONDS);
                 outputSizeFromErrorStream = output.length() - outputSizeFromInputStream;
             } catch (InterruptedException e) {
@@ -271,9 +181,8 @@ public class DiagnosticDataCollector {
                     process.destroy();
                 }
             }
-            Log.d(TAG, "[" + cmdString + "] " + "output collected in "
-                    + (SystemClock.elapsedRealtime() - startProcTime)
-                    + " milliseconds. Size:" + output.toString().length());
+            Log.d(TAG, "[" + cmd[0] + "]" + "output collected in " + (SystemClock.elapsedRealtime()
+                    - startProcTime) + " milliseconds. Size:" + output.toString().length());
             if (outputSizeFromErrorStream > 0) {
                 Log.w(TAG, "Cmd ran with errors");
                 output.append(ERROR_MSG + System.lineSeparator());

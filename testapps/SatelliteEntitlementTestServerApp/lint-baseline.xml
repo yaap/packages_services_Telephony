@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues
+    type="baseline"
+    client=""
+    dependencies="true"
+    name=""
+    variant=""
+    version="">
+    <issue
+        id="NewApi"
+        message="Class requires API level CUR_DEVELOPMENT/10000 (current min is 34): `android.telephony.TelephonyCallback.CarrierRoamingNtnListener`"
+        errorLine1="            TelephonyCallback.CarrierRoamingNtnListener {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="packages/services/Telephony/testapps/SatelliteEntitlementTestServerApp/src/com/android/phone/testapps/satelliteentitlementtestserverapp/SatelliteInfoUiUpdater.java"
+            line="184"
+            column="13"/>
+    </issue>
+
+</issues>

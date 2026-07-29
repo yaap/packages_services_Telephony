@@ -306,7 +306,8 @@ public class SlicePurchaseController extends Handler {
             "notification_count_last_reset_date";
 
     /** Map of phone ID -> SlicePurchaseController instances. */
-    @NonNull private static final Map<Integer, SlicePurchaseController> sInstances =
+    // Non-final: overwritten in SlicePurchaseControllerTest.
+    @NonNull private static Map<Integer, SlicePurchaseController> sInstances =
             new HashMap<>();
 
     /** The Phone instance used to create the SlicePurchaseController. */

@@ -17,9 +17,11 @@
 package com.android.phone;
 
 import static com.android.TestContext.STUB_PERMISSION_ENABLE_ALL;
+import static com.android.internal.telephony.util.TelephonyUtils.TELEPHONY_FEATURE_ENFORCEMENT_VENDOR_API_LEVEL;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,6 +30,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,6 +40,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -107,6 +111,11 @@ public class CarrierConfigLoaderTest extends TelephonyTestBase {
     private TelephonyManager mTelephonyManager;
     private CarrierConfigLoader mCarrierConfigLoader;
     private Handler mHandler;
+    private int mCapturedCarrierId;
+    private int mCapturedCarrierServiceUid;
+    private int[] mCapturedPackageUids;
+    private int mFakeCallingUid;
+    private boolean mFakeIsSdkSandboxUid;
 
     // The AIDL stub will use PermissionEnforcer to check permission from the caller.
     private FakePermissionEnforcer mFakePermissionEnforcer = new FakePermissionEnforcer();
@@ -154,8 +163,30 @@ public class CarrierConfigLoaderTest extends TelephonyTestBase {
         doReturn(true).when(mContext).bindServiceAsUser(
                 any(Intent.class), any(ServiceConnection.class), anyInt(), any(UserHandle.class));
 
-        mCarrierConfigLoader = new CarrierConfigLoader(mContext, mTestLooper,
-                mFeatureFlags);
+        mCarrierConfigLoader = new CarrierConfigLoader(mContext, mTestLooper, mFeatureFlags) {
+            @Override
+            public boolean isUserBuild() {
+                return true;
+            }
+
+            @Override
+            protected void writeCarrierServiceConfigOverridesReported(int carrierId,
+                    int carrierServiceUid, int[] packageUids) {
+                mCapturedCarrierId = carrierId;
+                mCapturedCarrierServiceUid = carrierServiceUid;
+                mCapturedPackageUids = packageUids;
+            }
+
+            @Override
+            protected int getBinderCallingUid() {
+                return mFakeCallingUid;
+            }
+
+            @Override
+            protected boolean isSdkSandboxUidInternal(int uid) {
+                return mFakeIsSdkSandboxUid;
+            }
+        };
         mHandler = mCarrierConfigLoader.getHandler();
 
         // Clear all configs to have the same starting point.
@@ -323,12 +354,84 @@ public class CarrierConfigLoaderTest extends TelephonyTestBase {
                 false/*persistent*/);
         processOneMessage();
         processOneMessage();
-
         assertThat(mCarrierConfigLoader.getOverrideConfig(DEFAULT_PHONE_ID).getInt(
                 CARRIER_CONFIG_EXAMPLE_KEY)).isEqualTo(CARRIER_CONFIG_EXAMPLE_VALUE);
         verify(mSubscriptionManagerService).updateSubscriptionByCarrierConfig(
                 eq(DEFAULT_PHONE_ID), eq(PLATFORM_CARRIER_CONFIG_PACKAGE),
                 any(PersistableBundle.class), any(Runnable.class));
+    }
+
+    /**
+     * The test case verified the blocking of the selectable carrier config values not to be
+     * override. The same values are allowed in case if that is MockModem to run the CTS test
+     * cases.
+     */
+    @Test
+    public void testOverrideConfig_blockedKeys() {
+        if (!SubscriptionManager.isValidPhoneId(SubscriptionManager.getPhoneId(DEFAULT_SUB_ID))) {
+            return;
+        }
+        mFakePermissionEnforcer.grant(android.Manifest.permission.MODIFY_PHONE_STATE);
+        PersistableBundle overrides = new PersistableBundle();
+
+        // Case 1, If mock modem service is used, it should be allowed.
+        when(mTelephonyManager.getModemService()).thenReturn(
+                "android.telephony.mockmodem.MockModemService");
+        overrides.putBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL, false);
+        mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, overrides /*overrides*/,
+                false/*persistent*/);
+        processOneMessage();
+        processOneMessage();
+        assertNotNull(mCarrierConfigLoader.getOverrideConfig(DEFAULT_PHONE_ID));
+        assertThat(mCarrierConfigLoader.getOverrideConfig(DEFAULT_PHONE_ID).getBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL)).isFalse();
+
+        // Clear override config for next test.
+        mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, null, false);
+
+        // Case 2, If not mock modem then do not override and throw security exception as the key
+        // KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL is blocked.
+        when(mTelephonyManager.getModemService()).thenReturn(null);
+        overrides.clear();
+        overrides.putBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL, false);
+        try {
+            // Call overrideConfig on the local instance
+            mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, overrides /*overrides*/,
+                    false/*persistent*/);
+            fail("Not received the SecurityException");
+        } catch (SecurityException se) {
+            // expected
+        }
+
+        // Case 3, In case of mock modem and userBuild is true the key
+        // KEY_SATELLITE_ATTACH_SUPPORTED_BOOL is allowed as it is not blocked
+        when(mTelephonyManager.getModemService()).thenReturn(
+                "android.telephony.mockmodem.MockModemService");
+        overrides.clear();
+        overrides.putBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ATTACH_SUPPORTED_BOOL, true);
+        mCarrierConfigLoader.clearConfigForPhone(DEFAULT_PHONE_ID, false);
+        mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, overrides /*overrides*/,
+                false/*persistent*/);
+        processOneMessage();
+        processOneMessage();
+        assertThat(mCarrierConfigLoader.getOverrideConfig(DEFAULT_PHONE_ID).getBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ATTACH_SUPPORTED_BOOL)).isTrue();
+
+        // Case 4, In case not a mock modem still KEY_SATELLITE_ATTACH_SUPPORTED_BOOL is allowed
+        // as it is not blocked
+        when(mTelephonyManager.getModemService()).thenReturn(null);
+        overrides.clear();
+        overrides.putBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ATTACH_SUPPORTED_BOOL, false);
+        mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, overrides /*overrides*/,
+                false/*persistent*/);
+        processAllMessages();
+        assertThat(mCarrierConfigLoader.getOverrideConfig(DEFAULT_PHONE_ID).getBoolean(
+                CarrierConfigManager.KEY_SATELLITE_ATTACH_SUPPORTED_BOOL)).isFalse();
+
     }
 
     /**
@@ -436,10 +539,9 @@ public class CarrierConfigLoaderTest extends TelephonyTestBase {
                 eq(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE),
                 anyInt(), anyInt(), anyString());
 
-        // Replace field to set SDK version of vendor partition to Android V
-        int vendorApiLevel = Build.VERSION_CODES.VANILLA_ICE_CREAM;
+        // Replace field to set vendor API level to the one where the exceptions are enabled.
         replaceInstance(CarrierConfigLoader.class, "mVendorApiLevel", mCarrierConfigLoader,
-                vendorApiLevel);
+                TELEPHONY_FEATURE_ENFORCEMENT_VENDOR_API_LEVEL);
 
         doReturn(false).when(mPackageManager).hasSystemFeature(
                 eq(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION));
@@ -529,5 +631,91 @@ public class CarrierConfigLoaderTest extends TelephonyTestBase {
         // But callback should not be sent.
         verify(mTelephonyRegistryManager, never()).notifyCarrierConfigChanged(
                 anyInt(), anyInt(), anyInt(), anyInt());
+    }
+
+    @Test
+    public void testLogCarrierServiceCarrierConfigOverrides() throws Exception {
+        String carrierPackageName = "com.test.carrier";
+        int carrierUid = 12345;
+        String cert = "1234567890ABCDEF";
+        String overridePackageName = "com.test.override";
+        int testSpecificCarrierId = 123;
+        int overrideUid = 54321;
+        doReturn(testSpecificCarrierId).when(mPhone).getSpecificCarrierId();
+        doReturn(carrierPackageName).when(mTelephonyManager)
+                .getCarrierServicePackageNameForLogicalSlot(anyInt());
+        doReturn(carrierUid).when(mPackageManager).getPackageUid(
+                eq(carrierPackageName), anyInt());
+        doReturn(overrideUid).when(mPackageManager).getPackageUid(
+                eq(overridePackageName), anyInt());
+        doReturn(overrideUid).when(mPackageManager).getPackageUidAsUser(
+                eq(overridePackageName), anyInt());
+
+        // Prepare config with access rules
+        PersistableBundle config = new PersistableBundle();
+        config.putStringArray(CarrierConfigManager.KEY_CARRIER_CERTIFICATE_STRING_ARRAY,
+                new String[] { cert + ":" + overridePackageName });
+
+        mCarrierConfigLoader.logCarrierServiceCarrierConfigOverrides(DEFAULT_PHONE_ID, config);
+
+        assertThat(mCapturedCarrierId).isEqualTo(testSpecificCarrierId);
+        assertThat(mCapturedCarrierServiceUid).isEqualTo(carrierUid);
+        assertThat(mCapturedPackageUids).asList().containsExactly(overrideUid);
+    }
+
+    @Test
+    public void testOverrideConfig_persistent_sdkSandboxUid_securityException() {
+        mFakePermissionEnforcer.grant(android.Manifest.permission.MODIFY_PHONE_STATE);
+        mFakeCallingUid = 25000; // Some UID in SDK Sandbox range
+        mFakeIsSdkSandboxUid = true;
+
+        assertThrows(SecurityException.class,
+                () -> mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, new PersistableBundle(),
+                        true/*persistent*/));
+    }
+
+    @Test
+    public void testOverrideConfig_persistent_nonSystemApp_fails() throws Exception {
+        mFakePermissionEnforcer.grant(android.Manifest.permission.MODIFY_PHONE_STATE);
+
+        int nonSystemUid = 12345;
+        mFakeCallingUid = nonSystemUid;
+        String pkgName = "com.thirdparty.app";
+
+        doReturn(new String[]{pkgName}).when(mPackageManager).getPackagesForUid(eq(nonSystemUid));
+        ApplicationInfo appInfo = new ApplicationInfo();
+        appInfo.flags = 0; // Not a system app
+        doReturn(appInfo).when(mPackageManager).getApplicationInfo(eq(pkgName), anyInt());
+        assertThrows(SecurityException.class, () -> mCarrierConfigLoader
+                .overrideConfig(DEFAULT_SUB_ID, getTestConfig(), true /*persistent*/));
+    }
+
+    @Test
+    public void testOverrideConfig_sharedUid_systemApp_succeeds() throws Exception {
+        if (!SubscriptionManager.isValidPhoneId(SubscriptionManager.getPhoneId(DEFAULT_SUB_ID))) {
+            return;
+        }
+        mFakePermissionEnforcer.grant(android.Manifest.permission.MODIFY_PHONE_STATE);
+
+        int sharedUid = 12345;
+        mFakeCallingUid = sharedUid;
+        String thirdPartyPkg = "com.thirdparty.app";
+        String systemPkg = "com.system.app";
+
+        doReturn(new String[]{thirdPartyPkg, systemPkg}).when(mPackageManager)
+                .getPackagesForUid(eq(sharedUid));
+
+        // First package throws NameNotFoundException
+        doThrow(new PackageManager.NameNotFoundException()).when(mPackageManager)
+                .getApplicationInfo(eq(thirdPartyPkg), anyInt());
+
+        // Second package is a system app
+        ApplicationInfo systemAppInfo = new ApplicationInfo();
+        systemAppInfo.flags = ApplicationInfo.FLAG_SYSTEM;
+        doReturn(systemAppInfo).when(mPackageManager)
+                .getApplicationInfo(eq(systemPkg), anyInt());
+
+        // Assert that no SecurityException is thrown (the method should execute successfully)
+        mCarrierConfigLoader.overrideConfig(DEFAULT_SUB_ID, getTestConfig(), true /*persistent*/);
     }
 }

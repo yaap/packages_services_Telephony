@@ -19,12 +19,10 @@ package com.android.phone.settings.fdn;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.UserManager;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
@@ -33,7 +31,6 @@ import android.widget.Toast;
 
 import com.android.internal.telephony.CommandException;
 import com.android.internal.telephony.Phone;
-import com.android.internal.telephony.flags.Flags;
 import com.android.phone.CallFeaturesSetting;
 import com.android.phone.PhoneGlobals;
 import com.android.phone.R;
@@ -44,7 +41,7 @@ import com.android.phone.SubscriptionInfoHelper;
  * Rewritten to look and behave closer to the other preferences.
  */
 public class FdnSetting extends PreferenceActivity
-        implements EditPinPreference.OnPinEnteredListener, Pin2LockedDialogFragment.Listener {
+        implements EditPinPreference.OnPinEnteredListener, FdnErrorDialogFragment.Listener {
 
     private static final String LOG_TAG = PhoneGlobals.LOG_TAG;
     private static final boolean DBG = false;
@@ -64,6 +61,8 @@ public class FdnSetting extends PreferenceActivity
     private static final String BUTTON_FDN_ENABLE_KEY = "button_fdn_enable_key";
     private static final String BUTTON_CHANGE_PIN2_KEY = "button_change_pin2_key";
     private static final String FDN_LIST_PREF_SCREEN_KEY = "fdn_list_pref_screen_key";
+
+    public static final String EXTRA_AUTO_CHANGE_PIN2 = "auto_change_pin2";
 
     private EditPinPreference mButtonEnableFDN;
     private EditPinPreference mButtonChangePin2;
@@ -283,14 +282,18 @@ public class FdnSetting extends PreferenceActivity
                                         ((CommandException) ar.exception).getCommandError();
                                 switch (e) {
                                     case SIM_PUK2:
-                                        showPin2OrPuk2LockedDialog(Pin2LockedDialogFragment
-                                                .DIALOG_ID_PUK2_REQUESTED_ON_PIN_ENTRY);
+                                        showFdnErrorDialog(FdnErrorDialogFragment
+                                                .DIALOG_ID_PUK2_REQUESTED_ON_PIN_ENTRY, 0, 0);
                                         break;
                                     case PASSWORD_INCORRECT:
-                                        displayMessage(R.string.pin2_invalid, attemptsRemaining);
+                                        showFdnErrorDialog(
+                                                FdnErrorDialogFragment.DIALOG_ID_INVALID_PIN2_ENTRY,
+                                                R.string.pin2_invalid, attemptsRemaining);
                                         break;
                                     default:
-                                        displayMessage(R.string.fdn_failed, attemptsRemaining);
+                                        showFdnErrorDialog(
+                                                FdnErrorDialogFragment.DIALOG_ID_FDN_FAILED_ERROR,
+                                                R.string.fdn_failed, attemptsRemaining);
                                         break;
                                 }
                             } else {
@@ -318,21 +321,25 @@ public class FdnSetting extends PreferenceActivity
                                 if (ce.getCommandError() == CommandException.Error.SIM_PUK2) {
                                     // throw an alert dialog on the screen, displaying the
                                     // request for a PUK2.
-                                    showPin2OrPuk2LockedDialog(Pin2LockedDialogFragment
-                                            .DIALOG_ID_PUK2_REQUESTED_ON_PIN_CHANGED);
+                                    showFdnErrorDialog(FdnErrorDialogFragment
+                                            .DIALOG_ID_PUK2_REQUESTED_ON_PIN_CHANGED, 0, 0);
                                 } else {
                                     if (mIsPuk2Locked && attemptsRemaining == 0) {
-                                        showPin2OrPuk2LockedDialog(Pin2LockedDialogFragment
-                                                .DIALOG_ID_PUK2_LOCKED_OUT);
+                                        showFdnErrorDialog(FdnErrorDialogFragment
+                                                .DIALOG_ID_PUK2_LOCKED_OUT, 0, 0);
                                     } else {
                                         // set the correct error message depending upon the state.
                                         // Reset the state depending upon or knowledge of the PUK
                                         // state.
                                         if (!mIsPuk2Locked) {
-                                            displayMessage(R.string.badPin2, attemptsRemaining);
+                                            showFdnErrorDialog(FdnErrorDialogFragment
+                                                            .DIALOG_ID_INCORRECT_PIN2_ENTRY,
+                                                    R.string.badPin2, attemptsRemaining);
                                             resetPinChangeState();
                                         } else {
-                                            displayMessage(R.string.badPuk2, attemptsRemaining);
+                                            showFdnErrorDialog(FdnErrorDialogFragment
+                                                            .DIALOG_ID_INCORRECT_PIN2_ENTRY,
+                                                    R.string.badPuk2, attemptsRemaining);
                                             resetPinChangeStateForPUK2();
                                         }
                                     }
@@ -493,7 +500,7 @@ public class FdnSetting extends PreferenceActivity
     */
     private void updateChangePIN2() {
         if (mPhone.getIccCard().getIccPuk2Blocked()) {
-            showPin2OrPuk2LockedDialog(Pin2LockedDialogFragment.DIALOG_ID_PUK2_LOCKED_OUT);
+            showFdnErrorDialog(FdnErrorDialogFragment.DIALOG_ID_PUK2_LOCKED_OUT, 0, 0);
             resetPinChangeStateForPUK2();
         } else if (mPhone.getIccCard().getIccPin2Blocked()) {
             // If the pin2 is blocked, the state of the change pin2 dialog
@@ -566,6 +573,15 @@ public class FdnSetting extends PreferenceActivity
         mPhone = mSubscriptionInfoHelper.getPhone();
         updateEnableFDN();
         updateChangePIN2();
+
+        if (getIntent().getBooleanExtra(EXTRA_AUTO_CHANGE_PIN2, false)) {
+            // Reset the intent extra so that we don't trigger this again on rotation.
+            getIntent().putExtra(EXTRA_AUTO_CHANGE_PIN2, false);
+            if (mPhone.getIccCard().getIccPin2Blocked()) {
+                resetPinChangeStateForPUK2();
+                displayPinChangeDialog(mButtonChangePin2, 0, true);
+            }
+        }
     }
 
     /**
@@ -611,21 +627,24 @@ public class FdnSetting extends PreferenceActivity
     public void onRequestPuk2(int id) {
         resetPinChangeStateForPUK2();
         final EditPinPreference button =
-                (id == Pin2LockedDialogFragment.DIALOG_ID_PUK2_REQUESTED_ON_PIN_CHANGED)
+                (id == FdnErrorDialogFragment.DIALOG_ID_PUK2_REQUESTED_ON_PIN_CHANGED)
                         ? mButtonChangePin2 : mButtonEnableFDN;
         displayPinChangeDialog(button, 0, true);
     }
 
-    private void showPin2OrPuk2LockedDialog(int id) {
+    private void showFdnErrorDialog(int dialogId, int errorId, int attemptsRemaining) {
         final FragmentManager fragmentManager = getFragmentManager();
-        Pin2LockedDialogFragment dialogFragment = (Pin2LockedDialogFragment) fragmentManager
-                .findFragmentByTag(Pin2LockedDialogFragment.TAG_PIN2_LOCKED_DIALOG);
+        FdnErrorDialogFragment dialogFragment = (FdnErrorDialogFragment) fragmentManager
+                .findFragmentByTag(FdnErrorDialogFragment.TAG_PIN2_LOCKED_DIALOG);
         if (dialogFragment == null) {
-            dialogFragment = new Pin2LockedDialogFragment();
+            dialogFragment = new FdnErrorDialogFragment();
             Bundle args = new Bundle();
-            args.putInt(Pin2LockedDialogFragment.KEY_DIALOG_ID, id);
+            args.putInt(FdnErrorDialogFragment.KEY_DIALOG_ID, dialogId);
+            args.putInt(FdnErrorDialogFragment.KEY_ERROR_MSG, errorId);
+            args.putInt(FdnErrorDialogFragment.KEY_ATTEMPTS_REMAINING, attemptsRemaining);
+
             dialogFragment.setArguments(args);
-            dialogFragment.show(fragmentManager, Pin2LockedDialogFragment.TAG_PIN2_LOCKED_DIALOG);
+            dialogFragment.show(fragmentManager, FdnErrorDialogFragment.TAG_PIN2_LOCKED_DIALOG);
         } else {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.show(dialogFragment);

@@ -386,6 +386,11 @@ public class EditFdnContactScreen extends BaseFdnContactScreen {
                     R.string.fdn_contact_added : R.string.fdn_contact_updated));
         } else {
             if (DBG) log("handleResult: failed!");
+            if (mPhone.getIccCard().getIccPin2Blocked()) {
+                showFdnErrorDialog(FdnErrorDialogFragment.DIALOG_ID_PIN2_ALREADY_BLOCKED);
+                return;
+            }
+
             if (invalidNumber) {
                 showStatus(getResources().getString(R.string.fdn_invalid_number,
                         mFdnNumberLimitLength));

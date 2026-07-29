@@ -44,6 +44,12 @@
             <TextView android:id="@+id/max_allowed_data_mode" style="@style/info_value" />
         </LinearLayout>
 
+        <!-- maxAllowedDataMode from SatelliteController -->
+        <LinearLayout style="@style/RadioInfo_entry_layout">
+            <TextView android:text="@string/satellite_provider_plmn_list_label" style="@style/info_label" />
+            <TextView android:id="@+id/satelltie_provider_plmn_list" style="@style/info_value" />
+        </LinearLayout>
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="10dip"

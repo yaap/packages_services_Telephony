@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"கணக்கு அமைப்புகளை உள்ளமைக்கவும்"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"எல்லா அழைப்புக் கணக்குகளும்"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"அழைப்புகள் செய்வதற்கான கணக்குகளைத் தேர்ந்தெடுக்கவும்"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"மூன்றாம் தரப்பு ஆப்ஸ்"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"அழைப்புகளை உங்கள் அழைப்புப் பதிவுகளில் காட்ட பிற ஆப்ஸை அனுமதிக்கலாம். ஆஃப் செய்தால், இந்த அழைப்புகள் அவற்றின் குறிப்பிட்ட ஆப்ஸில் மட்டுமே காட்டப்படும்."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"வைஃபை அழைப்பு"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"உள்ளமைக்கப்பட்ட இணைப்பு சேவை"</string>
     <string name="voicemail" msgid="7697769412804195032">"குரலஞ்சல்"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"நிலையான அழைப்பு எண்ணை நீக்கு"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"நிலையான அழைப்பு எண்ணை நீக்குகிறது…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"நிலையான அழைப்பு எண் நீக்கப்பட்டது."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"தவறான பின்னை உள்ளிட்டுள்ளதால், FDN புதுப்பிக்கப்படவில்லை."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"தவறான பின்2. FDN புதுப்பிக்கப்படவில்லை."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"உள்ளிட்ட எண் <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> இலக்கங்களுக்கும் அதிகமாக உள்ளதால் FDN புதுப்பிக்கப்படவில்லை."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN புதுப்பிக்கப்படவில்லை. PIN2 தவறானது அல்லது மொபைல் எண் நிராகரிக்கப்பட்டது."</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN செயல்பாடு தோல்வி."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 குறியீட்டை உள்ளிடவும்"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"கடவுச்சொல் தவறானது. பின்2 தடைசெய்யப்பட்டது. மீண்டும் முயல, பின்2ஐ மாற்றவும்."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"கடவுச்சொல் தவறானது. சிம் இப்போது பூட்டப்பட்டது. PUK2ஐ உள்ளிடவும்."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"பின்2 தடுக்கப்பட்டுள்ளது. தடுப்பை நீக்க PUK2வை டைப் செய்யவும்."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 தற்காலிகமாகத் தடுக்கப்பட்டது."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"நீங்கள் <xliff:g id="NUMBER">%d</xliff:g> முறை முயற்சிக்கலாம்."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 லாக் செய்யப்பட்டுள்ளது. அன்லாக் செய்ய சேவை வழங்குநரைத் தொடர்புகொள்ளவும்."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"நிராகரி"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"டேட்டா இணைப்பை இயக்கு"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"டேட்டா இணைப்பை முடக்கு"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"பயன்படுத்து"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"எல்லாம்"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE அமைக்கப்பட்டது"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"வீடியோ அழைப்பு அமைக்கப்பட்டது"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"வைஃபை அழைப்பு அமைக்கப்பட்டது"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"பதிப்பு:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo பதிப்பு:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"அதிகபட்சமாக அனுமதிக்கப்படும் டேட்டா பயன்முறை:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"சாட்டிலைட் சேவை வழங்கும் எல்லா plmnகளும்:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink பதிப்பு:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/servicetype:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

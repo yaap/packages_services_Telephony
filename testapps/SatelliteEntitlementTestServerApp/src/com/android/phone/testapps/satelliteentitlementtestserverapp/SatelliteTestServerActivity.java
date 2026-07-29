@@ -25,11 +25,14 @@ import android.os.Looper;
 import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -141,6 +144,18 @@ public class SatelliteTestServerActivity extends Activity {
         Button plmnRestroreButton = findViewById(R.id.plmnRestoreButton);
         mPlmnChangeEditText.setText(DEFAULT_PLMN_LIST);
 
+        mPlmnChangeEditText.setOnTouchListener((v, event) -> {
+            if (v.getId() == R.id.plmnChangeEditText) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+            }
+            return false;
+        });
+
         plmnChangeButton.setOnClickListener(v -> {
             mPlmnChangeEditText.setText(mPlmnChangeEditText.getText());
             mUserInputPlmnList = true;
@@ -171,6 +186,124 @@ public class SatelliteTestServerActivity extends Activity {
 
         mRefreshButton = findViewById(R.id.refreshButton);
         mRefreshButton.setOnClickListener(view -> updateUiWithCurrentSatelliteInfo(false));
+
+        initPayloadBuilder();
+    }
+
+    // Initialize new UI components in onCreate
+    private void initPayloadBuilder() {
+        EditText plmnIdBuilder = findViewById(R.id.plmnIdBuilder);
+        CheckBox dataPlanTypeCheckBox = findViewById(R.id.dataPlanTypeCheckBox);
+        Spinner dataPlanTypeSpinner = findViewById(R.id.dataPlanTypeSpinner);
+        CheckBox dataServiceCheckBox = findViewById(R.id.dataServiceCheckBox);
+        Spinner dataServicePolicySpinner = findViewById(R.id.dataServicePolicySpinner);
+        CheckBox voiceServiceCheckBox = findViewById(R.id.voiceServiceCheckBox);
+        Spinner voiceServicePolicySpinner = findViewById(R.id.voiceServicePolicySpinner);
+        Button addPlmnButton = findViewById(R.id.addPlmnButton);
+
+        EditText barredPlmnIdBuilder = findViewById(R.id.barredPlmnIdBuilder);
+        Button barPlmnButton = findViewById(R.id.barPlmnButton);
+        Button clearAllButton = findViewById(R.id.clearAllButton);
+
+        setupBuilderSpinner(dataPlanTypeSpinner, R.array.data_plan_type_array);
+        setupBuilderSpinner(dataServicePolicySpinner, R.array.service_policy_array);
+        setupBuilderSpinner(voiceServicePolicySpinner, R.array.service_policy_array);
+
+        addPlmnButton.setOnClickListener(v -> {
+            String plmnId = plmnIdBuilder.getText().toString();
+            if (TextUtils.isEmpty(plmnId)) {
+                Toast.makeText(this, "Please enter a PLMN ID", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            StringBuilder newEntry = new StringBuilder();
+            newEntry.append("{\"PLMN\":\"").append(plmnId).append("\"");
+
+            if (dataPlanTypeCheckBox.isChecked()) {
+                newEntry.append(",\"DataPlanType\":\"")
+                        .append(dataPlanTypeSpinner.getSelectedItem().toString()).append("\"");
+            }
+
+            if (dataServiceCheckBox.isChecked() || voiceServiceCheckBox.isChecked()) {
+                newEntry.append(",\"AllowedServicesInfo\":[");
+                boolean firstService = true;
+                if (dataServiceCheckBox.isChecked()) {
+                    newEntry.append("{\"AllowedServices\":{\"ServiceType\":\"data\","
+                            + "\"ServicePolicy\":\"");
+                    newEntry.append(dataServicePolicySpinner.getSelectedItem().toString())
+                            .append("\"}}");
+                    firstService = false;
+                }
+                if (voiceServiceCheckBox.isChecked()) {
+                    if (!firstService) newEntry.append(",");
+                    newEntry.append("{\"AllowedServices\":{\"ServiceType\":\"voice\","
+                            + "\"ServicePolicy\":\"");
+                    newEntry.append(voiceServicePolicySpinner.getSelectedItem().toString())
+                            .append("\"}}");
+                }
+                newEntry.append("]");
+            }
+            newEntry.append("}");
+
+            String currentPayload = mPlmnChangeEditText.getText().toString();
+            if (currentPayload.contains("\"PLMNAllowed\":[")) {
+                int lastBracketIndex = currentPayload.lastIndexOf("]");
+                if (lastBracketIndex != -1) {
+                    String prefix = currentPayload.substring(0, lastBracketIndex);
+                    String suffix = currentPayload.substring(lastBracketIndex);
+                    mPlmnChangeEditText.setText(prefix + "," + newEntry.toString() + suffix);
+                }
+            } else {
+                mPlmnChangeEditText.setText(currentPayload + " \"PLMNAllowed\":["
+                        + newEntry.toString() + "]");
+            }
+            mUserInputPlmnList = true;
+
+            // Reset inputs
+            plmnIdBuilder.setText("");
+            dataPlanTypeCheckBox.setChecked(false);
+            dataServiceCheckBox.setChecked(false);
+            voiceServiceCheckBox.setChecked(false);
+            dataPlanTypeSpinner.setSelection(0);
+            dataServicePolicySpinner.setSelection(0);
+            voiceServicePolicySpinner.setSelection(0);
+        });
+
+        barPlmnButton.setOnClickListener(v -> {
+            String plmnId = barredPlmnIdBuilder.getText().toString();
+            if (TextUtils.isEmpty(plmnId)) {
+                Toast.makeText(this, "Please enter a PLMN ID", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String newEntry = "{\"PLMN\":\"" + plmnId + "\"}";
+            String currentPayload = mPlmnChangeEditText.getText().toString();
+            if (currentPayload.contains("\"PLMNBarred\":[")) {
+                int lastBracketIndex = currentPayload.lastIndexOf("]");
+                if (lastBracketIndex != -1) {
+                    String prefix = currentPayload.substring(0, lastBracketIndex);
+                    String suffix = currentPayload.substring(lastBracketIndex);
+                    mPlmnChangeEditText.setText(prefix + "," + newEntry + suffix);
+                }
+            } else {
+                mPlmnChangeEditText.setText(currentPayload + " \"PLMNBarred\":[" + newEntry + "]");
+            }
+            mUserInputPlmnList = true;
+
+            // Reset input
+            barredPlmnIdBuilder.setText("");
+        });
+
+        clearAllButton.setOnClickListener(v -> {
+            mPlmnChangeEditText.setText("");
+            mUserInputPlmnList = true;
+        });
+    }
+
+    private void setupBuilderSpinner(Spinner spinner, int arrayResId) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                arrayResId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     private static final int REQUEST_CODE_PHONE_STATE = 1;
@@ -190,6 +323,20 @@ public class SatelliteTestServerActivity extends Activity {
     protected void onPause() {
         super.onPause();
         mSatelliteInfoUiUpdater.unRegisterTelephonyCallback();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PHONE_STATE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startServer();
+                updateUiWithCurrentSatelliteInfo(true);
+            } else {
+                Toast.makeText(this, "Permission denied. App cannot function.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void startServer() {

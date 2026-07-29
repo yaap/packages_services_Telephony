@@ -169,6 +169,10 @@
     <!-- Summary for all-calling-account setting indicating that is where the user goes to enable
          and disable phone accounts. -->
     <string name="phone_accounts_all_calling_accounts_summary">Select which accounts can make calls</string>
+    <!-- Label for heading of the call log preferences for supported 3P apps. -->
+    <string name="voip_call_log_integration_label">Third party apps</string>
+    <!-- Summary providing an explanation to the user what happens when enabling/disabling call log preferences. -->
+    <string name="voip_call_log_integration_summary">Allow other apps to show calls in your call history. If turned off, these calls will only appear in their specific apps.</string>
 
     <!-- Title for setting to select Wi-Fi call manager account -->
     <string name="wifi_calling">Wi-Fi calling</string>
@@ -1053,7 +1057,7 @@
     <!-- "Delete FDN Contact" screen: status message displayed in a popup (toast) -->
     <string name="fdn_contact_deleted">Fixed dialing number deleted.</string>
     <!-- FDN settings: error message displayed in a popup (toast) -->
-    <string name="pin2_invalid">FDN wasn\'t updated because you typed an incorrect PIN.</string>
+    <string name="pin2_invalid">Incorrect PIN2. FDN not updated.</string>
     <!-- FDN settings: error message displayed in a popup (toast) -->
     <string name="fdn_invalid_number">FDN wasn\'t updated because the number exceeds <xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> digits.</string>
     <!-- FDN settings: error message displayed in a popup (toast), when the entered
@@ -1140,6 +1144,8 @@
     <string name="fdn_enable_puk2_requested">Password incorrect. PIN2 now Blocked. To try again, change PIN 2.</string>
     <!-- SIM PIN2 screen: error message displayed in a dialog -->
     <string name="puk2_requested">Password incorrect. SIM now locked. Enter PUK2.</string>
+    <!-- SIM PIN2 screen: error message displayed in a dialog -->
+    <string name="pin2_blocked">PIN2 is blocked. Enter PUK2 to unblock.</string>
     <!-- SIM PIN2 screen: error message -->
     <string name="puk2_blocked">PUK2 is permanently blocked.</string>
     <!-- SIM PIN2 screen: error message -->
@@ -1995,6 +2001,14 @@
     <!-- Data Connection Disable. Only shown in diagnostic screen, so precise translation is not needed. -->
     <string name="radio_info_data_connection_disable">Disable Data Connection</string>
 
+    <!-- Multi-select Preferred Network Type -->
+    <string name="radio_info_apply_preferred_network_type">Apply</string>
+    <string name="radio_info_all_label">All</string>
+    <string name="radio_info_nr_label">NR (5G)</string>
+    <string name="radio_info_lte_label">LTE (4G)</string>
+    <string name="radio_info_wcdma_label">UMTS (3G)</string>
+    <string name="radio_info_gsm_label">GSM (2G)</string>
+
     <!-- VoLTE provisioning flag on. Only shown in diagnostic screen, so precise translation is not needed. -->
     <string name="volte_provisioned_switch_string">VoLTE Provisioned</string>
 
@@ -2166,6 +2180,10 @@
     <string name="radio_info_imei_label">IMEI:</string>
     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, DO NOT TRANSLATE. -->
     <string name="radio_info_imsi_label">IMSI:</string>
+    <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, DO NOT TRANSLATE. -->
+    <string name="radio_info_gid1_label">GID1:</string>
+    <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, DO NOT TRANSLATE. -->
+    <string name="radio_info_carrier_id_label">Carrier ID:</string>
     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
     <string name="radio_info_call_redirect_label">Call Redirect:</string>
     <!-- Radio Info screen. Label for a status item.  Used for diagnostic info screens, precise translation isn't needed -->
@@ -2303,6 +2321,8 @@
     <string name="satellite_config_version_for_skylo_label">skylo version: </string>
     <!-- Satellite config viewer screen. Label for the max allowed data mode -->
     <string name="satellite_max_allowed_data_mode_label">max allowed data mode: </string>
+    <!-- Satellite config viewer screen. Label for the satellite provider plmn list -->
+    <string name="satellite_provider_plmn_list_label">all satellite providers plmns: </string>
     <!-- Satellite config viewer screen. Label for the config data version for starlink -->
     <string name="satellite_config_version_for_starlink_label">starlink version: </string>
     <!-- Satellite config viewer screen. Label for the subId/plmn/servicetype -->

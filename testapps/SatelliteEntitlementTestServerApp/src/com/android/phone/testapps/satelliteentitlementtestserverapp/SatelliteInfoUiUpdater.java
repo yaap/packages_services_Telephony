@@ -133,7 +133,7 @@ public class SatelliteInfoUiUpdater {
                 getSubscriptionManager().getActiveSubscriptionInfoList();
 
         if (subscriptionInfoList != null && !subscriptionInfoList.isEmpty()) {
-            subId = subscriptionInfoList.getFirst().getSubscriptionId();
+            subId = subscriptionInfoList.get(0).getSubscriptionId();
         } else {
             subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
         }

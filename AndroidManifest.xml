@@ -192,16 +192,24 @@
     <!-- Used by Satellite module to check if Google Messages is the default SMS app. -->
     <uses-permission android:name="android.permission.MONITOR_DEFAULT_SMS_PACKAGE"/>
 
+    <!-- Used to query which apps can read SMS messages that contain OTPs -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+
+    <!-- Used by PinStorage to gate access to SIM PINs based on device authentication status. -->
+    <uses-permission android:name="android.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE"/>
+
+    <!-- Needed to send SMS/MMS over different transport by the Default Messaging App. -->
+    <uses-permission android:name="android.permission.BIND_ALTERNATIVE_MESSAGE_TRANSPORT_SERVICE"/>
+
     <application android:name="PhoneApp"
             android:persistent="true"
             android:label="@string/phoneAppLabel"
             android:icon="@mipmap/ic_launcher_phone"
             android:allowBackup="false"
             android:supportsRtl="true"
-            android:usesCleartextTraffic="true"
             android:enableOnBackInvokedCallback="false"
             android:defaultToDeviceProtectedStorage="true"
-            android:directBootAware="true">
+            android:directBootAware="true" android:networkSecurityConfig="@xml/network_security_config">
 
         <provider android:name="IccProvider"
                 android:authorities="icc"
@@ -533,6 +541,10 @@
             android:theme="@style/DialerSettingsLight">
             <intent-filter>
                 <action android:name="android.telecom.action.CHANGE_PHONE_ACCOUNTS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.telecom.action.CONFIGURE_CALL_LOG_INTEGRATION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

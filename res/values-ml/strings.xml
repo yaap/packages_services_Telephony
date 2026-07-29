@@ -75,6 +75,8 @@
     <string name="phone_accounts_configure_account_settings" msgid="6622119715253196586">"അക്കൗണ്ട് ക്രമീകരണങ്ങൾ കോൺഫിഗർചെയ്യുക"</string>
     <string name="phone_accounts_all_calling_accounts" msgid="1609600743500618823">"എല്ലാ കോളിംഗ് അക്കൗണ്ടുകളും"</string>
     <string name="phone_accounts_all_calling_accounts_summary" msgid="2214134955430107240">"ഫോൺ വിളിക്കാനാകുന്ന അക്കൗണ്ടുകൾ തിരഞ്ഞെടുക്കുക"</string>
+    <string name="voip_call_log_integration_label" msgid="2349275524959944815">"മൂന്നാം കക്ഷി ആപ്പുകൾ"</string>
+    <string name="voip_call_log_integration_summary" msgid="196486049335079938">"നിങ്ങളുടെ കോൾ ചരിത്രത്തിൽ കോളുകൾ കാണിക്കാൻ മറ്റ് ആപ്പുകളെ അനുവദിക്കുക. ഓഫാക്കിയിട്ടുണ്ടെങ്കിൽ, ഈ കോളുകൾ അവയുടെ നിർദ്ദിഷ്ട ആപ്പുകളിൽ മാത്രമേ ദൃശ്യമാകൂ."</string>
     <string name="wifi_calling" msgid="3650509202851355742">"വൈഫൈ കോളിംഗ്"</string>
     <string name="connection_service_default_label" msgid="7332739049855715584">"അന്തർ നിർമ്മിത കണക്ഷൻ സേവനം"</string>
     <string name="voicemail" msgid="7697769412804195032">"വോയ്സ് മെയില്‍"</string>
@@ -481,7 +483,7 @@
     <string name="delete_fdn_contact" msgid="7027405651994507077">"സ്ഥിര ഡയലിംഗ് നമ്പർ ഇല്ലാതാക്കുക"</string>
     <string name="deleting_fdn_contact" msgid="6872320570844460428">"സ്ഥിര ഡയലിംഗ് നമ്പർ ഇല്ലാതാക്കുന്നു…"</string>
     <string name="fdn_contact_deleted" msgid="1680714996763848838">"സ്ഥിര ഡയലിംഗ് നമ്പർ ഇല്ലാതാക്കി."</string>
-    <string name="pin2_invalid" msgid="2313954262684494442">"നിങ്ങൾ തെറ്റായ പിൻ നൽകിയതിനാൽ FDN അപ്‌ഡേറ്റുചെയ്‌തില്ല."</string>
+    <string name="pin2_invalid" msgid="7366835930615792402">"PIN2 തെറ്റാണ്. FDN അപ്ഡേറ്റ് ചെയ്തിട്ടില്ല."</string>
     <string name="fdn_invalid_number" msgid="9067189814657840439">"<xliff:g id="FDN_NUMBER_LIMIT_LENGTH">%d</xliff:g> അക്കങ്ങൾ കവിഞ്ഞതിനാൽ FDN അപ്‌ഡേറ്റ് ചെയ്‌തില്ല."</string>
     <string name="pin2_or_fdn_invalid" msgid="7542639487955868181">"FDN അപ്‌ഡേറ്റുചെയ്‌തില്ല. PIN2 തെറ്റായിരുന്നു, അല്ലെങ്കിൽ ഫോൺ നമ്പർ നിരസിച്ചു."</string>
     <string name="fdn_failed" msgid="216592346853420250">"FDN പ്രവർത്തനം പരാജയപ്പെട്ടു."</string>
@@ -520,6 +522,7 @@
     <string name="label_puk2_code" msgid="2852217004288085562">"PUK2 കോഡ് നൽകുക"</string>
     <string name="fdn_enable_puk2_requested" msgid="5793652792131588041">"പാസ്‌വേഡ് തെറ്റാണ്. PIN2 ഇപ്പോൾ തടഞ്ഞിരിക്കുന്നു. വീണ്ടും ശ്രമിക്കുന്നതിന് PIN 2 മാറ്റുക."</string>
     <string name="puk2_requested" msgid="6992374450720307514">"പാസ്‌വേഡ് തെറ്റാണ്. SIM ഇപ്പോൾ ലോക്കുചെയ്‌തിരിക്കുന്നു. PUK2 നൽകുക."</string>
+    <string name="pin2_blocked" msgid="1179589285280498087">"PIN2 ബ്ലോക്ക് ചെയ്തു. അൺബ്ലോക്ക് ചെയ്യാൻ PUK2 നൽകുക."</string>
     <string name="puk2_blocked" msgid="3131139031779319911">"PUK2 ശാശ്വതമായി തടഞ്ഞിരിക്കുന്നു."</string>
     <string name="pin2_attempts" msgid="5625178102026453023">\n"നിങ്ങൾക്ക് <xliff:g id="NUMBER">%d</xliff:g> ശ്രമങ്ങൾ ശേഷിക്കുന്നു."</string>
     <string name="puk2_locked" msgid="6497760825455461057">"PUK2 ലോക്ക് ആണ്. അൺലോക്ക് ചെയ്യാൻ സേവന ദാതാവിനെ ബന്ധപ്പെടുക."</string>
@@ -836,6 +839,12 @@
     <string name="supp_service_over_ut_precautions_dialog_dismiss" msgid="5934541487903081652">"നിരസിക്കുക"</string>
     <string name="radio_info_data_connection_enable" msgid="6183729739783252840">"ഡാറ്റാ കണക്ഷൻ പ്രവർത്തനക്ഷമമാക്കുക"</string>
     <string name="radio_info_data_connection_disable" msgid="6404751291511368706">"ഡാറ്റ കണക്ഷൻ പ്രവർത്തനരഹിതമാക്കുക"</string>
+    <string name="radio_info_apply_preferred_network_type" msgid="8828433232282314858">"ബാധകമാക്കുക"</string>
+    <string name="radio_info_all_label" msgid="4326377691373938122">"എല്ലാം"</string>
+    <string name="radio_info_nr_label" msgid="4346984853962997752">"NR (5G)"</string>
+    <string name="radio_info_lte_label" msgid="5721318031926928485">"LTE (4G)"</string>
+    <string name="radio_info_wcdma_label" msgid="5157664869835235769">"UMTS (3G)"</string>
+    <string name="radio_info_gsm_label" msgid="2947899997551185529">"GSM (2G)"</string>
     <string name="volte_provisioned_switch_string" msgid="4812874990480336178">"VoLTE ഏർപ്പെടുത്തി"</string>
     <string name="vt_provisioned_switch_string" msgid="8295542122512195979">"വീഡിയോ കോളിംഗ് ഏർപ്പെടുത്തി"</string>
     <string name="wfc_provisioned_switch_string" msgid="3835004640321078988">"വൈഫൈ കോളിംഗ് ഏർപ്പെടുത്തി"</string>
@@ -974,6 +983,7 @@
     <string name="satellite_config_version_label" msgid="1153447193166314791">"പതിപ്പ്:"</string>
     <string name="satellite_config_version_for_skylo_label" msgid="7068241597009832840">"skylo പതിപ്പ്:"</string>
     <string name="satellite_max_allowed_data_mode_label" msgid="1808484802651916339">"അനുവദനീയമായ പരമാവധി ഡാറ്റാ മോഡ്:"</string>
+    <string name="satellite_provider_plmn_list_label" msgid="7289533883006851963">"എല്ലാ സാറ്റലൈറ്റ് ദാതാക്കളുടെയും PLMN-കൾ:"</string>
     <string name="satellite_config_version_for_starlink_label" msgid="7984209491963621773">"starlink പതിപ്പ്:"</string>
     <string name="satellite_config_service_type_label" msgid="21749170241956082">"subId/plmn/സേവനതരം:"</string>
     <string name="satellite_config_allow_access_label" msgid="3806779900418131140">"allow_access:"</string>

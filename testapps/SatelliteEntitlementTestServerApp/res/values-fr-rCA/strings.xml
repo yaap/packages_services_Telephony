@@ -38,4 +38,28 @@
     <item msgid="1898895770647738117">"503"</item>
     <item msgid="2420418633305128093">"503_NO_RETRY_AFTER"</item>
   </string-array>
+    <string name="data_plan_type_label" msgid="6571895909927244218">"Type de forfait de données :"</string>
+    <string name="service_type_label" msgid="5778585335411078154">"Type de service :"</string>
+    <string name="service_policy_label" msgid="4132043416893841942">"Politique relative aux services :"</string>
+    <string name="plmn_id_label" msgid="8058228564151694348">"Identifiant de RMTP :"</string>
+    <string name="add_plmn_button" msgid="1674513590425103807">"AJOUTER À LA LISTE DE RMTP"</string>
+    <string name="bar_plmn_button" msgid="2476955538708126437">"INTERDIRE LE RMTP"</string>
+    <string name="clear_all_button" msgid="8066635149916015212">"TOUT EFFACER"</string>
+    <string name="data_plan_type_checkbox" msgid="3416488122240116800">"Inclure DataPlanType"</string>
+    <string name="data_service_checkbox" msgid="1053897552977297849">"Service de données"</string>
+    <string name="voice_service_checkbox" msgid="2955463313373337638">"Service vocal"</string>
+    <string name="barred_plmn_id_label" msgid="505024831880097474">"Identifiant de réseau public mobile interdit :"</string>
+  <string-array name="data_plan_type_array">
+    <item msgid="4481708547874319163">"mesuré"</item>
+    <item msgid="847694900028477007">"non mesuré"</item>
+  </string-array>
+  <string-array name="service_type_array">
+    <item msgid="8060338003865848773">"données"</item>
+    <item msgid="6815202494927703427">"voix"</item>
+  </string-array>
+  <string-array name="service_policy_array">
+    <item msgid="1671188299707229210">"sans contrainte"</item>
+    <item msgid="5432811344446551182">"limité"</item>
+    <item msgid="2865228900925141156">"contraint"</item>
+  </string-array>
 </resources>

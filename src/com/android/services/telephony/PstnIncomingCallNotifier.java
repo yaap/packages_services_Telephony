@@ -25,6 +25,7 @@ import android.os.SystemClock;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
 import android.telephony.ims.ImsCallProfile;
 import android.text.TextUtils;
 
@@ -317,12 +318,15 @@ final class PstnIncomingCallNotifier {
         extras.putLong(EXTRA_CALL_CREATED_TIME_MILLIS, SystemClock.elapsedRealtime());
 
         if (connection.getPhoneType() == PhoneConstants.PHONE_TYPE_IMS) {
+            // Ensure starting video state is reported on the call.
+            extras.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                    ((ImsPhoneConnection) connection).getVideoState());
             if (((ImsPhoneConnection) connection).isRttEnabledForCall()) {
                 extras.putBoolean(TelecomManager.EXTRA_START_CALL_WITH_RTT, true);
             }
             if (((ImsPhoneConnection) connection).isIncomingCallAutoRejected()) {
                 extras.putString(TelecomManager.EXTRA_CALL_DISCONNECT_MESSAGE,
-                        TelecomManager.CALL_AUTO_DISCONNECT_MESSAGE_STRING);
+                        TelephonyManager.CALL_AUTO_DISCONNECT_MESSAGE_STRING);
             }
             ImsCall imsCall = ((ImsPhoneConnection) connection).getImsCall();
             if (imsCall != null) {
@@ -473,6 +477,17 @@ final class PstnIncomingCallNotifier {
         Connection original = telephonyConnection.getOriginalConnection();
         if (original != null && !original.isIncoming()
                 && Objects.equals(original.getAddress(), unknown.getAddress())) {
+
+            // we only want to swap in one direction (IMS -> GSM) or (GSM->IMS) for some reason.
+            // There should be no SRVCC for the same Connection class type.
+            if (Flags.supportSameUriConferenceSrvcc()
+                    && original.getClass().equals(unknown.getClass())) {
+                Log.i(this, "maybeSwapWithUnknownConnection - not swapping, "
+                        + "original connection is already the same type: "
+                        + original.getClass().getSimpleName());
+                return false;
+            }
+
             // If the new unknown connection is an external connection, don't swap one with an
             // actual connection.  This means a call got pulled away.  We want the actual connection
             // to disconnect.

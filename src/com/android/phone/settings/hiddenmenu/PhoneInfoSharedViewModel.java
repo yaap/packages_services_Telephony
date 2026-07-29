@@ -48,8 +48,13 @@ public class PhoneInfoSharedViewModel extends ViewModel {
             new MutableLiveData[] {new MutableLiveData<>(), new MutableLiveData<>()};
     private final MutableLiveData<Integer>[] mSatelliteDataMode =
             new MutableLiveData[] {new MutableLiveData<>(), new MutableLiveData<>()};
+    private final MutableLiveData<Boolean>[] mSatelliteForceCamped =
+            new MutableLiveData[] {new MutableLiveData<>(), new MutableLiveData<>()};
     private final PersistableBundle[] mCarrierSatelliteOriginalBundle = new PersistableBundle[2];
     private final PersistableBundle[] mSatelliteDataOriginalBundle = new PersistableBundle[2];
+    private final PersistableBundle[] mOriginalSystemChannels = new PersistableBundle[2];
+    private final PersistableBundle[] mPreviousSatelliteBand = new PersistableBundle[2];
+    private final int[] mSelectedManualOverrideBandIndex = new int[2];
 
     public PhoneInfoSharedViewModel() {
         resetToDefaults();
@@ -121,6 +126,37 @@ public class PhoneInfoSharedViewModel extends ViewModel {
         return mSatelliteDataOriginalBundle[phoneId];
     }
 
+    public void setSatelliteForceCamped(boolean isForceCamped, int phoneId) {
+        mSatelliteForceCamped[phoneId].setValue(isForceCamped);
+    }
+    public LiveData<Boolean> getSatelliteForceCamped(int phoneId) {
+        return mSatelliteForceCamped[phoneId];
+    }
+
+    public void setOriginalSystemChannels(PersistableBundle bundle, int phoneId) {
+        mOriginalSystemChannels[phoneId] = bundle;
+    }
+
+    public PersistableBundle getOriginalSystemChannels(int phoneId) {
+        return mOriginalSystemChannels[phoneId];
+    }
+
+    public void setPreviousSatelliteBand(PersistableBundle bundle, int phoneId) {
+        mPreviousSatelliteBand[phoneId] = bundle;
+    }
+
+    public PersistableBundle getPreviousSatelliteBand(int phoneId) {
+        return mPreviousSatelliteBand[phoneId];
+    }
+
+    public void setSelectedManualOverrideBandIndex(int overrideBand, int phoneId) {
+        mSelectedManualOverrideBandIndex[phoneId] = overrideBand;
+    }
+
+    public int getSelectedManualOverrideBandIndex(int phoneId) {
+        return mSelectedManualOverrideBandIndex[phoneId];
+    }
+
     // --- Reset to Defaults ---
     public void resetToDefaults() {
         // Data Network
@@ -138,5 +174,16 @@ public class PhoneInfoSharedViewModel extends ViewModel {
         mSatelliteEnabled[1].setValue(DEFAULT_SATELLITE_ENABLED);
         mSatelliteDataEnabled[1].setValue(DEFAULT_SATELLITE_DATA_MODE_ENABLED);
         mSatelliteDataMode[1].setValue(DEFAULT_SATELLITE_DATA_MODE);
+
+        mCarrierSatelliteOriginalBundle[0] = null;
+        mCarrierSatelliteOriginalBundle[1] = null;
+        mSatelliteDataOriginalBundle[0] = null;
+        mSatelliteDataOriginalBundle[1] = null;
+        mOriginalSystemChannels[0] = null;
+        mOriginalSystemChannels[1] = null;
+        mPreviousSatelliteBand[0] = null;
+        mPreviousSatelliteBand[1] = null;
+        mSelectedManualOverrideBandIndex[0] = 0;
+        mSelectedManualOverrideBandIndex[1] = 0;
     }
 }

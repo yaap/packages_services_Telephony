@@ -1406,12 +1406,12 @@ countries {
 countries {
   iso_code: "IQ"
   eccs {
-    phone_number: "130"
+    phone_number: "911"
     types: POLICE
     types: AMBULANCE
     types: FIRE
   }
-  ecc_fallback: "112"
+  ecc_fallback: "911"
 }
 countries {
   iso_code: "IR"

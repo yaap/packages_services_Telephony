@@ -33,6 +33,7 @@ import android.content.Context;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.PersistableBundle;
+import android.platform.test.flag.junit.SetFlagsRule;
 import android.telephony.AccessNetworkConstants;
 import android.telephony.AccessNetworkConstants.AccessNetworkType;
 import android.telephony.AccessNetworkConstants.RadioAccessNetworkType;
@@ -54,9 +55,11 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.TestContext;
+import com.android.internal.telephony.flags.Flags;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -79,6 +82,8 @@ public class EmergencySmsDomainSelectorTest {
     @Mock private VopsSupportInfo mVopsSupportInfo;
     @Mock private ImsStateTracker mImsStateTracker;
     @Mock private DomainSelectorBase.DestroyListener mDomainSelectorDestroyListener;
+
+    @Rule public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
 
     private final SelectionAttributes mSelectionAttributes =
             new SelectionAttributes.Builder(SLOT_0, SUB_1, SELECTOR_TYPE_SMS)
@@ -133,6 +138,8 @@ public class EmergencySmsDomainSelectorTest {
         verify(mImsStateTracker).addBarringInfoListener(barringInfoListenerCaptor.capture());
         mBarringInfoListener = barringInfoListenerCaptor.getValue();
         assertNotNull(mBarringInfoListener);
+
+        mSetFlagsRule.disableFlags(Flags.FLAG_ENABLE_EMERGENCY_SMS_ROAMING_PDN_SELECTION);
     }
 
     @After
@@ -464,6 +471,54 @@ public class EmergencySmsDomainSelectorTest {
         setUpCarrierConfig(true);
         setUpNrInService(false, false, false, true);
 
+        assertTrue(mDomainSelector.isSmsOverImsAvailable());
+    }
+
+    @Test
+    @SmallTest
+    public void testIsSmsOverImsAvailableInNrAndEmergencyNotSupportedAndConfigIsMatched() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_ENABLE_EMERGENCY_SMS_ROAMING_PDN_SELECTION);
+        setUpImsStateTracker(AccessNetworkType.NGRAN);
+        setUpCarrierConfig(true, new int[] { CarrierConfigManager.Ims.NETWORK_TYPE_HOME });
+        setUpNrInService(false, false, false, false);
+
+        // Need to fallback to CS network.
+        assertFalse(mDomainSelector.isSmsOverImsAvailable());
+    }
+
+    @Test
+    @SmallTest
+    public void testIsSmsOverImsAvailableInNrAndEmergencyNotSupportedAndConfigIsNotMatched() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_ENABLE_EMERGENCY_SMS_ROAMING_PDN_SELECTION);
+        setUpImsStateTracker(AccessNetworkType.NGRAN);
+        setUpCarrierConfig(true, new int[] { CarrierConfigManager.Ims.NETWORK_TYPE_ROAMING });
+        setUpNrInService(false, false, false, false);
+
+        // Emergency SMS is supported via IMS PDN.
+        assertTrue(mDomainSelector.isSmsOverImsAvailable());
+    }
+
+    @Test
+    @SmallTest
+    public void testIsSmsOverImsAvailableInNrAndEmergencySupportedAndConfigIsMatched() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_ENABLE_EMERGENCY_SMS_ROAMING_PDN_SELECTION);
+        setUpImsStateTracker(AccessNetworkType.NGRAN);
+        setUpCarrierConfig(true, new int[] { CarrierConfigManager.Ims.NETWORK_TYPE_HOME });
+        setUpNrInService(false, false, true, false);
+
+        // Emergency SMS is supported via emergency PDN.
+        assertTrue(mDomainSelector.isSmsOverImsAvailable());
+    }
+
+    @Test
+    @SmallTest
+    public void testIsSmsOverImsAvailableInNrAndEmergencySupportedAndConfigIsNotMatched() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_ENABLE_EMERGENCY_SMS_ROAMING_PDN_SELECTION);
+        setUpImsStateTracker(AccessNetworkType.NGRAN);
+        setUpCarrierConfig(true, new int[] { CarrierConfigManager.Ims.NETWORK_TYPE_ROAMING });
+        setUpNrInService(false, false, true, false);
+
+        // Emergency SMS is supported via IMS PDN.
         assertTrue(mDomainSelector.isSmsOverImsAvailable());
     }
 
@@ -860,8 +915,15 @@ public class EmergencySmsDomainSelectorTest {
     }
 
     private void setUpCarrierConfig(boolean supported) {
+        setUpCarrierConfig(supported, null);
+    }
+
+    private void setUpCarrierConfig(boolean supported, int[] networkTypes) {
         PersistableBundle b = new PersistableBundle();
         b.putBoolean(CarrierConfigManager.KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL, supported);
+        b.putIntArray(
+                CarrierConfigManager.ImsSms.KEY_EMERGENCY_SMS_OVER_EMERGENCY_PDN_INT_ARRAY,
+                networkTypes);
         when(mCarrierConfigManager.getConfigForSubId(anyInt())).thenReturn(b);
     }
 

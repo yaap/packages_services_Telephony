@@ -10,6 +10,7 @@
     <string name="latency_title" msgid="963052613947017009">"ផ្ដល់អាទិភាពការ​ពន្យារ"</string>
     <string name="bw_title" msgid="3902162973688221344">"ផ្ដល់អាទិភាពកម្រិត​បញ្ជូន"</string>
     <string name="cbs_title" msgid="5234410535569935600">"CBS"</string>
+    <string name="uc_title" msgid="3318432893557370445">"ផ្ដល់​អាទិភាព​ដល់​ការប្រាស្រ័យ​ទាក់ទង​ដែលបាន​រួមបញ្ចូលគ្នា"</string>
     <string name="purchase" msgid="7843181995697372128">"ទិញបណ្ដាញលំដាប់ខ្ពស់"</string>
     <string name="network_available" msgid="4780293262690730734">"លទ្ធផល៖ ឥឡូវនេះអាចប្រើបណ្ដាញដែលបានស្នើសុំបានហើយ!"</string>
     <string name="network_requested" msgid="5646123922691865991">"លទ្ធផល៖ បានស្នើសុំបណ្ដាញ!"</string>
